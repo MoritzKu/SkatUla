@@ -5,10 +5,28 @@
  */
 package de.dhbw.skatula.web;
 
+import de.dhbw.skatula.ejb.DemoBean;
+import java.io.IOException;
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author MoritzKuttler
  */
-public class IndexServlet {
-    
+@WebServlet(urlPatterns = {"/", "/index", "/index.html"}, name = "IndexServlet")
+public class IndexServlet extends HttpServlet{
+
+    @EJB
+    protected DemoBean demoBean;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+    }
 }
