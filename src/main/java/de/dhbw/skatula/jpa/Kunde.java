@@ -15,7 +15,7 @@ import javax.persistence.Id;
  * @author Benjamin Kanzler
  */
 @Entity
-public class DemoEntity {
+public class Kunde {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

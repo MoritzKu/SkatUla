@@ -5,7 +5,7 @@
  */
 package de.dhbw.skatula.web;
 
-import de.dhbw.skatula.ejb.DemoBean;
+import de.dhbw.skatula.ejb.KundeBean;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class IndexServlet extends HttpServlet{
 
     @EJB
-    protected DemoBean demoBean;
+    protected KundeBean demoBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
