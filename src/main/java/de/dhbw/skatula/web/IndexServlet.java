@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class IndexServlet extends HttpServlet{
 
     @EJB
-    protected KundeBean demoBean;
+    protected KundeBean kundeBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
