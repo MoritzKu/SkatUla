@@ -6,6 +6,7 @@
 package de.dhbw.skatula.jpa;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,33 +20,67 @@ import javax.persistence.Id;
 public class Bankverbindung implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String bic;
+    
+    @Id
+    private String iban;
+    
+    private String insitut;
 
-    public Long getId() {
-        return id;
+    public String getBic() {
+        return bic;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBic(String bic) {
+        this.bic = bic;
+    }
+
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    public String getInsitut() {
+        return insitut;
+    }
+
+    public void setInsitut(String insitut) {
+        this.insitut = insitut;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.bic);
+        hash = 97 * hash + Objects.hashCode(this.iban);
+        hash = 97 * hash + Objects.hashCode(this.insitut);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Bankverbindung)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Bankverbindung other = (Bankverbindung) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Bankverbindung other = (Bankverbindung) obj;
+        if (!Objects.equals(this.bic, other.bic)) {
+            return false;
+        }
+        if (!Objects.equals(this.iban, other.iban)) {
+            return false;
+        }
+        if (!Objects.equals(this.insitut, other.insitut)) {
             return false;
         }
         return true;
@@ -53,7 +88,7 @@ public class Bankverbindung implements Serializable {
 
     @Override
     public String toString() {
-        return "de.dhbw.skatula.jpa.Bankverbindung[ id=" + id + " ]";
+        return "Bankverbindung{bic=" + bic + ", iban=" + iban + ", insitut=" + insitut + '}';
     }
     
 }
