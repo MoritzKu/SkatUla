@@ -5,6 +5,7 @@
  */
 package de.dhbw.skatula.jpa;
 
+import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,16 @@ public class Kurs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private String bezeichnung;
+    
+    private int maxTeilnehmer;
+    
+    private int aktuelleTeilnehmerzahl;
+    
+    private Schwierigkeitsgrad schwierigkeitsgrad;
+    
+    private Trainer trainer;
 
     public Long getId() {
         return id;

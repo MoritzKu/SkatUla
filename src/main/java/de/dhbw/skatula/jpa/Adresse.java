@@ -25,10 +25,6 @@ public class Adresse implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String name;
-    
-    private String vorname;
-    
     private String strasse;
     
     private String plz;
@@ -36,6 +32,8 @@ public class Adresse implements Serializable {
     private String ort;
     
     private String hausnummer;
+    
+    private String postfach;
 
     public Long getId() {
         return id;
@@ -43,22 +41,6 @@ public class Adresse implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getVorname() {
-        return vorname;
-    }
-
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
     }
 
     public String getStrasse() {
@@ -93,29 +75,54 @@ public class Adresse implements Serializable {
         this.hausnummer = hausnummer;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.vorname);
-        hash = 97 * hash + Objects.hashCode(this.strasse);
-        hash = 97 * hash + Objects.hashCode(this.plz);
-        hash = 97 * hash + Objects.hashCode(this.ort);
-        hash = 97 * hash + Objects.hashCode(this.hausnummer);
-        return hash;
+    public String getPostfach() {
+        return postfach;
     }
-    
-    
+
+    public void setPostfach(String postfach) {
+        this.postfach = postfach;
+    }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Adresse)) {
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.strasse);
+        hash = 79 * hash + Objects.hashCode(this.plz);
+        hash = 79 * hash + Objects.hashCode(this.ort);
+        hash = 79 * hash + Objects.hashCode(this.hausnummer);
+        hash = 79 * hash + Objects.hashCode(this.postfach);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Adresse other = (Adresse) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Adresse other = (Adresse) obj;
+        if (!Objects.equals(this.strasse, other.strasse)) {
+            return false;
+        }
+        if (!Objects.equals(this.plz, other.plz)) {
+            return false;
+        }
+        if (!Objects.equals(this.ort, other.ort)) {
+            return false;
+        }
+        if (!Objects.equals(this.hausnummer, other.hausnummer)) {
+            return false;
+        }
+        if (!Objects.equals(this.postfach, other.postfach)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -123,7 +130,6 @@ public class Adresse implements Serializable {
 
     @Override
     public String toString() {
-        return "Adresse{" + "id=" + id + ", name=" + name + ", vorname=" + vorname + ", strasse=" + strasse + ", plz=" + plz + ", ort=" + ort + ", hausnummer=" + hausnummer + '}';
+        return "Adresse{" + "id=" + id + ", strasse=" + strasse + ", plz=" + plz + ", ort=" + ort + ", hausnummer=" + hausnummer + ", postfach=" + postfach + '}';
     }
-    
 }

@@ -7,8 +7,7 @@ package de.dhbw.skatula.ejb;
 
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
-import de.dhbw.skatula.jpa.Bankverbindung;
-import de.dhbw.skatula.jpa.ids.BankverbindungId;
+import de.dhbw.skatula.jpa.Trainer;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,16 +17,16 @@ import javax.persistence.PersistenceContext;
  * @author Benjamin Kanzler
  */
 @Stateless
-public class BankverbindungBean {
+public class TrainerBean {
     
     @PersistenceContext
     EntityManager em;
 
-    public Response<Bankverbindung> createNewBankverbindung(Bankverbindung b) {
-        Response<Bankverbindung> response = new Response<>();
+    public Response<Trainer> createNewBankverbindung(Trainer t) {
+        Response<Trainer> response = new Response<>();
         try {
-            em.persist(b);
-            response.setResponse(em.merge(b));
+            em.persist(t);
+            response.setResponse(em.merge(t));
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
@@ -39,10 +38,10 @@ public class BankverbindungBean {
         }
     }
 
-    public Response<Bankverbindung> updateBankverbindung(Bankverbindung b) {
-        Response<Bankverbindung> response = new Response<>();
+    public Response<Trainer> updateBankverbindung(Trainer t) {
+        Response<Trainer> response = new Response<>();
         try {
-            response.setResponse(em.merge(b));
+            response.setResponse(em.merge(t));
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
@@ -54,10 +53,10 @@ public class BankverbindungBean {
         }
     }
     
-    public Response<Bankverbindung> findAll(){
-        Response<Bankverbindung> response = new Response<>();
+    public Response<Trainer> findAll(){
+        Response<Trainer> response = new Response<>();
         try {
-            response.setResponseList(em.createQuery("SELECT b FROM Bankverbindung b").getResultList());
+            response.setResponseList(em.createQuery("SELECT t FROM Trainer t").getResultList());
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
@@ -69,10 +68,10 @@ public class BankverbindungBean {
         }
     }
     
-    public Response<Bankverbindung> findById(BankverbindungId id){
-        Response<Bankverbindung> response = new Response<>();
+    public Response<Trainer> findById(Long id){
+        Response<Trainer> response = new Response<>();
         try {
-            response.setResponse(em.find(Bankverbindung.class, id));
+            response.setResponse(em.find(Trainer.class, id));
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
@@ -84,13 +83,13 @@ public class BankverbindungBean {
         }
     }
     
-    public Response<Bankverbindung> deleteBankverbingung(Bankverbindung b){
-        Response<Bankverbindung> response = new Response<>();
+    public Response<Trainer> deleteBankverbingung(Trainer t){
+        Response<Trainer> response = new Response<>();
         try {
-            em.remove(b);
-            response.setResponse(b);
+            em.remove(t);
+            response.setResponse(t);
             response.setStatus(ResponseStatus.ERFOLGREICH);
-            response.setMessage("Die Bankverbindung\n" + b + "\nwurde erfolgreich gelöscht.");
+            response.setMessage("Die Bankverbindung\n" + t + "\nwurde erfolgreich gelöscht.");
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
             response.setException(ex.getClass().getName());
@@ -100,6 +99,4 @@ public class BankverbindungBean {
             return response;
         }
     }
-    
-
 }

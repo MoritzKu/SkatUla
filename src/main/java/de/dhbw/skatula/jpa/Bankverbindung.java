@@ -5,11 +5,14 @@
  */
 package de.dhbw.skatula.jpa;
 
+import de.dhbw.skatula.jpa.ids.BankverbindungId;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -28,6 +31,10 @@ public class Bankverbindung implements Serializable {
     private String iban = "";
 
     private String insitut;
+
+    @OneToOne
+    @JoinColumn(name = "adress_id", referencedColumnName = "id")
+    private Adresse adresse;
 
     public String getBic() {
         return bic;
@@ -53,12 +60,21 @@ public class Bankverbindung implements Serializable {
         this.insitut = insitut;
     }
 
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.bic);
-        hash = 97 * hash + Objects.hashCode(this.iban);
-        hash = 97 * hash + Objects.hashCode(this.insitut);
+        hash = 67 * hash + Objects.hashCode(this.bic);
+        hash = 67 * hash + Objects.hashCode(this.iban);
+        hash = 67 * hash + Objects.hashCode(this.insitut);
+        hash = 67 * hash + Objects.hashCode(this.adresse);
         return hash;
     }
 
@@ -83,12 +99,14 @@ public class Bankverbindung implements Serializable {
         if (!Objects.equals(this.insitut, other.insitut)) {
             return false;
         }
+        if (!Objects.equals(this.adresse, other.adresse)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Bankverbindung{bic=" + bic + ", iban=" + iban + ", insitut=" + insitut + '}';
+        return "Bankverbindung{" + "bic=" + bic + ", iban=" + iban + ", insitut=" + insitut + ", adresse=" + adresse + '}';
     }
-
 }

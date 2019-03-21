@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.dhbw.skatula.jpa;
+package de.dhbw.skatula.jpa.ids;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,34 +12,33 @@ import java.util.Objects;
  *
  * @author Benjamin Kanzler
  */
-
-public class BankverbindungId implements Serializable {
+public class LoginDataId implements Serializable {
     
-    private String bic = "";
+    private String username = "";
+    
+    private String pw = "";
 
-    private String iban = "";
-
-    public String getBic() {
-        return bic;
+    public String getUsername() {
+        return username;
     }
 
-    public void setBic(String bic) {
-        this.bic = bic;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getIban() {
-        return iban;
+    public String getPw() {
+        return pw;
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
+    public void setPw(String pw) {
+        this.pw = pw;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.bic);
-        hash = 89 * hash + Objects.hashCode(this.iban);
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.username);
+        hash = 79 * hash + Objects.hashCode(this.pw);
         return hash;
     }
 
@@ -54,11 +53,11 @@ public class BankverbindungId implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BankverbindungId other = (BankverbindungId) obj;
-        if (!Objects.equals(this.bic, other.bic)) {
+        final LoginDataId other = (LoginDataId) obj;
+        if (!Objects.equals(this.username, other.username)) {
             return false;
         }
-        if (!Objects.equals(this.iban, other.iban)) {
+        if (!Objects.equals(this.pw, other.pw)) {
             return false;
         }
         return true;

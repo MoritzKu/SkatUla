@@ -5,12 +5,12 @@
  */
 package de.dhbw.skatula.jpa;
 
-import de.dhbw.skatula.jpa.ids.LoginDataId;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -19,19 +19,19 @@ import javax.persistence.OneToOne;
  * @author Benjamin Kanzler
  */
 @Entity
-@IdClass(LoginDataId.class)
-public class Kunde implements Serializable {
-
+public class Trainer implements Serializable{
+    
     @Id
-    private String username = "";
-    @Id
-    private String pw = "";
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    private String name;
     
     private String vorname;
-
-    private String name;
-
-    private String email;
+    
+    private String mitarbeiterNr;
+    
+    private String passwort;
     
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
@@ -40,28 +40,12 @@ public class Kunde implements Serializable {
     @OneToOne()
     private Bankverbindung bankverbindung;
 
-    public String getUsername() {
-        return username;
+    public Long getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPw() {
-        return pw;
-    }
-
-    public void setPw(String pw) {
-        this.pw = pw;
-    }
-
-    public String getVorname() {
-        return vorname;
-    }
-
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -72,12 +56,28 @@ public class Kunde implements Serializable {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getVorname() {
+        return vorname;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
+
+    public String getMitarbeiterNr() {
+        return mitarbeiterNr;
+    }
+
+    public void setMitarbeiterNr(String mitarbeiterNr) {
+        this.mitarbeiterNr = mitarbeiterNr;
+    }
+
+    public String getPasswort() {
+        return passwort;
+    }
+
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
     }
 
     public Adresse getAdresse() {
@@ -99,13 +99,13 @@ public class Kunde implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.username);
-        hash = 41 * hash + Objects.hashCode(this.pw);
-        hash = 41 * hash + Objects.hashCode(this.vorname);
-        hash = 41 * hash + Objects.hashCode(this.name);
-        hash = 41 * hash + Objects.hashCode(this.email);
-        hash = 41 * hash + Objects.hashCode(this.adresse);
-        hash = 41 * hash + Objects.hashCode(this.bankverbindung);
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.name);
+        hash = 31 * hash + Objects.hashCode(this.vorname);
+        hash = 31 * hash + Objects.hashCode(this.mitarbeiterNr);
+        hash = 31 * hash + Objects.hashCode(this.passwort);
+        hash = 31 * hash + Objects.hashCode(this.adresse);
+        hash = 31 * hash + Objects.hashCode(this.bankverbindung);
         return hash;
     }
 
@@ -120,20 +120,20 @@ public class Kunde implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Kunde other = (Kunde) obj;
-        if (!Objects.equals(this.username, other.username)) {
-            return false;
-        }
-        if (!Objects.equals(this.pw, other.pw)) {
+        final Trainer other = (Trainer) obj;
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         if (!Objects.equals(this.vorname, other.vorname)) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.mitarbeiterNr, other.mitarbeiterNr)) {
             return false;
         }
-        if (!Objects.equals(this.email, other.email)) {
+        if (!Objects.equals(this.passwort, other.passwort)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.adresse, other.adresse)) {
@@ -147,7 +147,6 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return "Kunde{" + "username=" + username + ", pw=" + pw + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + ", bankverbindung=" + bankverbindung + '}';
+        return "Trainer{" + "id=" + id + ", name=" + name + ", vorname=" + vorname + ", mitarbeiterNr=" + mitarbeiterNr + ", passwort=" + passwort + ", adresse=" + adresse + ", bankverbindung=" + bankverbindung + '}';
     }
-    
 }

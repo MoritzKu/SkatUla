@@ -56,7 +56,7 @@ public class TerminBean {
     public Response<Termin> findAll(){
         Response<Termin> response = new Response<>();
         try {
-            response.setResponseList(em.createQuery("SELECT b FROM Bankverbindung b").getResultList());
+            response.setResponseList(em.createQuery("SELECT t FROM Termin t").getResultList());
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);

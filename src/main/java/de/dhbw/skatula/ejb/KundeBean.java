@@ -8,6 +8,7 @@ package de.dhbw.skatula.ejb;
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.Kunde;
+import de.dhbw.skatula.jpa.ids.LoginDataId;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -68,7 +69,7 @@ public class KundeBean {
         }
     }
     
-    public Response<Kunde> findById(Long id){
+    public Response<Kunde> findById(LoginDataId id){
         Response<Kunde> response = new Response<>();
         try {
             response.setResponse(em.find(Kunde.class, id));
