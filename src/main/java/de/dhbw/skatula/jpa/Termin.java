@@ -26,6 +26,10 @@ public class Termin implements Serializable {
     private Long id;
 
     @OneToMany()
+    @JoinColumns(value = {
+        @JoinColumn(name = "kunde_username", referencedColumnName = "username"),
+        @JoinColumn(name = "kunde_pw", referencedColumnName = "pw")}
+    )
     private List<Kunde> kunde;
 
     private Date start;

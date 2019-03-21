@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 
 /**
@@ -26,18 +27,22 @@ public class Kunde implements Serializable {
     private String username = "";
     @Id
     private String pw = "";
-    
+
     private String vorname;
 
     private String name;
 
     private String email;
-    
+
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
-    
+
     @OneToOne()
+    @JoinColumns(value = {
+        @JoinColumn(name = "iban", referencedColumnName = "iban"),
+        @JoinColumn(name = "bic", referencedColumnName = "bic")}
+    )
     private Bankverbindung bankverbindung;
 
     public String getUsername() {
@@ -149,5 +154,5 @@ public class Kunde implements Serializable {
     public String toString() {
         return "Kunde{" + "username=" + username + ", pw=" + pw + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + ", bankverbindung=" + bankverbindung + '}';
     }
-    
+
 }

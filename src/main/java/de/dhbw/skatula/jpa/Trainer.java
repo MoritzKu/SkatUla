@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 
 /**
@@ -19,25 +20,28 @@ import javax.persistence.OneToOne;
  * @author Benjamin Kanzler
  */
 @Entity
-public class Trainer implements Serializable{
-    
+public class Trainer implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String name;
-    
+
     private String vorname;
-    
+
     private String mitarbeiterNr;
-    
+
     private String passwort;
-    
+
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
-    
-    @OneToOne()
+
+    @JoinColumns(value = {
+        @JoinColumn(name = "iban", referencedColumnName = "iban"),
+        @JoinColumn(name = "bic", referencedColumnName = "bic")}
+    )
     private Bankverbindung bankverbindung;
 
     public Long getId() {
