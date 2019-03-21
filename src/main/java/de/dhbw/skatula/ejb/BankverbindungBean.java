@@ -8,6 +8,7 @@ package de.dhbw.skatula.ejb;
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.Bankverbindung;
+import de.dhbw.skatula.jpa.BankverbindungId;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -68,7 +69,7 @@ public class BankverbindungBean {
         }
     }
     
-    public Response<Bankverbindung> findById(Long id){
+    public Response<Bankverbindung> findById(BankverbindungId id){
         Response<Bankverbindung> response = new Response<>();
         try {
             response.setResponse(em.find(Bankverbindung.class, id));
