@@ -23,7 +23,7 @@ public class KundeBean {
     @PersistenceContext
     EntityManager em;
 
-    public Response<Kunde> createNewBankverbindung(Kunde k) {
+    public Response<Kunde> createNewKunde(Kunde k) {
         Response<Kunde> response = new Response<>();
         try {
             em.persist(k);

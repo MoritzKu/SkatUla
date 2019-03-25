@@ -6,6 +6,7 @@
 package de.dhbw.skatula.web;
 
 import de.dhbw.skatula.ejb.KundeBean;
+import de.dhbw.skatula.jpa.Kunde;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -27,6 +28,8 @@ public class IndexServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Kunde k = new Kunde();
+        request.setAttribute("kunde", kundeBean.createNewKunde(k));
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
 }
