@@ -6,6 +6,7 @@
 package de.dhbw.skatula.web;
 
 import de.dhbw.skatula.ejb.KundeBean;
+import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.Kunde;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -29,7 +30,13 @@ public class IndexServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Kunde k = new Kunde();
-        request.setAttribute("kunde", kundeBean.createNewKunde(k));
+        k.setUsername("Horst");
+        k.setEmail("horst@test.de");
+        System.out.println("Kunde vor dem schreiben: " + k);
+        Response<Kunde> resK = kundeBean.createNewKunde(k);
+        System.out.println("Kunde nach dem Persistieren: " + resK.getResponse());
+        request.setAttribute("kunde", resK);
+        
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
 }

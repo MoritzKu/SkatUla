@@ -5,14 +5,14 @@
  */
 package de.dhbw.skatula.jpa;
 
-import de.dhbw.skatula.jpa.ids.LoginDataId;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 
 /**
@@ -20,30 +20,28 @@ import javax.persistence.OneToOne;
  * @author Benjamin Kanzler
  */
 @Entity
-@IdClass(LoginDataId.class)
 public class Kunde implements Serializable {
 
     @Id
-    private String username = "";
-    @Id
-    private String pw = "";
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+    
+    @Column(nullable = false, unique = true)
+    private String username;
+    
+    @Column()
+    private String pw;
 
     private String vorname;
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
-
-    @OneToOne()
-    @JoinColumns(value = {
-        @JoinColumn(name = "iban", referencedColumnName = "iban"),
-        @JoinColumn(name = "bic", referencedColumnName = "bic")}
-    )
-    private Bankverbindung bankverbindung;
 
     public String getUsername() {
         return username;
@@ -93,14 +91,6 @@ public class Kunde implements Serializable {
         this.adresse = adresse;
     }
 
-    public Bankverbindung getBankverbindung() {
-        return bankverbindung;
-    }
-
-    public void setBankverbindung(Bankverbindung bankverbindung) {
-        this.bankverbindung = bankverbindung;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -110,7 +100,6 @@ public class Kunde implements Serializable {
         hash = 41 * hash + Objects.hashCode(this.name);
         hash = 41 * hash + Objects.hashCode(this.email);
         hash = 41 * hash + Objects.hashCode(this.adresse);
-        hash = 41 * hash + Objects.hashCode(this.bankverbindung);
         return hash;
     }
 
@@ -144,15 +133,12 @@ public class Kunde implements Serializable {
         if (!Objects.equals(this.adresse, other.adresse)) {
             return false;
         }
-        if (!Objects.equals(this.bankverbindung, other.bankverbindung)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Kunde{" + "username=" + username + ", pw=" + pw + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + ", bankverbindung=" + bankverbindung + '}';
+        return "Kunde{" + "username=" + username + ", pw=" + pw + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
     }
 
 }

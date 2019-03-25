@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -30,10 +29,7 @@ public class Termin implements Serializable {
     private Long id;
 
     @OneToMany()
-    @JoinColumns(value = {
-        @JoinColumn(name = "kunde_username", referencedColumnName = "username"),
-        @JoinColumn(name = "kunde_pw", referencedColumnName = "pw")}
-    )
+    @JoinColumn(name = "kunde_id", referencedColumnName = "id")
     private List<Kunde> kunde;
 
     private Date start;

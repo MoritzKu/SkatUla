@@ -38,11 +38,6 @@ public class Trainer implements Serializable {
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
 
-    @JoinColumns(value = {
-        @JoinColumn(name = "iban", referencedColumnName = "iban"),
-        @JoinColumn(name = "bic", referencedColumnName = "bic")}
-    )
-    private Bankverbindung bankverbindung;
 
     public Long getId() {
         return id;
@@ -91,15 +86,7 @@ public class Trainer implements Serializable {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
-
-    public Bankverbindung getBankverbindung() {
-        return bankverbindung;
-    }
-
-    public void setBankverbindung(Bankverbindung bankverbindung) {
-        this.bankverbindung = bankverbindung;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -109,7 +96,6 @@ public class Trainer implements Serializable {
         hash = 31 * hash + Objects.hashCode(this.mitarbeiterNr);
         hash = 31 * hash + Objects.hashCode(this.passwort);
         hash = 31 * hash + Objects.hashCode(this.adresse);
-        hash = 31 * hash + Objects.hashCode(this.bankverbindung);
         return hash;
     }
 
@@ -143,14 +129,12 @@ public class Trainer implements Serializable {
         if (!Objects.equals(this.adresse, other.adresse)) {
             return false;
         }
-        if (!Objects.equals(this.bankverbindung, other.bankverbindung)) {
-            return false;
-        }
+
         return true;
     }
 
     @Override
     public String toString() {
-        return "Trainer{" + "id=" + id + ", name=" + name + ", vorname=" + vorname + ", mitarbeiterNr=" + mitarbeiterNr + ", passwort=" + passwort + ", adresse=" + adresse + ", bankverbindung=" + bankverbindung + '}';
+        return "Trainer{" + "id=" + id + ", name=" + name + ", vorname=" + vorname + ", mitarbeiterNr=" + mitarbeiterNr + ", passwort=" + passwort + ", adresse=" + adresse + '}';
     }
 }

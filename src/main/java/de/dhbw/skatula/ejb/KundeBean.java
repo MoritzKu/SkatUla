@@ -8,7 +8,6 @@ package de.dhbw.skatula.ejb;
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.Kunde;
-import de.dhbw.skatula.jpa.ids.LoginDataId;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -69,10 +68,10 @@ public class KundeBean {
         }
     }
     
-    public Response<Kunde> findById(LoginDataId id){
+    public Response<Kunde> findById(String nickname){
         Response<Kunde> response = new Response<>();
         try {
-            response.setResponse(em.find(Kunde.class, id));
+            response.setResponse(em.find(Kunde.class, nickname));
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
@@ -84,7 +83,7 @@ public class KundeBean {
         }
     }
     
-    public Response<Kunde> deleteBankverbingung(Kunde k){
+    public Response<Kunde> deleteKunde(Kunde k){
         Response<Kunde> response = new Response<>();
         try {
             em.remove(k);
