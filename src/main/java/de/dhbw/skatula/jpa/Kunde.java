@@ -24,7 +24,7 @@ public class Kunde implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
     
     @Column(nullable = false, unique = true)
     private String username;
@@ -42,6 +42,14 @@ public class Kunde implements Serializable {
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -94,12 +102,13 @@ public class Kunde implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.username);
-        hash = 41 * hash + Objects.hashCode(this.pw);
-        hash = 41 * hash + Objects.hashCode(this.vorname);
-        hash = 41 * hash + Objects.hashCode(this.name);
-        hash = 41 * hash + Objects.hashCode(this.email);
-        hash = 41 * hash + Objects.hashCode(this.adresse);
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.username);
+        hash = 13 * hash + Objects.hashCode(this.pw);
+        hash = 13 * hash + Objects.hashCode(this.vorname);
+        hash = 13 * hash + Objects.hashCode(this.name);
+        hash = 13 * hash + Objects.hashCode(this.email);
+        hash = 13 * hash + Objects.hashCode(this.adresse);
         return hash;
     }
 
@@ -115,22 +124,7 @@ public class Kunde implements Serializable {
             return false;
         }
         final Kunde other = (Kunde) obj;
-        if (!Objects.equals(this.username, other.username)) {
-            return false;
-        }
-        if (!Objects.equals(this.pw, other.pw)) {
-            return false;
-        }
-        if (!Objects.equals(this.vorname, other.vorname)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (!Objects.equals(this.adresse, other.adresse)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -138,7 +132,7 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return "Kunde{" + "username=" + username + ", pw=" + pw + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
+        return "Kunde{" + "id=" + id + ", username=" + username + ", pw=" + pw + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
     }
 
 }
