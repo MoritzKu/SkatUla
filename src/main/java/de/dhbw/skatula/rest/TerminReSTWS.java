@@ -20,6 +20,4 @@ import javax.ws.rs.Produces;
 @Produces("application/json")
 public class TerminReSTWS {
     
-    
-    
 }
