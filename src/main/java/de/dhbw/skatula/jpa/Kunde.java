@@ -30,7 +30,7 @@ public class Kunde implements Serializable {
     private String username;
     
     @Column()
-    private String pw;
+    private String passwort;
 
     private String vorname;
 
@@ -58,15 +58,7 @@ public class Kunde implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public String getPw() {
-        return pw;
-    }
-
-    public void setPw(String pw) {
-        this.pw = pw;
-    }
-
+    
     public String getVorname() {
         return vorname;
     }
@@ -99,16 +91,24 @@ public class Kunde implements Serializable {
         this.adresse = adresse;
     }
 
+    public String getPasswort() {
+        return passwort;
+    }
+
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.id);
-        hash = 13 * hash + Objects.hashCode(this.username);
-        hash = 13 * hash + Objects.hashCode(this.pw);
-        hash = 13 * hash + Objects.hashCode(this.vorname);
-        hash = 13 * hash + Objects.hashCode(this.name);
-        hash = 13 * hash + Objects.hashCode(this.email);
-        hash = 13 * hash + Objects.hashCode(this.adresse);
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.username);
+        hash = 37 * hash + Objects.hashCode(this.passwort);
+        hash = 37 * hash + Objects.hashCode(this.vorname);
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.email);
+        hash = 37 * hash + Objects.hashCode(this.adresse);
         return hash;
     }
 
@@ -132,7 +132,7 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return "Kunde{" + "id=" + id + ", username=" + username + ", pw=" + pw + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
+        return "Kunde{" + "id=" + id + ", username=" + username + ", passwort=" + passwort + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
     }
-
+    
 }

@@ -7,6 +7,7 @@ package de.dhbw.skatula.jpa;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,11 +28,16 @@ public class Adresse implements Serializable {
     
     private String strasse;
     
+    @Column(length = 5)
     private String plz;
     
     private String ort;
     
-    private String hausnummer;
+    @Column(length = 3)
+    private int hausnummer;
+    
+    @Column(length = 2)
+    private String hausnummerzusatz;
     
     private String postfach;
 
@@ -67,20 +73,28 @@ public class Adresse implements Serializable {
         this.ort = ort;
     }
 
-    public String getHausnummer() {
-        return hausnummer;
-    }
-
-    public void setHausnummer(String hausnummer) {
-        this.hausnummer = hausnummer;
-    }
-
     public String getPostfach() {
         return postfach;
     }
 
     public void setPostfach(String postfach) {
         this.postfach = postfach;
+    }
+
+    public int getHausnummer() {
+        return hausnummer;
+    }
+
+    public void setHausnummer(int hausnummer) {
+        this.hausnummer = hausnummer;
+    }
+
+    public String getHausnummerzusatz() {
+        return hausnummerzusatz;
+    }
+
+    public void setHausnummerzusatz(String hausnummerzusatz) {
+        this.hausnummerzusatz = hausnummerzusatz;
     }
 
     @Override
