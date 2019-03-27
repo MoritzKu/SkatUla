@@ -25,6 +25,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/", "/index", "/index.html"}, name = "IndexServlet")
 public class IndexServlet extends HttpServlet {
 
+    public static final String URL = "/";
+
     @EJB
     protected KundeBean kundeBean;
 

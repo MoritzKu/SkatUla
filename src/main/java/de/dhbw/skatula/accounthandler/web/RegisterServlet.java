@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Registrieren", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
 
+    public static final String URL = "/register";
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

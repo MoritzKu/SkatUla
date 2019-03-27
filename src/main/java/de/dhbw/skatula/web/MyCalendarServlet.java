@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "MyCalendarServlet", urlPatterns = {"/MyCalendar"})
 public class MyCalendarServlet extends HttpServlet {
 
+    public static final String URL = "/MyCalendar";
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -32,7 +33,7 @@ public class MyCalendarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -46,7 +47,7 @@ public class MyCalendarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
 }

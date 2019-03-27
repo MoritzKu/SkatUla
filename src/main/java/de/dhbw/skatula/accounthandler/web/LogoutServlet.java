@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "logout", urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
 
+    public static final String URL = "/logout";
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
