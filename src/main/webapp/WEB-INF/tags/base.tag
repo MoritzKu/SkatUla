@@ -35,48 +35,41 @@
     </head>
     <body>
         <header>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <nav>
-                                <a href="<c:url value="/"/>" class="navbar-brand p-0">
-                                    <img class="logo p-0" src="<c:url value="/images/Logo_Placeholder.png"/>" alt="SketUla Logo"/> 
-                                    <span class="brand h3">SketUla</span>
-                                </a>
-                            </nav>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <button type="button" class="btn btn-link">
-                                        <a href="<c:url value="/register"/>">Registrieren</a>
-                                    </button>
-                                </div>
-                                <div class="col-md-2">
-                                    <c:if test="${!empty nutzer}">
-                                        <button type="button" class="btn btn-outline-primary">
-                                            <a href="/login">Login</a>
-                                        </button>
-                                    </c:if>
-                                    <c:if test="${empty nutzer}">
-                                        <button type="button" class="btn btn-outline-info">
-                                            <a href="/logout">Logout</a>
-                                        </button>
-                                    </c:if>
-                                </div>
-                            </div>
-                        </div>    
-                    </div>
+            <!-- Navigationsbereich der Anwendung-->
+            <nav class="navbar navbar-expand-sm bg-dark">
+                <a href="<c:url value="/"/>" class="navbar-brand p-0">
+                    <img class="logo p-0" src="<c:url value="/images/Logo_Placeholder.png"/>" alt="SketUla Logo"/> 
+                    <span class="brand h3">SketUla</span>
+                </a>
+                <div>
+                    <a href="<c:url value="/register"/>">
+                        <button type="button" class="btn btn-link">
+                            Registrieren
+                        </button>
+                    </a>
+                    <c:if test="${empty nutzer}">
+                        <a href="/login">
+                            <button type="button" class="btn btn-sm btn-outline-primary mr-2">
+                                Login
+                            </button>
+                        </a>
+                    </c:if>
+                    <c:if test="${!empty nutzer}">
+                        <a href="/logout">
+                            <button type="button" class="btn btn-sm btn-outline-info mr-2">
+                                Logout
+                            </button>
+                        </a>
+                    </c:if>
                 </div>
-            </div>
+            </nav>
             <jsp:invoke fragment="header"/>
         </header>
-        <main>
+        <div>
             <jsp:invoke fragment="content"/>
-        </main>
-        <footer>
-            <jsp:invoke fragment="footer"/>
-        </footer>
+        </div>
     </body>
+    <footer>
+        <jsp:invoke fragment="footer"/>
+    </footer>
 </html>
