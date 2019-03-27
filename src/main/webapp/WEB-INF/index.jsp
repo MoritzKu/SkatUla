@@ -20,7 +20,6 @@
                 <p>${detailFahrzeug.message}</p>
             </div>
         </c:if>
-        <h1>HELLO WORLD!</h1>
     </jsp:attribute>
     <jsp:attribute name="header">
         <div>
@@ -31,7 +30,7 @@
             </form>
         </div>
     </jsp:attribute>
-    <jsp:attribute name="main">
+    <jsp:attribute name="content">
         <div>Main</div>
     </jsp:attribute>
     <jsp:attribute name="footer">

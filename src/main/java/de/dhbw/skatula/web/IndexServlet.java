@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,6 +32,7 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Kunde erstellen
+        HttpSession session = request.getSession();
         Kunde k = new Kunde();
         k.setUsername("Horst");
         k.setEmail("horst@test.de");
@@ -45,6 +47,7 @@ public class IndexServlet extends HttpServlet {
             resK = kundeBean.updateKunde(k);
         }
         request.setAttribute("kunde", resK);
+        session.setAttribute("nutzer", null);
 
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
