@@ -21,7 +21,7 @@ public class KundeBean {
     
     @PersistenceContext
     EntityManager em;
-
+    
     public Response<Kunde> createNewKunde(Kunde k) {
         Response<Kunde> response = new Response<>();
         try {
@@ -37,8 +37,8 @@ public class KundeBean {
             return response;
         }
     }
-
-    public Response<Kunde> updateBankverbindung(Kunde k) {
+    
+    public Response<Kunde> updateKunde(Kunde k) {
         Response<Kunde> response = new Response<>();
         try {
             response.setResponse(em.merge(k));
@@ -53,7 +53,7 @@ public class KundeBean {
         }
     }
     
-    public Response<Kunde> findAll(){
+    public Response<Kunde> findAll() {
         Response<Kunde> response = new Response<>();
         try {
             response.setResponseList(em.createQuery("SELECT k FROM Kunde K").getResultList());
@@ -68,10 +68,10 @@ public class KundeBean {
         }
     }
     
-    public Response<Kunde> findById(String nickname){
+    public Response<Kunde> findById(Long id) {
         Response<Kunde> response = new Response<>();
         try {
-            response.setResponse(em.find(Kunde.class, nickname));
+            response.setResponse(em.find(Kunde.class, id));
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
@@ -83,7 +83,24 @@ public class KundeBean {
         }
     }
     
-    public Response<Kunde> deleteKunde(Kunde k){
+    public Response<Kunde> findByNick(String nick) {
+        Response<Kunde> response = new Response<>();
+        try {
+            response.setResponse((Kunde) em.createQuery("SELECT k FROM Kunde k WHERE k.username LIKE :NICK")
+                    .setParameter("NICK", nick).getSingleResult());
+            response.setStatus(ResponseStatus.ERFOLGREICH);
+        } catch (Exception ex) {
+            response.setStatus(ResponseStatus.ERROR);
+            response.setException(ex.getClass().getName());
+            response.setMessage(ex.getMessage());
+            response.setStackTrace(ex.getStackTrace());
+        } finally {
+            return response;
+        }
+        
+    }
+    
+    public Response<Kunde> deleteKunde(Kunde k) {
         Response<Kunde> response = new Response<>();
         try {
             em.remove(k);
@@ -100,5 +117,4 @@ public class KundeBean {
         }
     }
     
-
 }

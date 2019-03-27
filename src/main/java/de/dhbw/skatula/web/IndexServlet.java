@@ -6,6 +6,7 @@
 package de.dhbw.skatula.web;
 
 import de.dhbw.skatula.ejb.KundeBean;
+import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.Kunde;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author MoritzKuttler
  */
 @WebServlet(urlPatterns = {"/", "/index", "/index.html"}, name = "IndexServlet")
-public class IndexServlet extends HttpServlet{
+public class IndexServlet extends HttpServlet {
 
     @EJB
     protected KundeBean kundeBean;
@@ -33,10 +34,13 @@ public class IndexServlet extends HttpServlet{
         k.setUsername("Horst");
         k.setEmail("horst@test.de");
         System.out.println("Kunde vor dem schreiben: " + k);
-        Response<Kunde> resK = kundeBean.createNewKunde(k);
+        Response<Kunde> resK = kundeBean.findByNick(k.getUsername());
+        if (resK.getStatus() != ResponseStatus.ERFOLGREICH) {
+            resK = kundeBean.createNewKunde(k);
+        }
         System.out.println("Kunde nach dem Persistieren: " + resK.getResponse());
         request.setAttribute("kunde", resK);
-        
+
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
 }
