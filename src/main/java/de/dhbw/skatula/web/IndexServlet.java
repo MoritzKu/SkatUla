@@ -6,7 +6,6 @@
 package de.dhbw.skatula.web;
 
 import de.dhbw.skatula.accounthandler.ejb.KundeBean;
-import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import java.io.IOException;
@@ -16,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,23 +31,9 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Kunde erstellen
-        HttpSession session = request.getSession();
-        Kunde k = new Kunde();
-        k.setUsername("Horst");
-        k.setEmail("horst@test.de");
-        k.setVorname("Horst");
-        k.setName("Horstensen");
-        k.setPasswort("123");
-        Response<Kunde> resK = kundeBean.findByNick(k.getUsername());
-        if (resK.getStatus() != ResponseStatus.ERFOLGREICH) {
-            resK = kundeBean.createNewKunde(k);
-        } else {
-            k.setId(resK.getResponse().getId());
-            resK = kundeBean.updateKunde(k);
-        }
-        request.setAttribute("kunde", resK);
-
+        Response<Kunde> k = new Response<>();
+        k.setResponse(new Kunde());
+        request.setAttribute("kunde", k);
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
 }
