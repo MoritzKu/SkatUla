@@ -5,10 +5,10 @@
  */
 package de.dhbw.skatula.web;
 
-import de.dhbw.skatula.ejb.KundeBean;
+import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
-import de.dhbw.skatula.jpa.Kunde;
+import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -30,15 +30,20 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Kunde erstellen
         Kunde k = new Kunde();
         k.setUsername("Horst");
         k.setEmail("horst@test.de");
-        System.out.println("Kunde vor dem schreiben: " + k);
+        k.setVorname("Horst");
+        k.setName("Horstensen");
+        k.setPasswort("123");
         Response<Kunde> resK = kundeBean.findByNick(k.getUsername());
         if (resK.getStatus() != ResponseStatus.ERFOLGREICH) {
             resK = kundeBean.createNewKunde(k);
+        } else {
+            k.setId(resK.getResponse().getId());
+            resK = kundeBean.updateKunde(k);
         }
-        System.out.println("Kunde nach dem Persistieren: " + resK.getResponse());
         request.setAttribute("kunde", resK);
 
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);

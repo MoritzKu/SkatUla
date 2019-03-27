@@ -8,7 +8,7 @@
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="title"%>
-<%@attribute name="main" fragment="true"%>
+<%@attribute name="content" fragment="true"%>
 <%@attribute name="head" fragment="true"%>
 <%@attribute name="header" fragment="true"%>
 <%@attribute name="footer" fragment="true" %>
@@ -20,12 +20,16 @@
     </title>
     <head>
         <jsp:invoke fragment="head"></jsp:invoke>
-    </head>
+        </head>
     <body>
-    <jsp:invoke fragment="header"></jsp:invoke>
-    <jsp:invoke fragment="main"></jsp:invoke>
-    <jsp:invoke fragment="footer"></jsp:invoke>
+        <header>
+            <jsp:invoke fragment="header"></jsp:invoke>
+        </header>
+        <main>
+            <jsp:invoke fragment="content"></jsp:invoke>
+        </main>
+        <footer>
+            <jsp:invoke fragment="footer"></jsp:invoke>
+        </footer>
     </body>
-    
-    
 </html>

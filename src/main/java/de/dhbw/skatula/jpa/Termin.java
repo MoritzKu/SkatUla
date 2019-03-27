@@ -5,6 +5,7 @@
  */
 package de.dhbw.skatula.jpa;
 
+import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

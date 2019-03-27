@@ -5,6 +5,7 @@
  */
 package de.dhbw.skatula.jpa;
 
+import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import java.io.Serializable;
 import javax.persistence.Entity;

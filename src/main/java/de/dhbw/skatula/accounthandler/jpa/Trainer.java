@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.dhbw.skatula.jpa;
+package de.dhbw.skatula.accounthandler.jpa;
 
+import de.dhbw.skatula.jpa.Adresse;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;

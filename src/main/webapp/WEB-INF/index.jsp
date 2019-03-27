@@ -15,10 +15,21 @@
         Index
     </jsp:attribute>
     <jsp:attribute name="head">
+        <c:if test="${kunde.message != null}">
+            <div class="alert alert-danger" role="alert">
+                <p>${detailFahrzeug.message}</p>
+            </div>
+        </c:if>
         <h1>HELLO WORLD!</h1>
     </jsp:attribute>
     <jsp:attribute name="header">
-        <div>Header</div>
+        <div>
+            <form>
+                <label for="nickname">Nickname: </label>
+                <input class="form-control form-control-sm" name="nickname" value="${kunde.response.username}" required="true"
+                       type="text" readonly="true"></input>
+            </form>
+        </div>
     </jsp:attribute>
     <jsp:attribute name="main">
         <div>Main</div>
