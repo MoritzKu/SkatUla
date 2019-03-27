@@ -44,17 +44,17 @@
                                 <span class="brand h3">SketUla</span>
                             </a>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             Menu
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div class="row">
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <button type="button" class="btn btn-link">
                                     <a href="<c:url value="/register"/>">Registrieren</a>
                                     </button>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <c:if test="${!empty nutzer}">
                                         <button type="button" class="btn btn-outline-primary">
                                         <a href="/login">Login</a>
