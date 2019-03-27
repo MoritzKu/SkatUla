@@ -38,31 +38,30 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-2">
-                            <a href="<c:url value="/"/>" class="navbar-brand p-0">
-                                <img class="logo p-0" src="<c:url value="/images/Logo_Placeholder.png"/>" alt="SketUla Logo" /> 
-                                <span class="brand h3">SketUla</span>
-                            </a>
-                        </div>
-                        <div class="col-md-6">
-                            Menu
+                        <div class="col-md-8">
+                            <nav>
+                                <a href="<c:url value="/"/>" class="navbar-brand p-0">
+                                    <img class="logo p-0" src="<c:url value="/images/Logo_Placeholder.png"/>" alt="SketUla Logo"/> 
+                                    <span class="brand h3">SketUla</span>
+                                </a>
+                            </nav>
                         </div>
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-link">
-                                    <a href="<c:url value="/register"/>">Registrieren</a>
+                                        <a href="<c:url value="/register"/>">Registrieren</a>
                                     </button>
                                 </div>
                                 <div class="col-md-2">
                                     <c:if test="${!empty nutzer}">
                                         <button type="button" class="btn btn-outline-primary">
-                                        <a href="/login">Login</a>
+                                            <a href="/login">Login</a>
                                         </button>
                                     </c:if>
                                     <c:if test="${empty nutzer}">
                                         <button type="button" class="btn btn-outline-info">
-                                        <a href="/logout">Logout</a>
+                                            <a href="/logout">Logout</a>
                                         </button>
                                     </c:if>
                                 </div>

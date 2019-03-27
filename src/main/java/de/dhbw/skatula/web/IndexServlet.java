@@ -47,7 +47,6 @@ public class IndexServlet extends HttpServlet {
             resK = kundeBean.updateKunde(k);
         }
         request.setAttribute("kunde", resK);
-        session.setAttribute("nutzer", null);
 
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
