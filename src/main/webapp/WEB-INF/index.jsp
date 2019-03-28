@@ -14,24 +14,21 @@
     <jsp:attribute name="title">
         Index
     </jsp:attribute>
-    <jsp:attribute name="head">
-        <c:if test="${kunde.message != null}">
-            <div class="alert alert-info" role="success">
-                <p>${kunde.message}</p>
+    <jsp:attribute name="header">
+        <c:if test="${nutzer.message != null}">
+            <div class="alert alert-success" role="success">
+                <p>${nutzer.message}</p>
             </div>
         </c:if>
     </jsp:attribute>
-    <jsp:attribute name="header">
+    <jsp:attribute name="content">
         <div>
             <form>
                 <label for="nickname">Nickname: </label>
-                <input class="form-control form-control-sm" name="nickname" value="${kunde.response.username}" required="true"
+                <input class="form-control form-control-sm" name="nickname" value="${nutzer.response.username}" required="true"
                        type="text" readonly="true"></input>
             </form>
         </div>
-    </jsp:attribute>
-    <jsp:attribute name="content">
-        <div>Main</div>
     </jsp:attribute>
     <jsp:attribute name="footer">
         <div>Footer</div>

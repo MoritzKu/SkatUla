@@ -37,7 +37,7 @@ public class Kunde implements Serializable {
 
     private String name;
 
-    @Column(unique = true)
+//    @Column(nullable = true, unique = true)
     private String email;
 
     @OneToOne()

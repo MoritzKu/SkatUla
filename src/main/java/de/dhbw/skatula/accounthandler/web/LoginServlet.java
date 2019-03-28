@@ -71,6 +71,7 @@ public class LoginServlet extends HttpServlet {
         if (nutzertyp == 1) {
             kunde = kundeBean.findByNick(nickname);
             if (password.equals(kunde.getResponse().getPasswort())) {
+                kunde.setMessage("Sie sind erfolgreich angemeldet");
                 session.setAttribute("nutzertyp", "kunde");
             } else {
                 kunde.setResponse(null);
@@ -81,6 +82,7 @@ public class LoginServlet extends HttpServlet {
         } else if (nutzertyp == 2) {
             trainer = trainerBean.findByNick(nickname);
             if (password.equals(trainer.getResponse().getPasswort())) {
+                trainer.setMessage("Sie sind erfolgreich angemeldet");
                 session.setAttribute("nutzertyp", "trainer");
             }
             session.setAttribute("nutzer", trainer);

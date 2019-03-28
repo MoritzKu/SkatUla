@@ -74,6 +74,7 @@ public class RegisterServlet extends HttpServlet {
             k.setPasswort(password);
             kunde = kundeBean.createNewKunde(k);
             session.setAttribute("nutzer", kunde);
+            session.setAttribute("nutzertyp", "kunde");
         } else if (nutzertyp == 2) {
             Trainer t = new Trainer();
             t.setUsername(nickname);
@@ -81,6 +82,7 @@ public class RegisterServlet extends HttpServlet {
             createMitarbeiterNo(t);
             trainer = trainerBean.createNewTrainer(t);
             session.setAttribute("nutzer", trainer);
+            session.setAttribute("nutzertyp", "trainer");
         }
         response.sendRedirect(request.getContextPath() + IndexServlet.URL);
     }
