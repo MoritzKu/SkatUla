@@ -16,7 +16,7 @@
     </jsp:attribute>
     <jsp:attribute name="head">
         <c:if test="${kunde.message != null}">
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-info" role="info">
                 <p>${kunde.message}</p>
             </div>
         </c:if>
