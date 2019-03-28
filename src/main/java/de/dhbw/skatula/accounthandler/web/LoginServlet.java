@@ -5,7 +5,11 @@
  */
 package de.dhbw.skatula.accounthandler.web;
 
+import de.dhbw.skatula.accounthandler.ejb.KundeBean;
+import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
+import de.dhbw.skatula.enums.ResponseStatus;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +25,12 @@ import javax.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     public static final String URL = "login";
+    
+    @EJB
+    protected KundeBean kundeBean;
+    
+    @EJB
+    protected TrainerBean trainerBean;
     
     /**
      * Handles the HTTP <code>GET</code> method.

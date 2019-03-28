@@ -8,6 +8,7 @@ package de.dhbw.skatula.web;
 import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
+import de.dhbw.skatula.enums.ResponseStatus;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,12 +30,19 @@ public class IndexServlet extends HttpServlet {
     @EJB
     protected KundeBean kundeBean;
 
+    private ResponseStatus responseStatus;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("responseStatus") == null) {
+            session.setAttribute("responseStatus", responseStatus.values());
+        }
         Response<Kunde> k = new Response<>();
-        k.setResponse(new Kunde()); 
+        k.setResponse(new Kunde());
         k.setMessage("Funktioniert!");
+        k.setStatus(ResponseStatus.ERFOLGREICH);
         request.setAttribute("kunde", k);
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }

@@ -38,7 +38,7 @@
             <!-- Navigationsbereich der Anwendung-->
             <nav class="navbar navbar-expand-sm bg-dark">
                 <a href="<c:url value="/"/>" class="navbar-brand p-0">
-                    <img class="logo p-0" src="<c:url value="/images/Logo_Placeholder.png"/>" alt="SketUla Logo"/> 
+                    <img class="logo p-0" src="images/Logo_Placeholder.png" alt="SketUla Logo"/> 
                     <span class="brand h3">SketUla</span>
                 </a>
                 <div>
