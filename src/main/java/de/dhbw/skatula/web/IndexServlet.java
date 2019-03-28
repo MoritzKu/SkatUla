@@ -32,7 +32,8 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Response<Kunde> k = new Response<>();
-        k.setResponse(new Kunde());
+        k.setResponse(new Kunde()); 
+        k.setMessage("Funktioniert!");
         request.setAttribute("kunde", k);
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }

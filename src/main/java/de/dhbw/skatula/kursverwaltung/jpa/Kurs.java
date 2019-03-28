@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.dhbw.skatula.jpa;
+package de.dhbw.skatula.kursverwaltung.jpa;
 
-import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
-import de.dhbw.skatula.accounthandler.jpa.Kunde;
+import de.dhbw.skatula.accounthandler.jpa.Trainer;
+import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,24 +20,24 @@ import javax.persistence.OneToOne;
  * @author Benjamin Kanzler
  */
 @Entity
-public class Termin implements Serializable {
+public class Kurs implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @OneToMany()
-    @JoinColumn(name = "kunde_id", referencedColumnName = "id")
-    private List<Kunde> kunde;
-
-    private Date start;
-
-    private Date ende;
-
+    
+    private String bezeichnung;
+    
+    private int maxTeilnehmer;
+    
+    private int aktuelleTeilnehmerzahl;
+    
+    private Schwierigkeitsgrad schwierigkeitsgrad;
+    
     @OneToOne()
-    @JoinColumn(name = "kurs_id", referencedColumnName = "id")
-    private Kurs kurs;
+    @JoinColumn(name = "trainer_id", referencedColumnName = "id")
+    private Trainer trainer;
 
     public Long getId() {
         return id;
@@ -60,10 +57,10 @@ public class Termin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Termin)) {
+        if (!(object instanceof Kurs)) {
             return false;
         }
-        Termin other = (Termin) object;
+        Kurs other = (Kurs) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -72,7 +69,7 @@ public class Termin implements Serializable {
 
     @Override
     public String toString() {
-        return "de.dhbw.skatula.jpa.Termin[ id=" + id + " ]";
+        return "de.dhbw.skatula.jpa.Kurs[ id=" + id + " ]";
     }
-
+    
 }
