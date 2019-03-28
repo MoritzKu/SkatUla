@@ -8,6 +8,7 @@ package de.dhbw.skatula.accounthandler.jpa;
 import de.dhbw.skatula.jpa.Adresse;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,14 +31,20 @@ public class Trainer implements Serializable {
 
     private String vorname;
 
+    @Column(nullable = false, unique = true)
     private String mitarbeiterNr;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
     private String passwort;
+
+    @Column
+    private String email;
 
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
-
 
     public Long getId() {
         return id;
@@ -86,16 +93,34 @@ public class Trainer implements Serializable {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
-    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.name);
-        hash = 31 * hash + Objects.hashCode(this.vorname);
-        hash = 31 * hash + Objects.hashCode(this.mitarbeiterNr);
-        hash = 31 * hash + Objects.hashCode(this.passwort);
-        hash = 31 * hash + Objects.hashCode(this.adresse);
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.name);
+        hash = 47 * hash + Objects.hashCode(this.vorname);
+        hash = 47 * hash + Objects.hashCode(this.mitarbeiterNr);
+        hash = 47 * hash + Objects.hashCode(this.username);
+        hash = 47 * hash + Objects.hashCode(this.passwort);
+        hash = 47 * hash + Objects.hashCode(this.email);
+        hash = 47 * hash + Objects.hashCode(this.adresse);
         return hash;
     }
 
@@ -111,30 +136,14 @@ public class Trainer implements Serializable {
             return false;
         }
         final Trainer other = (Trainer) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.vorname, other.vorname)) {
-            return false;
-        }
-        if (!Objects.equals(this.mitarbeiterNr, other.mitarbeiterNr)) {
-            return false;
-        }
-        if (!Objects.equals(this.passwort, other.passwort)) {
-            return false;
-        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.adresse, other.adresse)) {
-            return false;
-        }
-
         return true;
     }
 
     @Override
     public String toString() {
-        return "Trainer{" + "id=" + id + ", name=" + name + ", vorname=" + vorname + ", mitarbeiterNr=" + mitarbeiterNr + ", passwort=" + passwort + ", adresse=" + adresse + '}';
+        return "Trainer{" + "id=" + id + ", name=" + name + ", vorname=" + vorname + ", mitarbeiterNr=" + mitarbeiterNr + ", username=" + username + ", passwort=" + passwort + ", email=" + email + ", adresse=" + adresse + '}';
     }
 }

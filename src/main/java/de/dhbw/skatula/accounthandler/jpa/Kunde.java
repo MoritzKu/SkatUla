@@ -30,7 +30,7 @@ public class Kunde implements Serializable {
     @Column(nullable = false, unique = true)
     private String username;
     
-    @Column()
+    @Column(nullable = false)
     private String passwort;
 
     private String vorname;

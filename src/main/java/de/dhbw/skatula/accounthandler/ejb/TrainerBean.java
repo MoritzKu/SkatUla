@@ -18,9 +18,26 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class TrainerBean {
-
+    
     @PersistenceContext
     EntityManager em;
+
+    public Response<Trainer> findByMitarbeiterNr(String mitarbeiterNr) {
+        Response<Trainer> response = new Response<>();
+        try {
+            response.setResponse((Trainer) em.createQuery("SELECT t FROM Trainer t WHERE t.mitarbeiterNr = :MITNR")
+                    .setParameter("MITNR", mitarbeiterNr)
+                    .getSingleResult());
+            response.setStatus(ResponseStatus.ERFOLGREICH);
+        } catch (Exception ex){
+            response.setStatus(ResponseStatus.ERROR);
+            response.setException(ex.getClass().getName());
+            response.setMessage(ex.getMessage());
+            response.setStackTrace(ex.getStackTrace());
+        }finally{
+            return response;
+        }
+    }
 
     public Response<Trainer> createNewBankverbindung(Trainer t) {
         Response<Trainer> response = new Response<>();
@@ -86,8 +103,8 @@ public class TrainerBean {
     public Response<Trainer> findByNick(String nickname) {
         Response<Trainer> response = new Response<>();
         try {
-            response.setResponse((Trainer) em.createQuery("SELECT t FROM Trainer t WHERE t.mitarbeiterNr = :MNR")
-                    .setParameter("MNR", nickname)
+            response.setResponse((Trainer) em.createQuery("SELECT t FROM Trainer t WHERE t.username = :NICK")
+                    .setParameter("NICK", nickname)
                     .getSingleResult());
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex){
@@ -98,6 +115,7 @@ public class TrainerBean {
         }finally{
             return response;
         }
+        
     }
 
     public Response<Trainer> deleteBankverbingung(Trainer t) {
