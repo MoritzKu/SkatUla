@@ -48,14 +48,14 @@
                         </button>
                     </a>
                     <c:if test="${empty nutzer}">
-                        <a href="/login">
+                        <a href="<c:url value="/login"/>">
                             <button type="button" class="btn btn-sm btn-outline-primary mr-2">
                                 Login
                             </button>
                         </a>
                     </c:if>
                     <c:if test="${!empty nutzer}">
-                        <a href="/logout">
+                        <a href="<c:url value="/logout"/>">
                             <button type="button" class="btn btn-sm btn-outline-info mr-2">
                                 Logout
                             </button>

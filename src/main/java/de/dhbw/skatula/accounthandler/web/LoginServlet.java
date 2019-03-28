@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
-    public static final String URL = "/login";
+    public static final String URL = "login";
     
     /**
      * Handles the HTTP <code>GET</code> method.
