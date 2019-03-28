@@ -5,11 +5,13 @@
  */
 package de.dhbw.skatula.accounthandler.web;
 
+import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
+import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -30,6 +32,9 @@ public class RegisterServlet extends HttpServlet {
 
     @EJB
     protected TrainerBean trainerBean;
+
+    @EJB
+    protected KundeBean kundeBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -67,14 +72,17 @@ public class RegisterServlet extends HttpServlet {
             Kunde k = new Kunde();
             k.setUsername(nickname);
             k.setPasswort(password);
+            kunde = kundeBean.createNewKunde(k);
             session.setAttribute("nutzer", kunde);
         } else if (nutzertyp == 2) {
             Trainer t = new Trainer();
             t.setUsername(nickname);
             t.setPasswort(password);
             createMitarbeiterNo(t);
+            trainer = trainerBean.createNewTrainer(t);
             session.setAttribute("nutzer", trainer);
         }
+        response.sendRedirect(request.getContextPath() + IndexServlet.URL);
     }
 
     private void createMitarbeiterNo(Trainer t) {

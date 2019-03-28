@@ -22,24 +22,9 @@ public class TrainerBean {
     @PersistenceContext
     EntityManager em;
 
-    public Response<Trainer> findByMitarbeiterNr(String mitarbeiterNr) {
-        Response<Trainer> response = new Response<>();
-        try {
-            response.setResponse((Trainer) em.createQuery("SELECT t FROM Trainer t WHERE t.mitarbeiterNr = :MITNR")
-                    .setParameter("MITNR", mitarbeiterNr)
-                    .getSingleResult());
-            response.setStatus(ResponseStatus.ERFOLGREICH);
-        } catch (Exception ex){
-            response.setStatus(ResponseStatus.ERROR);
-            response.setException(ex.getClass().getName());
-            response.setMessage(ex.getMessage());
-            response.setStackTrace(ex.getStackTrace());
-        }finally{
-            return response;
-        }
-    }
+    
 
-    public Response<Trainer> createNewBankverbindung(Trainer t) {
+    public Response<Trainer> createNewTrainer(Trainer t) {
         Response<Trainer> response = new Response<>();
         try {
             em.persist(t);
@@ -55,7 +40,7 @@ public class TrainerBean {
         }
     }
 
-    public Response<Trainer> updateBankverbindung(Trainer t) {
+    public Response<Trainer> updateTrainer(Trainer t) {
         Response<Trainer> response = new Response<>();
         try {
             response.setResponse(em.merge(t));
@@ -96,6 +81,22 @@ public class TrainerBean {
             response.setMessage(ex.getMessage());
             response.setStackTrace(ex.getStackTrace());
         } finally {
+            return response;
+        }
+    }
+    public Response<Trainer> findByMitarbeiterNr(String mitarbeiterNr) {
+        Response<Trainer> response = new Response<>();
+        try {
+            response.setResponse((Trainer) em.createQuery("SELECT t FROM Trainer t WHERE t.mitarbeiterNr = :MITNR")
+                    .setParameter("MITNR", mitarbeiterNr)
+                    .getSingleResult());
+            response.setStatus(ResponseStatus.ERFOLGREICH);
+        } catch (Exception ex){
+            response.setStatus(ResponseStatus.ERROR);
+            response.setException(ex.getClass().getName());
+            response.setMessage(ex.getMessage());
+            response.setStackTrace(ex.getStackTrace());
+        }finally{
             return response;
         }
     }

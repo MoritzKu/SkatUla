@@ -11,6 +11,7 @@ import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
+import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -84,5 +85,6 @@ public class LoginServlet extends HttpServlet {
             }
             session.setAttribute("nutzer", trainer);
         }
+        response.sendRedirect(request.getContextPath() + IndexServlet.URL);
     }
 }
