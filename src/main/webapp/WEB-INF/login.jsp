@@ -12,6 +12,19 @@
     <jsp:attribute name="title">Login</jsp:attribute>
     <jsp:attribute name="content">
         <form method="POST">
+            <div class="form-check-inline">
+                <label class="form-check-label" for="kunde">
+                    <input type="radio" name="nutzertyp" class="form-check-input"
+                           value="1" id="kunde" checked> Kunde
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label" for="mitarbeiter">
+                    <input type="radio" name="nutzertyp" class="form-check-input"
+                           value="2" id="mitarbeiter"> Trainer
+                </label>
+            </div>
+            <br>
             <label for="nickname">Nickname: </label>
             <input class="form-control form-control-sm" name="nickname" placeholder="username" required="true"
                    type="text"></input>

@@ -7,7 +7,9 @@ package de.dhbw.skatula.accounthandler.web;
 
 import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
-import de.dhbw.skatula.enums.ResponseStatus;
+import de.dhbw.skatula.accounthandler.jpa.Kunde;
+import de.dhbw.skatula.accounthandler.jpa.Trainer;
+import de.dhbw.skatula.helper.Response;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -25,13 +27,13 @@ import javax.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     public static final String URL = "login";
-    
+
     @EJB
     protected KundeBean kundeBean;
-    
+
     @EJB
     protected TrainerBean trainerBean;
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -58,7 +60,24 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
-    }
 
+        String nickname = request.getParameter("nickname");
+        String password = request.getParameter("password");
+        Integer nutzertyp = Integer.parseInt(request.getParameter("nutzertyp"));
+        Response<Kunde> kunde;
+        Response<Trainer> trainer;
+        if (nutzertyp == 1) {
+            kunde = kundeBean.findByNick(nickname);
+            if (password.equals(kunde.getResponse().getPasswort())){
+                session.setAttribute("nutzer", kunde);
+                session.setAttribute("nutzertyp", "kunde");
+            }
+        } else if (nutzertyp == 2) {
+            trainer = trainerBean.findByNick(nickname);
+            if(password.equals(trainer.getResponse().getPasswort())){
+                session.setAttribute("nutzer", trainer);
+                session.setAttribute("nutzertyp", "trainer");
+            }
+        }
+    }
 }

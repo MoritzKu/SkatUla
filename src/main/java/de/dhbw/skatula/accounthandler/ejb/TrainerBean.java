@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class TrainerBean {
-    
+
     @PersistenceContext
     EntityManager em;
 
@@ -52,8 +52,8 @@ public class TrainerBean {
             return response;
         }
     }
-    
-    public Response<Trainer> findAll(){
+
+    public Response<Trainer> findAll() {
         Response<Trainer> response = new Response<>();
         try {
             response.setResponseList(em.createQuery("SELECT t FROM Trainer t").getResultList());
@@ -67,8 +67,8 @@ public class TrainerBean {
             return response;
         }
     }
-    
-    public Response<Trainer> findById(Long id){
+
+    public Response<Trainer> findById(Long id) {
         Response<Trainer> response = new Response<>();
         try {
             response.setResponse(em.find(Trainer.class, id));
@@ -82,8 +82,25 @@ public class TrainerBean {
             return response;
         }
     }
-    
-    public Response<Trainer> deleteBankverbingung(Trainer t){
+
+    public Response<Trainer> findByNick(String nickname) {
+        Response<Trainer> response = new Response<>();
+        try {
+            response.setResponse((Trainer) em.createQuery("SELECT t FROM Trainer t WHERE t.mitarbeiterNr = :MNR")
+                    .setParameter("MNR", nickname)
+                    .getSingleResult());
+            response.setStatus(ResponseStatus.ERFOLGREICH);
+        } catch (Exception ex){
+            response.setStatus(ResponseStatus.ERROR);
+            response.setException(ex.getClass().getName());
+            response.setMessage(ex.getMessage());
+            response.setStackTrace(ex.getStackTrace());
+        }finally{
+            return response;
+        }
+    }
+
+    public Response<Trainer> deleteBankverbingung(Trainer t) {
         Response<Trainer> response = new Response<>();
         try {
             em.remove(t);
