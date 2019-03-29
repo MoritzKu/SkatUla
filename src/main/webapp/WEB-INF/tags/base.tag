@@ -77,7 +77,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="<c:url value="/profil"/>">
+                                        <a href="<c:url value="/accountdetail"/>">
                                             <button class="btn btn-outline-link btn-sm">    
                                                 Profil
                                             </button>
