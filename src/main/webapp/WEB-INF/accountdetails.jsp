@@ -15,10 +15,30 @@
         <form method="POST">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
+                    <span class="input-group-text">Anmeldedaten</span>
+                </div>
+                <input name="nickname" type="text" class="form-control" placeholder="Nutzername" value="${nutzer.response.username}">
+                <input name="passwort" type="password" class="form-control" value="${nutzer.response.passwort}">
+                <input name="email" type="text" class="form-control" placeholder="example@test.com" value="${nutzer.response.email}">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
                     <span class="input-group-text">Person</span>
                 </div>
-                <input name="vorname" type="text" class="form-control" placeholder="Vorname">
-                <input name="nachname" type="text" class="form-control" placeholder="Nachname">
+                <input name="vorname" type="text" class="form-control" placeholder="Vorname" value="${nutzer.response.vorname}">
+                <input name="nachname" type="text" class="form-control" placeholder="Nachname" value="${nutzer.response.name}">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Adresse</span>
+                </div>
+                <input name="strasse" type="text" class="form-control" placeholder="Straße" value="${nutzer.response.adresse.strasse}">
+                <input name="hausnr" type="text" class="form-control" placeholder="Hausnummer" value="${nutzer.response.adresse.hausnummer}">
+            </div>
+            <div class="input-group mb-3">
+                <input name="land" type="text" class="form-control" placeholder="D" value="${nutzer.response.adresse.land}">
+                <input name="plz" type="text" class="form-control" placeholder="PLZ" value="${nutzer.response.adresse.plz}">
+                <input name="ort" type="text" class="form-control" placeholder="Ort" value="${nutzer.response.adresse.ort}">
             </div>
             <button type="submit" class="btn btn-outline-primary btn-sm">
                 Speichern

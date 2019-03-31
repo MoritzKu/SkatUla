@@ -40,6 +40,8 @@ public class Adresse implements Serializable {
     private String hausnummerzusatz;
     
     private String postfach;
+    
+    private String land;
 
     public Long getId() {
         return id;
@@ -97,15 +99,25 @@ public class Adresse implements Serializable {
         this.hausnummerzusatz = hausnummerzusatz;
     }
 
+    public String getLand() {
+        return land;
+    }
+
+    public void setLand(String land) {
+        this.land = land;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 7;
         hash = 79 * hash + Objects.hashCode(this.id);
         hash = 79 * hash + Objects.hashCode(this.strasse);
         hash = 79 * hash + Objects.hashCode(this.plz);
         hash = 79 * hash + Objects.hashCode(this.ort);
-        hash = 79 * hash + Objects.hashCode(this.hausnummer);
+        hash = 79 * hash + this.hausnummer;
+        hash = 79 * hash + Objects.hashCode(this.hausnummerzusatz);
         hash = 79 * hash + Objects.hashCode(this.postfach);
+        hash = 79 * hash + Objects.hashCode(this.land);
         return hash;
     }
 
@@ -121,6 +133,9 @@ public class Adresse implements Serializable {
             return false;
         }
         final Adresse other = (Adresse) obj;
+        if (this.hausnummer != other.hausnummer) {
+            return false;
+        }
         if (!Objects.equals(this.strasse, other.strasse)) {
             return false;
         }
@@ -130,20 +145,18 @@ public class Adresse implements Serializable {
         if (!Objects.equals(this.ort, other.ort)) {
             return false;
         }
-        if (!Objects.equals(this.hausnummer, other.hausnummer)) {
+        if (!Objects.equals(this.hausnummerzusatz, other.hausnummerzusatz)) {
             return false;
         }
         if (!Objects.equals(this.postfach, other.postfach)) {
+            return false;
+        }
+        if (!Objects.equals(this.land, other.land)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Adresse{" + "id=" + id + ", strasse=" + strasse + ", plz=" + plz + ", ort=" + ort + ", hausnummer=" + hausnummer + ", postfach=" + postfach + '}';
     }
 }
