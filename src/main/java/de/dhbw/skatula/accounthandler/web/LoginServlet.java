@@ -10,6 +10,7 @@ import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.ResponseStatus;
+import de.dhbw.skatula.helper.PasswordEncryptionHelper;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class LoginServlet extends HttpServlet {
 
     @EJB
     protected TrainerBean trainerBean;
+
+    protected PasswordEncryptionHelper passwordHelper = new PasswordEncryptionHelper();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -70,15 +73,23 @@ public class LoginServlet extends HttpServlet {
         Response<Trainer> trainer;
         if (nutzertyp == 1) {
             kunde = kundeBean.findByNick(nickname);
-            if (password.equals(kunde.getResponse().getPasswort())) {
-                kunde.setMessage("Sie sind erfolgreich angemeldet");
-                session.setAttribute("nutzertyp", "kunde");
-            } else {
+            try {
+                boolean login = passwordHelper.authenticate(password, kunde.getResponse().getPasswort(), kunde.getResponse().getSalt());
+                if (login) {
+                    kunde.setMessage("Sie sind erfolgreich angemeldet");
+                    session.setAttribute("nutzertyp", "kunde");
+                } else {
+                    kunde.setResponse(null);
+                    kunde.setStatus(ResponseStatus.ERROR);
+                    kunde.setMessage("Das Passwort stimmt nicht mit dem Nutzer überein");
+                }
+            } catch (Exception e) {
                 kunde.setResponse(null);
                 kunde.setStatus(ResponseStatus.ERROR);
-                kunde.setMessage("Das Passwort stimmt nicht mit dem Nutzer überein");
+                kunde.setMessage("Bei der Überprüfung des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+            } finally {
+                session.setAttribute("nutzer", kunde);
             }
-            session.setAttribute("nutzer", kunde);
         } else if (nutzertyp == 2) {
             trainer = trainerBean.findByNick(nickname);
             if (password.equals(trainer.getResponse().getPasswort())) {

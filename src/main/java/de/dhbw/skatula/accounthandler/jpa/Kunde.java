@@ -7,6 +7,7 @@ package de.dhbw.skatula.accounthandler.jpa;
 
 import de.dhbw.skatula.jpa.Adresse;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +32,10 @@ public class Kunde implements Serializable {
     private String username;
     
     @Column(nullable = false)
-    private String passwort;
+    private byte[] passwort;
+    
+    @Column(nullable = false)
+    private byte[] salt;
 
     private String vorname;
 
@@ -92,24 +96,33 @@ public class Kunde implements Serializable {
         this.adresse = adresse;
     }
 
-    public String getPasswort() {
+    public byte[] getPasswort() {
         return passwort;
     }
 
-    public void setPasswort(String passwort) {
+    public void setPasswort(byte[] passwort) {
         this.passwort = passwort;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.username);
-        hash = 37 * hash + Objects.hashCode(this.passwort);
-        hash = 37 * hash + Objects.hashCode(this.vorname);
-        hash = 37 * hash + Objects.hashCode(this.name);
-        hash = 37 * hash + Objects.hashCode(this.email);
-        hash = 37 * hash + Objects.hashCode(this.adresse);
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.username);
+        hash = 67 * hash + Arrays.hashCode(this.passwort);
+        hash = 67 * hash + Arrays.hashCode(this.salt);
+        hash = 67 * hash + Objects.hashCode(this.vorname);
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.email);
+        hash = 67 * hash + Objects.hashCode(this.adresse);
         return hash;
     }
 
@@ -133,7 +146,7 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return "Kunde{" + "id=" + id + ", username=" + username + ", passwort=" + passwort + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
+        return "Kunde{" + "id=" + id + ", username=" + username + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
     }
     
 }

@@ -10,9 +10,12 @@ import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.ResponseStatus;
+import de.dhbw.skatula.helper.PasswordEncryptionHelper;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -68,21 +71,37 @@ public class RegisterServlet extends HttpServlet {
         Integer nutzertyp = Integer.parseInt(request.getParameter("nutzertyp"));
         Response<Kunde> kunde = new Response<>();
         Response<Trainer> trainer = new Response<>();
+        PasswordEncryptionHelper passwordHelper = new PasswordEncryptionHelper();
         if (nutzertyp == 1) {
+
             Kunde k = new Kunde();
             k.setUsername(nickname);
-            k.setPasswort(password);
-            kunde = kundeBean.createNewKunde(k);
-            session.setAttribute("nutzer", kunde);
-            session.setAttribute("nutzertyp", "kunde");
+            try {
+                k.setSalt(passwordHelper.generateSalt());
+                k.setPasswort(passwordHelper.getEncryptedPassword(password, k.getSalt()));
+            } catch (Exception e) {
+                k = null;
+            }
+            if (k != null) {
+                kunde = kundeBean.createNewKunde(k);
+                session.setAttribute("nutzer", kunde);
+                session.setAttribute("nutzertyp", "kunde");
+            }
         } else if (nutzertyp == 2) {
             Trainer t = new Trainer();
             t.setUsername(nickname);
-            t.setPasswort(password);
-            createMitarbeiterNo(t);
-            trainer = trainerBean.createNewTrainer(t);
-            session.setAttribute("nutzer", trainer);
-            session.setAttribute("nutzertyp", "trainer");
+            try {
+                t.setSalt(passwordHelper.generateSalt());
+                t.setPasswort(passwordHelper.getEncryptedPassword(password, t.getSalt()));
+            } catch (Exception e) {
+                t = null;
+            }
+            if (t != null) {
+                createMitarbeiterNo(t);
+                trainer = trainerBean.createNewTrainer(t);
+                session.setAttribute("nutzer", trainer);
+                session.setAttribute("nutzertyp", "trainer");
+            }
         }
         response.sendRedirect(request.getContextPath() + IndexServlet.URL);
     }
