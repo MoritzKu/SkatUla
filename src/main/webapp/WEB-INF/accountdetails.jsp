@@ -18,7 +18,7 @@
                     <span class="input-group-text">Anmeldedaten</span>
                 </div>
                 <input name="nickname" type="text" class="form-control" placeholder="Nutzername" value="${nutzer.response.username}">
-                <input name="passwort" type="password" class="form-control" value="${nutzer.response.passwort}">
+                <input name="passwort" type="password" class="form-control" value="${nutzer.response.passwort}" readonly="true">
                 <input name="email" type="text" class="form-control" placeholder="example@test.com" value="${nutzer.response.email}">
             </div>
             <div class="input-group mb-3">
