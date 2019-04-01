@@ -38,8 +38,8 @@
             <!-- Navigationsbereich der Anwendung-->
             <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
                 <a href="<c:url value="/"/>" class="navbar-brand p-0">
-                    <img class="logo p-0 rounded-circle" src="images/Logo_Placeholder.png" alt="SketUla Logo"/> 
-                    <span class="brand h3">SketUla</span>
+                    <img class="logo p-0 rounded-circle" style="max-width:50px" src="images/Logo_Placeholder.png" alt="SketUla Logo"/> 
+                    <span class="brand h3">SkatUla</span>
                 </a>
                 <div class="">
                     <form class="form-inline" action="/action_page.php">
