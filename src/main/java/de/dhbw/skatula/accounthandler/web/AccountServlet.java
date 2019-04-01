@@ -7,6 +7,10 @@ package de.dhbw.skatula.accounthandler.web;
 
 import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
+import de.dhbw.skatula.accounthandler.jpa.Kunde;
+import de.dhbw.skatula.accounthandler.jpa.Trainer;
+import de.dhbw.skatula.helper.Response;
+import de.dhbw.skatula.jpa.Adresse;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,13 +26,15 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/accountdetail"}, name = "AccountServlet")
 public class AccountServlet extends HttpServlet {
+
+    public final static String URL = "accoutdetail";
     
     @EJB
     protected KundeBean kundeBean;
-    
+
     @EJB
     protected TrainerBean trainerBean;
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,8 +61,50 @@ public class AccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        if (session.getAttribute("nutzertyp") == "kunde") {
+            Response<Kunde> resKunde = (Response<Kunde>) session.getAttribute("nutzer");
+            Kunde kunde = new Kunde();
+            kunde.setName((String) request.getAttribute("nachname"));
+            kunde.setVorname((String) request.getAttribute("vorname"));
+            kunde.setEmail((String) request.getAttribute("email"));
+
+            Adresse adresse = new Adresse();
+            adresse.setHausnummer(Integer.parseInt((String) request.getAttribute("hausnr")));
+            adresse.setStrasse((String) request.getAttribute("strasse"));
+            adresse.setLand((String) request.getAttribute("land"));
+            adresse.setOrt((String) request.getAttribute("ort"));
+            adresse.setPlz((String) request.getAttribute("plz"));
+
+            kunde.setAdresse(adresse);
+            kunde.setId(resKunde.getResponse().getId());
+            kunde.setUsername(resKunde.getResponse().getUsername());
+            kunde.setPasswort(resKunde.getResponse().getPasswort());
+            
+            session.setAttribute("nutzer", kundeBean.updateKunde(kunde));
+            
+        } else if (session.getAttribute("nutzertyp") == "trainer") {
+            Response<Trainer> resTrainer = (Response<Trainer>) session.getAttribute("nutzer");
+            Trainer trainer = new Trainer();
+            trainer.setName((String) request.getAttribute("nachname"));
+            trainer.setVorname((String) request.getAttribute("vorname"));
+            trainer.setEmail((String) request.getAttribute("email"));
+
+            Adresse adresse = new Adresse();
+            adresse.setHausnummer(Integer.parseInt((String) request.getAttribute("hausnr")));
+            adresse.setStrasse((String) request.getAttribute("strasse"));
+            adresse.setLand((String) request.getAttribute("land"));
+            adresse.setOrt((String) request.getAttribute("ort"));
+            adresse.setPlz((String) request.getAttribute("plz"));
+
+            trainer.setAdresse(adresse);
+            trainer.setId(resTrainer.getResponse().getId());
+            trainer.setUsername(resTrainer.getResponse().getUsername());
+            trainer.setPasswort(resTrainer.getResponse().getPasswort());
+            
+            session.setAttribute("nutzer", trainerBean.updateTrainer(trainer));
         
-        
+        }
+        request.getRequestDispatcher("WEB-INF/accountdetails.jsp").forward(request, response);
     }
-    
+
 }
