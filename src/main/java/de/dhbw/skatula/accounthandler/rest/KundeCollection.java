@@ -23,20 +23,19 @@ import javax.ws.rs.Produces;
  * @author Benjamin Kanzler
  */
 @Stateless
-@Path("accountdetailsKundeWS/{nutzerId}/")
+@Path("accountdetailsKundeWS/")
 @Consumes({"application/json", "text/xml"})
 @Produces({"application/json", "text/xml"})
-public class AccountDetailsKundeWS {
+public class KundeCollection {
 
     @EJB
     protected KundeBean kundeBean;
 
     @GET
-    public Response<Kunde> getKunde(@PathParam("nutzerId") String nutzerId) {
+    public Response<Kunde> getKunde() {
         Response<Kunde> resKunde = new Response<>();
         try {
-            System.out.println("Die Id für den Kunden ist: " + nutzerId);
-            resKunde = kundeBean.findById(Long.parseLong(nutzerId));
+            resKunde = kundeBean.findAll();
             resKunde.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             resKunde.setStatus(ResponseStatus.ERROR);
@@ -46,10 +45,5 @@ public class AccountDetailsKundeWS {
         } finally {
             return resKunde;
         }
-    }
-
-    @PUT
-    public Response<Kunde> updateKunde(Kunde kunde) {
-        return kundeBean.updateKunde(kunde);
     }
 }
