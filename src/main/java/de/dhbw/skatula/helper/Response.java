@@ -7,6 +7,7 @@ package de.dhbw.skatula.helper;
 
 import de.dhbw.skatula.enums.ResponseStatus;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Diese Klasse soll alle Daten sammeln, die bei einer Datenbankabfrage erhoben
@@ -14,6 +15,7 @@ import java.util.List;
  *
  * @author Benjamin Kanzler
  */
+@XmlRootElement
 public class Response<E> {
 
     private List<E> responseList;

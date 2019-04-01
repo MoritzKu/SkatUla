@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author MoritzKuttler
  */
-@WebServlet(urlPatterns = {"/", "/index", "/index.html"}, name = "IndexServlet")
+@WebServlet(urlPatterns = {"/index", "/index.html"}, name = "IndexServlet")
 public class IndexServlet extends HttpServlet {
 
     public static final String URL = "/";
