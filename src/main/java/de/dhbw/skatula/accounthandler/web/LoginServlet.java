@@ -92,9 +92,22 @@ public class LoginServlet extends HttpServlet {
             }
         } else if (nutzertyp == 2) {
             trainer = trainerBean.findByNick(nickname);
-            if (password.equals(trainer.getResponse().getPasswort())) {
-                trainer.setMessage("Sie sind erfolgreich angemeldet");
-                session.setAttribute("nutzertyp", "trainer");
+            try {
+                boolean login = passwordHelper.authenticate(password, trainer.getResponse().getPasswort(), trainer.getResponse().getSalt());
+                if (login) {
+                    trainer.setMessage("Sie sind erfolgreich angemeldet");
+                    session.setAttribute("nutzertyp", "kunde");
+                } else {
+                    trainer.setResponse(null);
+                    trainer.setStatus(ResponseStatus.ERROR);
+                    trainer.setMessage("Das Passwort stimmt nicht mit dem Nutzer überein");
+                }
+            } catch (Exception e) {
+                trainer.setResponse(null);
+                trainer.setStatus(ResponseStatus.ERROR);
+                trainer.setMessage("Bei der Überprüfung des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+            } finally {
+                session.setAttribute("nutzer", trainer);
             }
             session.setAttribute("nutzer", trainer);
         }
