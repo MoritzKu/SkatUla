@@ -5,8 +5,8 @@
  */
 package de.dhbw.skatula.accounthandler.rest;
 
-import de.dhbw.skatula.accounthandler.ejb.KundeBean;
-import de.dhbw.skatula.accounthandler.jpa.Kunde;
+import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
+import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.helper.Response;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -20,16 +20,16 @@ import javax.ws.rs.Produces;
  * @author Benjamin Kanzler
  */
 @Stateless
-@Path("accountdetailsKundeWS/")
+@Path("accountdetailsTrainerWS/")
 @Consumes({"application/json", "text/xml"})
 @Produces({"application/json", "text/xml"})
-public class KundeCollection {
+public class TrainerCollection {
 
     @EJB
-    protected KundeBean kundeBean;
+    protected TrainerBean trainerBean;
 
     @GET
-    public Response<Kunde> getKunde() {
-        return kundeBean.findAll();
+    public Response<Trainer> getTrainer() {
+        return trainerBean.findAll();
     }
 }
