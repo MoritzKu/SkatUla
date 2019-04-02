@@ -3,6 +3,7 @@
     Created on : 29.03.2019, 11:59:50
     Author     : Benjamin Kanzler
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib tagdir="/WEB-INF/tags/" prefix="template" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,6 +19,11 @@
                     <span class="input-group-text">Anmeldedaten</span>
                 </div>
                 <input name="nickname" type="text" class="form-control" placeholder="Nutzername" value="${nutzer.response.username}">
+                <div>
+                    <a href="<c:url value="/changePassword"/>">
+                        <span class="input-group-prepend">Passwort ändern</span>
+                    </a>
+                </div>
                 <input name="passwort" type="password" class="form-control" value="${nutzer.response.passwort}" readonly="true">
                 <input name="email" type="text" class="form-control" placeholder="example@test.com" value="${nutzer.response.email}">
             </div>
