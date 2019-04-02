@@ -78,6 +78,7 @@ public class ChangePasswordServlet extends HttpServlet {
                 if (passwordHelper.authenticate(request.getParameter("oldPassword"), kunde.getResponse().getPasswort(), salt)) {
                     if (passwordHelper.authenticate(newPasswordConfirmed, newPassword, salt)) {
                         kunde.getResponse().setPasswort(newPassword);
+                        kunde.setStatus(ResponseStatus.ERFOLGREICH);
                     } else {
                         kunde.setStatus(ResponseStatus.ERROR);
                         kunde.setMessage("Die Passwörter stimmem nicht überein");
@@ -87,7 +88,8 @@ public class ChangePasswordServlet extends HttpServlet {
                     kunde.setMessage("Das eingegebne alte Passwort war nicht korrekt");
                 }
             } catch (Exception e) {
-                
+                    kunde.setStatus(ResponseStatus.ERROR);
+                    kunde.setMessage("Beim verarbeiten des Passworts ist ein Fehler aufgetreten");
             }
             if (kunde.getStatus() == ResponseStatus.ERFOLGREICH) {
                 kunde = kundeBean.updateKunde(kunde.getResponse());
@@ -113,14 +115,14 @@ public class ChangePasswordServlet extends HttpServlet {
                     trainer.setMessage("Das eingegebne alte Passwort war nicht korrekt");
                 }
             } catch (Exception e) {
-
+                    trainer.setStatus(ResponseStatus.ERROR);
+                    trainer.setMessage("Beim verarbeiten des Passworts ist ein Fehler aufgetreten");
             }
             if (trainer.getStatus() == ResponseStatus.ERFOLGREICH) {
                 trainer = trainerBean.updateTrainer(trainer.getResponse());
                 session.setAttribute("nutzer", trainer);
                 session.setAttribute("nutzertyp", "trainer");
             }
-            
         }
         response.sendRedirect(request.getContextPath() + AccountServlet.URL);
     }

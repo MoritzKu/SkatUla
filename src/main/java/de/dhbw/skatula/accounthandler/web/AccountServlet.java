@@ -9,6 +9,7 @@ import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
+import de.dhbw.skatula.ejb.AdresseBean;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.Adresse;
 import java.io.IOException;
@@ -27,13 +28,16 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/accountdetail"}, name = "AccountServlet")
 public class AccountServlet extends HttpServlet {
 
-    public final static String URL = "accoutdetail";
-    
+    public final static String URL = "/accountdetail";
+
     @EJB
     protected KundeBean kundeBean;
 
     @EJB
     protected TrainerBean trainerBean;
+    
+    @EJB
+    protected AdresseBean adresseBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -62,47 +66,60 @@ public class AccountServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("nutzertyp") == "kunde") {
-            Response<Kunde> resKunde = (Response<Kunde>) session.getAttribute("nutzer");
-            Kunde kunde = new Kunde();
-            kunde.setName((String) request.getAttribute("nachname"));
-            kunde.setVorname((String) request.getAttribute("vorname"));
-            kunde.setEmail((String) request.getAttribute("email"));
-
-            Adresse adresse = new Adresse();
-            adresse.setHausnummer(Integer.parseInt((String) request.getAttribute("hausnr")));
-            adresse.setStrasse((String) request.getAttribute("strasse"));
-            adresse.setLand((String) request.getAttribute("land"));
-            adresse.setOrt((String) request.getAttribute("ort"));
-            adresse.setPlz((String) request.getAttribute("plz"));
-
-            kunde.setAdresse(adresse);
-            kunde.setId(resKunde.getResponse().getId());
-            kunde.setUsername(resKunde.getResponse().getUsername());
-            kunde.setPasswort(resKunde.getResponse().getPasswort());
+            //Kunde aus der Session lesen
+            Response<Kunde> kunde = (Response<Kunde>) session.getAttribute("nutzer");
             
-            session.setAttribute("nutzer", kundeBean.updateKunde(kunde));
+            kunde.getResponse().setName(request.getParameter("nachname"));
+            kunde.getResponse().setVorname(request.getParameter("vorname"));
+            kunde.getResponse().setEmail(request.getParameter("email"));
             
+            System.out.println(request.getParameter("hausnr"));
+            kunde.getResponse().getAdresse().setHausnummer(Integer.parseInt(request.getParameter("hausnr")));
+            if(kunde.getResponse().getAdresse() == null){
+                kunde.getResponse().setAdresse(new Adresse());
+            }
+            kunde.getResponse().getAdresse().setStrasse(request.getParameter("strasse"));
+            kunde.getResponse().getAdresse().setLand(request.getParameter("land"));
+            kunde.getResponse().getAdresse().setOrt(request.getParameter("ort"));
+            kunde.getResponse().getAdresse().setPlz(request.getParameter("plz"));
+
+            if(kunde.getResponse().getAdresse().getId() == null){
+                kunde.getResponse().setAdresse(adresseBean.createNewAdresse(kunde.getResponse().getAdresse()).getResponse());
+            } else {
+                kunde.getResponse().setAdresse(adresseBean.updateAdresse(kunde.getResponse().getAdresse()).getResponse());
+            }
+
+            System.out.println(kunde);
+            
+            session.setAttribute("nutzer", kundeBean.updateKunde(kunde.getResponse()));
+
         } else if (session.getAttribute("nutzertyp") == "trainer") {
-            Response<Trainer> resTrainer = (Response<Trainer>) session.getAttribute("nutzer");
-            Trainer trainer = new Trainer();
-            trainer.setName((String) request.getAttribute("nachname"));
-            trainer.setVorname((String) request.getAttribute("vorname"));
-            trainer.setEmail((String) request.getAttribute("email"));
-
-            Adresse adresse = new Adresse();
-            adresse.setHausnummer(Integer.parseInt((String) request.getAttribute("hausnr")));
-            adresse.setStrasse((String) request.getAttribute("strasse"));
-            adresse.setLand((String) request.getAttribute("land"));
-            adresse.setOrt((String) request.getAttribute("ort"));
-            adresse.setPlz((String) request.getAttribute("plz"));
-
-            trainer.setAdresse(adresse);
-            trainer.setId(resTrainer.getResponse().getId());
-            trainer.setUsername(resTrainer.getResponse().getUsername());
-            trainer.setPasswort(resTrainer.getResponse().getPasswort());
+            Response<Trainer> trainer = (Response<Trainer>) session.getAttribute("nutzer");
             
-            session.setAttribute("nutzer", trainerBean.updateTrainer(trainer));
-        
+            trainer.getResponse().setName(request.getParameter("nachname"));
+            trainer.getResponse().setVorname(request.getParameter("vorname"));
+            trainer.getResponse().setEmail(request.getParameter("email"));
+            
+            if(trainer.getResponse().getAdresse() == null){
+                trainer.getResponse().setAdresse(new Adresse());
+            }
+            
+            trainer.getResponse().getAdresse().setHausnummer(Integer.parseInt(request.getParameter("hausnr")));
+            trainer.getResponse().getAdresse().setStrasse(request.getParameter("strasse"));
+            trainer.getResponse().getAdresse().setLand(request.getParameter("land"));
+            trainer.getResponse().getAdresse().setOrt(request.getParameter("ort"));
+            trainer.getResponse().getAdresse().setPlz(request.getParameter("plz"));
+
+            if(trainer.getResponse().getAdresse().getId() == null){
+                trainer.getResponse().setAdresse(adresseBean.createNewAdresse(trainer.getResponse().getAdresse()).getResponse());
+            } else {
+                trainer.getResponse().setAdresse(adresseBean.updateAdresse(trainer.getResponse().getAdresse()).getResponse());
+            }
+            
+            System.out.println(trainer);
+            
+            session.setAttribute("nutzer", trainerBean.updateTrainer(trainer.getResponse()));
+
         }
         request.getRequestDispatcher("WEB-INF/accountdetails.jsp").forward(request, response);
     }

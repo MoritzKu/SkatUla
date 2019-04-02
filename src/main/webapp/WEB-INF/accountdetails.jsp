@@ -39,7 +39,7 @@
                     <span class="input-group-text">Adresse</span>
                 </div>
                 <input name="strasse" type="text" class="form-control" placeholder="Straße" value="${nutzer.response.adresse.strasse}">
-                <input name="hausnr" type="text" class="form-control" placeholder="Hausnummer" value="${nutzer.response.adresse.hausnummer}">
+                <input name="hausnr" type="number" class="form-control" placeholder="Hausnummer" value="${nutzer.response.adresse.hausnummer}">
             </div>
             <div class="input-group mb-3">
                 <input name="land" type="text" class="form-control" placeholder="D" value="${nutzer.response.adresse.land}">
