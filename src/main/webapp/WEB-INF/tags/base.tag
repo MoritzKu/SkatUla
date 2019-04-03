@@ -47,7 +47,13 @@
                         <button class="btn btn-success" type="submit">
                             Suchen
                         </button>
+                         <a href="<c:url value="/register"/>">
+                                <button type="button" class="btn btn-success">
+                                    Kurse
+                                </button>
+                            </a>
                     </form>
+                    
                     <div class="justify-content-center">
                         <c:if test="${empty nutzer}">
                             <a href="<c:url value="/register"/>">
