@@ -68,58 +68,46 @@ public class AccountServlet extends HttpServlet {
         if (session.getAttribute("nutzertyp") == "kunde") {
             //Kunde aus der Session lesen
             Response<Kunde> kunde = (Response<Kunde>) session.getAttribute("nutzer");
-            
+            //Setzen der Attribute auf dem Kunden
             kunde.getResponse().setName(request.getParameter("nachname"));
             kunde.getResponse().setVorname(request.getParameter("vorname"));
             kunde.getResponse().setEmail(request.getParameter("email"));
-            
-            System.out.println(request.getParameter("hausnr"));
             kunde.getResponse().getAdresse().setHausnummer(Integer.parseInt(request.getParameter("hausnr")));
+            //Adresse-Objekt erzeugen, falls noch keine Adresse am Kunden hängt
             if(kunde.getResponse().getAdresse() == null){
                 kunde.getResponse().setAdresse(new Adresse());
             }
+            
             kunde.getResponse().getAdresse().setStrasse(request.getParameter("strasse"));
             kunde.getResponse().getAdresse().setLand(request.getParameter("land"));
             kunde.getResponse().getAdresse().setOrt(request.getParameter("ort"));
             kunde.getResponse().getAdresse().setPlz(request.getParameter("plz"));
-
             if(kunde.getResponse().getAdresse().getId() == null){
                 kunde.getResponse().setAdresse(adresseBean.createNewAdresse(kunde.getResponse().getAdresse()).getResponse());
             } else {
                 kunde.getResponse().setAdresse(adresseBean.updateAdresse(kunde.getResponse().getAdresse()).getResponse());
             }
-
-            System.out.println(kunde);
-            
             session.setAttribute("nutzer", kundeBean.updateKunde(kunde.getResponse()));
 
         } else if (session.getAttribute("nutzertyp") == "trainer") {
             Response<Trainer> trainer = (Response<Trainer>) session.getAttribute("nutzer");
-            
             trainer.getResponse().setName(request.getParameter("nachname"));
             trainer.getResponse().setVorname(request.getParameter("vorname"));
             trainer.getResponse().setEmail(request.getParameter("email"));
-            
             if(trainer.getResponse().getAdresse() == null){
                 trainer.getResponse().setAdresse(new Adresse());
             }
-            
             trainer.getResponse().getAdresse().setHausnummer(Integer.parseInt(request.getParameter("hausnr")));
             trainer.getResponse().getAdresse().setStrasse(request.getParameter("strasse"));
             trainer.getResponse().getAdresse().setLand(request.getParameter("land"));
             trainer.getResponse().getAdresse().setOrt(request.getParameter("ort"));
             trainer.getResponse().getAdresse().setPlz(request.getParameter("plz"));
-
             if(trainer.getResponse().getAdresse().getId() == null){
                 trainer.getResponse().setAdresse(adresseBean.createNewAdresse(trainer.getResponse().getAdresse()).getResponse());
             } else {
                 trainer.getResponse().setAdresse(adresseBean.updateAdresse(trainer.getResponse().getAdresse()).getResponse());
             }
-            
-            System.out.println(trainer);
-            
             session.setAttribute("nutzer", trainerBean.updateTrainer(trainer.getResponse()));
-
         }
         request.getRequestDispatcher("WEB-INF/accountdetails.jsp").forward(request, response);
     }
