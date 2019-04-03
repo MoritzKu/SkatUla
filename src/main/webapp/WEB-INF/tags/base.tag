@@ -20,6 +20,9 @@
         SkatUla | ${title}
     </title>
     <head>
+        <!--Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+        
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
