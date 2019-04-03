@@ -20,6 +20,9 @@
         SkatUla | ${title}
     </title>
     <head>
+        <!-- CSS einbinden -->
+        <link rel="stylesheet" href="style.css">
+        
         <!--Favicon -->
         <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
         
@@ -35,6 +38,13 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
         <jsp:invoke fragment="head"/>
+        <!--Versuch ein Hintergrundbild einzubauen -->
+        <style type="text/css">
+            body{
+                background: url(WEB-INF/tags/hintergrund.jpg) no-repeat fixed;
+            }
+        </style>
+    
     </head>
     <body>
         <header>
@@ -47,17 +57,15 @@
                 <div class="">
                     <form class="form-inline" action="/action_page.php">
                         <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                        <button class="btn btn-success" type="submit">
+                        <button class="btn btn-success" style="margin:5px;" type="submit">
                             Suchen
                         </button>
                          <a href="<c:url value="/register"/>">
                                 <button type="button" class="btn btn-success">
                                     Kurse
                                 </button>
-                            </a>
-                    </form>
-                    
-                    <div class="justify-content-center">
+                         </a>
+                                                    <div class="justify-content-center">
                         <c:if test="${empty nutzer}">
                             <a href="<c:url value="/register"/>">
                                 <button type="button" class="btn btn-link">
@@ -96,6 +104,9 @@
                             </div>
                         </c:if>
                     </div>
+                    </form>
+                    
+
                 </div>
             </nav>
             <jsp:invoke fragment="header"/>
