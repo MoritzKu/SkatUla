@@ -89,8 +89,9 @@ public class LoginServlet extends HttpServlet {
                 kunde.setResponse(null);
                 kunde.setStatus(ResponseStatus.ERROR);
                 kunde.setMessage("Bei der Überprüfung des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
-                    url = LoginServlet.URL;
+                url = LoginServlet.URL;
             } finally {
+                log("Sie haben sich als Kunde angemeldet: " + kunde.getResponse());
                 session.setAttribute("nutzer", kunde);
             }
         } else if (nutzertyp == 2) {
@@ -111,11 +112,11 @@ public class LoginServlet extends HttpServlet {
                 trainer.setResponse(null);
                 trainer.setStatus(ResponseStatus.ERROR);
                 trainer.setMessage("Bei der Überprüfung des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
-                    url = LoginServlet.URL;
+                url = LoginServlet.URL;
             } finally {
                 session.setAttribute("nutzer", trainer);
+                log("Sie haben sich als Trainer angemeldet: " + trainer);
             }
-            session.setAttribute("nutzer", trainer);
         }
         response.sendRedirect(request.getContextPath() + url);
     }
