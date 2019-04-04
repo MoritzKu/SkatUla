@@ -88,14 +88,14 @@
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
                                         <a href="<c:url value="/logout"/>">
-                                            <button class="btn btn-outline-link btn-sm">    
+                                            <button class="btn btn-link btn-sm">    
                                                 Logout
                                             </button>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="<c:url value="/accountdetails"/>">
-                                            <button class="btn btn-outline-link btn-sm">    
+                                            <button class="btn btn-link btn-sm">    
                                                 Profil
                                             </button>
                                         </a>
