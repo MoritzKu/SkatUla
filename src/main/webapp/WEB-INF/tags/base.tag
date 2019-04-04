@@ -60,8 +60,8 @@
                     <button class="btn btn-success" style="margin:5px;" type="submit">
                         Suchen
                     </button>
-                    <a href="<c:url value="/register"/>">
-                        <button type="button" class="btn btn-success">
+                    <a href="<c:url value="/kursuebersicht"/>">
+                        <button type="button" class="btn btn-outline-primary">
                             Kurse
                         </button>
                     </a>

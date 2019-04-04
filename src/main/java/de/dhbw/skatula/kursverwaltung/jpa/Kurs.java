@@ -47,29 +47,52 @@ public class Kurs implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public String getBezeichnung() {
+        return bezeichnung;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Kurs)) {
-            return false;
-        }
-        Kurs other = (Kurs) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
+
+    public int getMaxTeilnehmer() {
+        return maxTeilnehmer;
+    }
+
+    public void setMaxTeilnehmer(int maxTeilnehmer) {
+        this.maxTeilnehmer = maxTeilnehmer;
+    }
+
+    public int getAktuelleTeilnehmerzahl() {
+        return aktuelleTeilnehmerzahl;
+    }
+
+    public void setAktuelleTeilnehmerzahl(int aktuelleTeilnehmerzahl) {
+        this.aktuelleTeilnehmerzahl = aktuelleTeilnehmerzahl;
+    }
+
+    public Schwierigkeitsgrad getSchwierigkeitsgrad() {
+        return schwierigkeitsgrad;
+    }
+
+    public void setSchwierigkeitsgrad(Schwierigkeitsgrad schwierigkeitsgrad) {
+        this.schwierigkeitsgrad = schwierigkeitsgrad;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 
     @Override
     public String toString() {
-        return "de.dhbw.skatula.jpa.Kurs[ id=" + id + " ]";
+        return "Kurs{" + "id=" + id + ", bezeichnung=" + bezeichnung + ", maxTeilnehmer=" + maxTeilnehmer + ", aktuelleTeilnehmerzahl=" + aktuelleTeilnehmerzahl + ", schwierigkeitsgrad=" + schwierigkeitsgrad + ", trainer=" + trainer + '}';
     }
+
+    
+    
     
 }

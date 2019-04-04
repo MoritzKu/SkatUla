@@ -22,7 +22,7 @@ public class KursBean {
     @PersistenceContext
     EntityManager em;
 
-    public Response<Kurs> createNewBankverbindung(Kurs k) {
+    public Response<Kurs> createNewKurs(Kurs k) {
         Response<Kurs> response = new Response<>();
         try {
             em.persist(k);
@@ -38,7 +38,7 @@ public class KursBean {
         }
     }
 
-    public Response<Kurs> updateBankverbindung(Kurs k) {
+    public Response<Kurs> updateKurs(Kurs k) {
         Response<Kurs> response = new Response<>();
         try {
             response.setResponse(em.merge(k));
@@ -83,7 +83,7 @@ public class KursBean {
         }
     }
     
-    public Response<Kurs> deleteBankverbingung(Kurs k){
+    public Response<Kurs> deleteKurs(Kurs k){
         Response<Kurs> response = new Response<>();
         try {
             em.remove(k);
