@@ -66,7 +66,7 @@
                                 </button>
                          </a>
                                                     <div class="justify-content-center">
-                        <c:if test="${empty nutzer}">
+                        <c:if test="${empty nutzer || nutzer.response == null}">
                             <a href="<c:url value="/register"/>">
                                 <button type="button" class="btn btn-link">
                                     Registrieren
@@ -78,7 +78,7 @@
                                 </button>
                             </a>
                         </c:if>
-                        <c:if test="${!empty nutzer}">
+                        <c:if test="${!empty nutzer && nutzer.response != null}">
                             <!-- Toggler/collapsibe Button -->
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 
