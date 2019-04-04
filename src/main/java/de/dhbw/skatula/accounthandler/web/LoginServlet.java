@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
-    public static final String URL = "login";
+    public static final String URL = "/login";
 
     @EJB
     protected KundeBean kundeBean;
@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-
+        String url = "";
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
         Integer nutzertyp = Integer.parseInt(request.getParameter("nutzertyp"));
@@ -78,15 +78,18 @@ public class LoginServlet extends HttpServlet {
                 if (login) {
                     kunde.setMessage("Sie sind erfolgreich angemeldet");
                     session.setAttribute("nutzertyp", "kunde");
+                    url = IndexServlet.URL;
                 } else {
                     kunde.setResponse(null);
                     kunde.setStatus(ResponseStatus.ERROR);
                     kunde.setMessage("Das Passwort stimmt nicht mit dem Nutzer überein");
+                    url = LoginServlet.URL;
                 }
             } catch (Exception e) {
                 kunde.setResponse(null);
                 kunde.setStatus(ResponseStatus.ERROR);
                 kunde.setMessage("Bei der Überprüfung des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+                    url = LoginServlet.URL;
             } finally {
                 session.setAttribute("nutzer", kunde);
             }
@@ -97,20 +100,23 @@ public class LoginServlet extends HttpServlet {
                 if (login) {
                     trainer.setMessage("Sie sind erfolgreich angemeldet");
                     session.setAttribute("nutzertyp", "kunde");
+                    url = IndexServlet.URL;
                 } else {
                     trainer.setResponse(null);
                     trainer.setStatus(ResponseStatus.ERROR);
                     trainer.setMessage("Das Passwort stimmt nicht mit dem Nutzer überein");
+                    url = LoginServlet.URL;
                 }
             } catch (Exception e) {
                 trainer.setResponse(null);
                 trainer.setStatus(ResponseStatus.ERROR);
                 trainer.setMessage("Bei der Überprüfung des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.");
+                    url = LoginServlet.URL;
             } finally {
                 session.setAttribute("nutzer", trainer);
             }
             session.setAttribute("nutzer", trainer);
         }
-        response.sendRedirect(request.getContextPath() + IndexServlet.URL);
+        response.sendRedirect(request.getContextPath() + url);
     }
 }

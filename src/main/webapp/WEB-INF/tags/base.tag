@@ -94,7 +94,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="<c:url value="/accountdetail"/>">
+                                        <a href="<c:url value="/accountdetails"/>">
                                             <button class="btn btn-outline-link btn-sm">    
                                                 Profil
                                             </button>

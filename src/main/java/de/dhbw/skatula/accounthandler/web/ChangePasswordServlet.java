@@ -72,7 +72,6 @@ public class ChangePasswordServlet extends HttpServlet {
             kunde = (Response<Kunde>) session.getAttribute("nutzer");
             byte[] salt = kunde.getResponse().getSalt();
             try {
-                byte[] oldPassword = passwordHelper.getEncryptedPassword(request.getParameter("oldPassword"), salt);
                 byte[] newPassword = passwordHelper.getEncryptedPassword(request.getParameter("newPassword"), salt);
                 String newPasswordConfirmed = request.getParameter("newPasswordConfirmed");
                 if (passwordHelper.authenticate(request.getParameter("oldPassword"), kunde.getResponse().getPasswort(), salt)) {
@@ -100,7 +99,6 @@ public class ChangePasswordServlet extends HttpServlet {
             trainer = (Response<Trainer>) session.getAttribute("nutzer");
             byte[] salt = trainer.getResponse().getSalt();
             try {
-                byte[] oldPassword = passwordHelper.getEncryptedPassword(request.getParameter("oldPassword"), salt);
                 byte[] newPassword = passwordHelper.getEncryptedPassword(request.getParameter("newPassword"), salt);
                 String newPasswordConfirmed = request.getParameter("newPasswordConfirmed");
                 if (passwordHelper.authenticate(request.getParameter("oldPassword"), kunde.getResponse().getPasswort(), salt)) {

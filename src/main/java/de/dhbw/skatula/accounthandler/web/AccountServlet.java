@@ -25,17 +25,17 @@ import javax.servlet.http.HttpSession;
  *
  * @author Benjamin Kanzler
  */
-@WebServlet(urlPatterns = {"/accountdetail"}, name = "AccountServlet")
+@WebServlet(urlPatterns = {"/accountdetails"}, name = "AccountServlet")
 public class AccountServlet extends HttpServlet {
 
-    public final static String URL = "/accountdetail";
+    public final static String URL = "/accountdetails";
 
     @EJB
     protected KundeBean kundeBean;
 
     @EJB
     protected TrainerBean trainerBean;
-    
+
     @EJB
     protected AdresseBean adresseBean;
 
@@ -72,17 +72,19 @@ public class AccountServlet extends HttpServlet {
             kunde.getResponse().setName(request.getParameter("nachname"));
             kunde.getResponse().setVorname(request.getParameter("vorname"));
             kunde.getResponse().setEmail(request.getParameter("email"));
-            kunde.getResponse().getAdresse().setHausnummer(Integer.parseInt(request.getParameter("hausnr")));
             //Adresse-Objekt erzeugen, falls noch keine Adresse am Kunden hängt
-            if(kunde.getResponse().getAdresse() == null){
+            if (kunde.getResponse().getAdresse() == null) {
                 kunde.getResponse().setAdresse(new Adresse());
             }
-            
+            String hausnr = request.getParameter("hausnr");
+            if (hausnr != null && hausnr.contains("\\d+")) {
+                kunde.getResponse().getAdresse().setHausnummer(Integer.parseInt(hausnr));
+            }
             kunde.getResponse().getAdresse().setStrasse(request.getParameter("strasse"));
             kunde.getResponse().getAdresse().setLand(request.getParameter("land"));
             kunde.getResponse().getAdresse().setOrt(request.getParameter("ort"));
             kunde.getResponse().getAdresse().setPlz(request.getParameter("plz"));
-            if(kunde.getResponse().getAdresse().getId() == null){
+            if (kunde.getResponse().getAdresse().getId() == null) {
                 kunde.getResponse().setAdresse(adresseBean.createNewAdresse(kunde.getResponse().getAdresse()).getResponse());
             } else {
                 kunde.getResponse().setAdresse(adresseBean.updateAdresse(kunde.getResponse().getAdresse()).getResponse());
@@ -94,15 +96,19 @@ public class AccountServlet extends HttpServlet {
             trainer.getResponse().setName(request.getParameter("nachname"));
             trainer.getResponse().setVorname(request.getParameter("vorname"));
             trainer.getResponse().setEmail(request.getParameter("email"));
-            if(trainer.getResponse().getAdresse() == null){
+            if (trainer.getResponse().getAdresse() == null) {
                 trainer.getResponse().setAdresse(new Adresse());
             }
-            trainer.getResponse().getAdresse().setHausnummer(Integer.parseInt(request.getParameter("hausnr")));
+
+            String hausnr = request.getParameter("hausnr");
+            if (hausnr != null && hausnr.contains("\\d+")) {
+                trainer.getResponse().getAdresse().setHausnummer(Integer.parseInt(hausnr));
+            }
             trainer.getResponse().getAdresse().setStrasse(request.getParameter("strasse"));
             trainer.getResponse().getAdresse().setLand(request.getParameter("land"));
             trainer.getResponse().getAdresse().setOrt(request.getParameter("ort"));
             trainer.getResponse().getAdresse().setPlz(request.getParameter("plz"));
-            if(trainer.getResponse().getAdresse().getId() == null){
+            if (trainer.getResponse().getAdresse().getId() == null) {
                 trainer.getResponse().setAdresse(adresseBean.createNewAdresse(trainer.getResponse().getAdresse()).getResponse());
             } else {
                 trainer.getResponse().setAdresse(adresseBean.updateAdresse(trainer.getResponse().getAdresse()).getResponse());
