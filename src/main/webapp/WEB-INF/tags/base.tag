@@ -22,10 +22,10 @@
     <head>
         <!-- CSS einbinden -->
         <link rel="stylesheet" href="style.css">
-        
+
         <!--Favicon -->
         <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-        
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -44,7 +44,7 @@
                 background: url(WEB-INF/tags/hintergrund.jpg) no-repeat fixed;
             }
         </style>
-    
+
     </head>
     <body>
         <header>
@@ -55,17 +55,16 @@
                     <span class="brand h3">SkatUla</span>
                 </a>
                 <div class="">
-                    <form class="form-inline" action="/action_page.php">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                        <button class="btn btn-success" style="margin:5px;" type="submit">
-                            Suchen
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-success" style="margin:5px;" type="submit">
+                        Suchen
+                    </button>
+                    <a href="<c:url value="/register"/>">
+                        <button type="button" class="btn btn-success">
+                            Kurse
                         </button>
-                         <a href="<c:url value="/register"/>">
-                                <button type="button" class="btn btn-success">
-                                    Kurse
-                                </button>
-                         </a>
-                                                    <div class="justify-content-center">
+                    </a>
+                    <div class="justify-content-center">
                         <c:if test="${empty nutzer || nutzer.response == null}">
                             <a href="<c:url value="/register"/>">
                                 <button type="button" class="btn btn-link">
@@ -79,34 +78,19 @@
                             </a>
                         </c:if>
                         <c:if test="${!empty nutzer && nutzer.response != null}">
-                            <!-- Toggler/collapsibe Button -->
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-
-                            </button>
                             <!-- Navbar links -->
-                            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <a href="<c:url value="/logout"/>">
-                                            <button class="btn btn-link btn-sm">    
-                                                Logout
-                                            </button>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="<c:url value="/accountdetails"/>">
-                                            <button class="btn btn-link btn-sm">    
-                                                Profil
-                                            </button>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a href="<c:url value="/logout"/>">
+                                <button class="btn btn-outline-light">
+                                    Logout
+                                </button>
+                            </a>
+                            <a href="<c:url value="/accountdetails"/>">
+                                <button class="btn btn-outline-light">
+                                    Profil
+                                </button>
+                            </a>
                         </c:if>
                     </div>
-                    </form>
-                    
-
                 </div>
             </nav>
             <jsp:invoke fragment="header"/>
