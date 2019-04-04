@@ -9,7 +9,6 @@ import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
-import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.PasswordEncryptionHelper;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.web.IndexServlet;
@@ -109,7 +108,7 @@ public class RegisterServlet extends HttpServlet {
         Integer mitNo = (int) (d * 10000);
         String mitarbeiterNr = "tr" + mitNo;
         Response<Trainer> resT = trainerBean.findByMitarbeiterNr(mitarbeiterNr);
-        if (resT.getResponse() == null) {
+        if (resT.getResponse() != null) {
             createMitarbeiterNo(t);
         } else {
             t.setMitarbeiterNr(mitarbeiterNr);
