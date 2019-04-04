@@ -14,8 +14,6 @@ import de.dhbw.skatula.helper.PasswordEncryptionHelper;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -111,7 +109,7 @@ public class RegisterServlet extends HttpServlet {
         Integer mitNo = (int) (d * 10000);
         String mitarbeiterNr = "tr" + mitNo;
         Response<Trainer> resT = trainerBean.findByMitarbeiterNr(mitarbeiterNr);
-        if (resT.getStatus() == ResponseStatus.ERFOLGREICH) {
+        if (resT.getResponse() == null) {
             createMitarbeiterNo(t);
         } else {
             t.setMitarbeiterNr(mitarbeiterNr);
