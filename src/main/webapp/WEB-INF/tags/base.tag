@@ -21,7 +21,7 @@
     </title>
     <head>
         <!-- CSS einbinden -->
-        <link rel="stylesheet" href="style.css">
+
         <link rel="stylesheet" href="<c:url value="/css/base.css"/>">
         <link rel="stylesheet" href="<c:url value="/css/login.css"/>">
 
@@ -50,63 +50,85 @@
     </head>
     <body>
         <header>
-            <!-- Navigationsbereich der Anwendung-->
-            <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-                <a href="<c:url value="/"/>" class="navbar-brand p-0">
-                    <img class="logo p-0 rounded-circle" style="max-width:50px" src="images/Logo_Placeholder.png" alt="SketUla Logo"/> 
-                    <span class="brand h3">SkatUla</span>
-                </a>
-                <div class="">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-success" style="margin:5px;" type="submit">
-                        Suchen
+            <nav class="navbar navbar-dark bg-dark">
+                <div class="box1">
+                    <a href="<c:url value="/"/>" class="navbar-brand p-0">
+                        <img class="logo p-0 rounded-circle" style="max-width:50px" src="images/Logo_Placeholder.png" alt="SketUla Logo"/> 
+                        <span class="brand h3">SkatUla</span>                        
+                    </a>                
+
+                    <!-- Button um Modal-Kontoeinstellungen zu triggern -->
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                        Konto
                     </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Konto verwalten</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <c:if test="${empty nutzer || nutzer.response == null}">
+                                        <a href="<c:url value="/register"/>">
+                                        <img src="<c:url value="/images/registration.png"/>" alt="selfhtml">                                        
+                                            Registrieren
+                                        </a>
+                                        <hr>
+                                        <a href="<c:url value="/login"/>">
+                                            <img src="<c:url value="/images/login.png"/>" alt="selfhtml"> 
+                                                Login
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${!empty nutzer && nutzer.response != null}">
+                                        <!-- Navbar links -->
+                                        <a href="<c:url value="/logout"/>">
+                                            <button class="btn btn-success">
+                                                Logout
+                                            </button>
+                                        </a>
+                                        <a href="<c:url value="/accountdetails"/>">
+                                            <button class="btn btn-success">
+                                                Profil
+                                            </button>
+                                        </a>
+                                    </c:if>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box2">
                     <a href="<c:url value="/kursuebersicht"/>">
-                        <button type="button" class="btn btn-outline-primary">
+                        <button type="button" class="btn btn-success">
                             Kurse
                         </button>
                     </a>
                     <!-- Weiteren Button für die Planverwaltung -->
                     <a href="<c:url value="/planuebersicht"/>">
-                        <button type="button" class="btn btn-outline-primary">
+                        <button type="button" class="btn btn-success">
                             Pläne
                         </button>
                     </a>
                     <!-- Weiterer Button für die Terminverwaltung -->
                     <a href="<c:url value="/terminuebersicht"/>">
-                        <button type="button" class="btn btn-outline-primary">
+                        <button type="button" class="btn btn-success">
                             Termine
                         </button>
                     </a>
-                    
-                    <div class="justify-content-center">
-                        <c:if test="${empty nutzer || nutzer.response == null}">
-                            <a href="<c:url value="/register"/>">
-                                <button type="button" class="btn btn-link">
-                                    Registrieren
-                                </button>
-                            </a>
-                            <a href="<c:url value="/login"/>">
-                                <button type="button" class="btn btn-sm btn-outline-primary mr-2">
-                                    Login
-                                </button>
-                            </a>
-                        </c:if>
-                        <c:if test="${!empty nutzer && nutzer.response != null}">
-                            <!-- Navbar links -->
-                            <a href="<c:url value="/logout"/>">
-                                <button class="btn btn-outline-light">
-                                    Logout
-                                </button>
-                            </a>
-                            <a href="<c:url value="/accountdetails"/>">
-                                <button class="btn btn-outline-light">
-                                    Profil
-                                </button>
-                            </a>
-                        </c:if>
-                    </div>
                 </div>
+                <div class="box3">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+                </div>                    
             </nav>
             <jsp:invoke fragment="header"/>
         </header>

@@ -7,6 +7,24 @@ and open the template in the editor.
     Created on : 04.04.2019, 16:24:37
     Author     : Benjamin Kanzler
 */
-body {
-  background-color: blue;
+.box1, .box2, .box3{
+    margin-right: 2%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.box1{
+    float: left;
+    width: 35%;
+}
+
+.box2{
+    vertical-align: middle;
+    float: left;
+    width: 30%;
+}
+
+.box3{
+    float: right;
+    width: 20%;
 }
