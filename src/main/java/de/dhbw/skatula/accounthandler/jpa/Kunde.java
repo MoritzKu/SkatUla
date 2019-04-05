@@ -6,15 +6,18 @@
 package de.dhbw.skatula.accounthandler.jpa;
 
 import de.dhbw.skatula.jpa.Adresse;
+import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -47,6 +50,9 @@ public class Kunde implements Serializable {
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
+    
+    @ManyToMany(mappedBy = "teilnehmer")
+    private Set<Kurs> kurse;
 
     public Long getId() {
         return id;
@@ -112,17 +118,26 @@ public class Kunde implements Serializable {
         this.salt = salt;
     }
 
+    public Set<Kurs> getKurse() {
+        return kurse;
+    }
+
+    public void setKurse(Set<Kurs> kurse) {
+        this.kurse = kurse;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.username);
-        hash = 67 * hash + Arrays.hashCode(this.passwort);
-        hash = 67 * hash + Arrays.hashCode(this.salt);
-        hash = 67 * hash + Objects.hashCode(this.vorname);
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.email);
-        hash = 67 * hash + Objects.hashCode(this.adresse);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.username);
+        hash = 59 * hash + Arrays.hashCode(this.passwort);
+        hash = 59 * hash + Arrays.hashCode(this.salt);
+        hash = 59 * hash + Objects.hashCode(this.vorname);
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.email);
+        hash = 59 * hash + Objects.hashCode(this.adresse);
+        hash = 59 * hash + Objects.hashCode(this.kurse);
         return hash;
     }
 
@@ -146,7 +161,7 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return "Kunde{" + "id=" + id + ", username=" + username + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + '}';
+        return "Kunde{" + "id=" + id + ", username=" + username + ", passwort=" + passwort + ", salt=" + salt + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + ", kurse=" + kurse + '}';
     }
     
 }

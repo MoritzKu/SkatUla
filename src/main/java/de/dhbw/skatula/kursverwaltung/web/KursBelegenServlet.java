@@ -5,6 +5,7 @@
  */
 package de.dhbw.skatula.kursverwaltung.web;
 
+import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import de.dhbw.skatula.helper.Response;
@@ -33,6 +34,9 @@ public class KursBelegenServlet extends HttpServlet {
 
     @EJB
     protected KursBean kursBean;
+    
+    @EJB
+    protected KundeBean kundeBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -82,7 +86,7 @@ public class KursBelegenServlet extends HttpServlet {
         if (session.getAttribute("nutzertyp") == "kunde") {
             //Kunde aus der Session lesen
             Response<Kunde> kunde = (Response<Kunde>) session.getAttribute("nutzer");
-
+            kunde = kundeBean.findById(kunde.getResponse().getId());
             long id = -1;
             String pathInfo = request.getPathInfo();
 
@@ -94,6 +98,11 @@ public class KursBelegenServlet extends HttpServlet {
                         Set<Kunde> teilnehmer = new HashSet<>();
                         teilnehmer.add(kunde.getResponse());
                         kurs.getResponse().setTeilnehmer(teilnehmer);
+                        if(kunde.getResponse().getKurse() == null){
+                            kunde.getResponse().setKurse(new HashSet<Kurs>());
+                        }
+                        kunde.getResponse().getKurse().add(kurs.getResponse());
+                        kundeBean.updateKunde(kunde.getResponse());
                     } else {
                         kurs.getResponse().getTeilnehmer().add(kunde.getResponse());
                     }

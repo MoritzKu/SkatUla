@@ -11,7 +11,6 @@ import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *
@@ -46,13 +44,13 @@ public class Kurs implements Serializable {
     @JoinColumn(name = "trainer_id", referencedColumnName = "id")
     private Trainer trainer;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "kurs_teilnehmer", joinColumns = @JoinColumn(name = "kurs_id"), inverseJoinColumns = @JoinColumn(name = "kunde_id"))
+    @ManyToMany
+    @JoinTable(name = "kurs_kunde",
+            joinColumns = {
+                @JoinColumn(name = "fk_kurs")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "fk_kunde")})
     private Set<Kunde> teilnehmer = new HashSet<>();
-
-    private DateTime startdatum;
-
-    private int anzahl;
 
     public Long getId() {
         return id;
@@ -60,22 +58,6 @@ public class Kurs implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public DateTime getStartdatum() {
-        return startdatum;
-    }
-
-    public void setStartdatum(DateTime startdatum) {
-        this.startdatum = startdatum;
-    }
-
-    public int getAnzahl() {
-        return anzahl;
-    }
-
-    public void setAnzahl(int anzahl) {
-        this.anzahl = anzahl;
     }
 
     public String getBezeichnung() {
