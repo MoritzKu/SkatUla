@@ -54,7 +54,13 @@ public class KursAnlegenServlvet extends HttpServlet {
         request.setAttribute("schwierigkeitsgrad", sgList);
         
         Response<Trainer> trainer = trainerBean.findAll();
+        for(Trainer t: trainer.getResponseList()){
+            t.setPasswort(null);
+            t.setSalt(null);
+        }
         request.setAttribute("trainerList", trainer.getResponseList());
+        
+ 
         
         
         request.getRequestDispatcher("WEB-INF/kursAnlegen.jsp").forward(request, response);
