@@ -12,8 +12,8 @@ import de.dhbw.skatula.kursverwaltung.ejb.KursBean;
 import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -90,13 +90,15 @@ public class KursBelegenServlet extends HttpServlet {
                 try {
                     id = Long.parseLong(pathInfo.split("/")[pathInfo.split("/").length - 1]);
                     Response<Kurs> kurs = kursBean.findById(id);
-                    Kurs testKurs = new Kurs();
-                    testKurs.getTeilnehmer().add(kunde.getResponse());
-                    System.out.println("Teilnehmer Testkurs: " + testKurs.getTeilnehmer());
-                    kurs.getResponse().getTeilnehmer().add(kunde.getResponse());
-                    kurs.getResponse().setAktuelleTeilnehmerzahl(kurs.getResponse().getTeilnehmer().size());
+                    if (kurs.getResponse().getTeilnehmer() == null) {
+                        Set<Kunde> teilnehmer = new HashSet<>();
+                        teilnehmer.add(kunde.getResponse());
+                        kurs.getResponse().setTeilnehmer(teilnehmer);
+                    } else {
+                        kurs.getResponse().getTeilnehmer().add(kunde.getResponse());
+                    }
+                    kurs.getResponse().setAktuelleTeilnehmerzahl(kurs.getResponse().getAktuelleTeilnehmerzahl()+1);
                     kurs = kursBean.updateKurs(kurs.getResponse());
-
                 } catch (NumberFormatException ex) {
                     // request.setAttribute("kurs", null);
                     // URL enthält keine gültige Long-Zahl
