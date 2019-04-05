@@ -4,7 +4,7 @@
     Author     : MoritzKuttler
 --%>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib tagdir="/WEB-INF/tags/" prefix="template"%>
 
@@ -31,16 +31,8 @@
             </div>
 
             <label for="schwierigkeitsgrad">Schwierigkeitsgrad: </label>
-            <select name="schwierigkeitsgrad" class="form-control form-control-sm" readonly="true">
-                <option value="" disabled selected style="display: none;">Bitte Schwierigkeitsgrad wählen</option>
-                <c:forEach items="${kurs.response.schwierigkeitsgrad}" var="sgValue">
-                    <option value="${sgValue}"
-                            ${sgValue == kurs.response.schwierigkeitsgrad ? 'selected' : ''}>
-                        ${sgValue}
-                    </option>
-                </c:forEach>
-            </select>
-             
+            <input name="schwierigkeitsgrad" value="${kurs.response.schwierigkeitsgrad.bezeichnung}" readonly="true"></input>
+
             <label for="trainer">Trainer: </label>
             <input name="trainer" value="${kurs.response.trainer.username}" readonly="true"></input>
 
