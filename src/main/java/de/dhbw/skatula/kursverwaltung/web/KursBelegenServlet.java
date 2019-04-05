@@ -13,6 +13,7 @@ import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,10 +55,7 @@ public class KursBelegenServlet extends HttpServlet {
         if (pathInfo != null && pathInfo.length() > 2) {
             try {
                 id = Long.parseLong(pathInfo.split("/")[pathInfo.split("/").length - 1]);
-                System.out.println("Übergeben ID im Servlet" + id);
                 Response<Kurs> kurs = kursBean.findById(id);
-                System.out.println("Ausgelesener Kurs" + kurs.getResponse());
-
                 request.setAttribute("kurs", kurs);
                 request.getRequestDispatcher("/WEB-INF/kursBelegen.jsp").forward(request, response);
                 return;
@@ -84,22 +82,20 @@ public class KursBelegenServlet extends HttpServlet {
         if (session.getAttribute("nutzertyp") == "kunde") {
             //Kunde aus der Session lesen
             Response<Kunde> kunde = (Response<Kunde>) session.getAttribute("nutzer");
-            
+
             long id = -1;
             String pathInfo = request.getPathInfo();
 
             if (pathInfo != null && pathInfo.length() > 2) {
                 try {
                     id = Long.parseLong(pathInfo.split("/")[pathInfo.split("/").length - 1]);
-                    System.out.println("Übergeben ID im Servlet" + id);
                     Response<Kurs> kurs = kursBean.findById(id);
-                    if (kurs.getResponse().getKundeList().isEmpty() && kurs.getResponse().getKundeList() == null) {
-                        kurs.getResponse().setKundeList(new ArrayList<Kunde>());
-                    }
-                    kurs.getResponse().getKundeList().add(kunde.getResponse());
+                    Kurs testKurs = new Kurs();
+                    testKurs.getTeilnehmer().add(kunde.getResponse());
+                    System.out.println("Teilnehmer Testkurs: " + testKurs.getTeilnehmer());
+                    kurs.getResponse().getTeilnehmer().add(kunde.getResponse());
+                    kurs.getResponse().setAktuelleTeilnehmerzahl(kurs.getResponse().getTeilnehmer().size());
                     kurs = kursBean.updateKurs(kurs.getResponse());
-                    kurs.getResponse().setAktuelleTeilnehmerzahl(kurs.getResponse().getKundeList().size());
-                    response.sendRedirect(request.getContextPath() + KursuebersichtServlet.URL);
 
                 } catch (NumberFormatException ex) {
                     // request.setAttribute("kurs", null);
@@ -108,17 +104,8 @@ public class KursBelegenServlet extends HttpServlet {
             }
 
         }
+        response.sendRedirect(request.getContextPath() + KursuebersichtServlet.URL);
 
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

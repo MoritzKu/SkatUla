@@ -9,14 +9,16 @@ import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
@@ -31,26 +33,27 @@ public class Kurs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String bezeichnung;
-    
+
     private int maxTeilnehmer;
-    
+
     private int aktuelleTeilnehmerzahl;
-    
+
     private Schwierigkeitsgrad schwierigkeitsgrad;
-    
+
     @OneToOne()
     @JoinColumn(name = "trainer_id", referencedColumnName = "id")
     private Trainer trainer;
-    
-    @OneToMany
-    private List<Kunde> kundeList = new ArrayList<Kunde>();
-    
-    private DateTime startdatum; 
-    
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "kurs_teilnehmer", joinColumns = @JoinColumn(name = "kurs_id"), inverseJoinColumns = @JoinColumn(name = "kunde_id"))
+    private Set<Kunde> teilnehmer = new HashSet<>();
+
+    private DateTime startdatum;
+
     private int anzahl;
-        
+
     public Long getId() {
         return id;
     }
@@ -73,15 +76,6 @@ public class Kurs implements Serializable {
 
     public void setAnzahl(int anzahl) {
         this.anzahl = anzahl;
-    }
-
-    
-    public List<Kunde> getKundeList() {
-        return kundeList;
-    }
-
-    public void setKundeList(List<Kunde> kundeList) {
-        this.kundeList = kundeList;
     }
 
     public String getBezeichnung() {
@@ -124,12 +118,17 @@ public class Kurs implements Serializable {
         this.trainer = trainer;
     }
 
+    public Set<Kunde> getTeilnehmer() {
+        return teilnehmer;
+    }
+
+    public void setTeilnehmer(Set<Kunde> teilnehmer) {
+        this.teilnehmer = teilnehmer;
+    }
+
     @Override
     public String toString() {
         return "Kurs{" + "id=" + id + ", bezeichnung=" + bezeichnung + ", maxTeilnehmer=" + maxTeilnehmer + ", aktuelleTeilnehmerzahl=" + aktuelleTeilnehmerzahl + ", schwierigkeitsgrad=" + schwierigkeitsgrad + ", trainer=" + trainer + '}';
     }
 
-    
-    
-    
 }

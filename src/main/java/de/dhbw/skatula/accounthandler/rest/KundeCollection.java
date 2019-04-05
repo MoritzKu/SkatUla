@@ -31,11 +31,11 @@ public class KundeCollection {
     @GET
     public Response<Kunde> getKunde() {
         Response<Kunde> kunde = kundeBean.findAll();
-
-        for (Kunde k : kunde.getResponseList()) {
-            k.setSalt(null);
-            k.setPasswort(null);
+        /**
+         * for (Kunde k : kunde.getResponseList()) { k.setSalt(null); k.setPasswort(null);
         }
+         */
+        
         return kunde;
     }
 }
