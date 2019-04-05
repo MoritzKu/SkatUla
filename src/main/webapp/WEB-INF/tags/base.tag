@@ -66,6 +66,12 @@
                             Kurse
                         </button>
                     </a>
+                    <!-- Weiteren Button für die Planverwaltung -->
+                    <a href="<c:url value="/planuebersicht"/>">
+                        <button type="button" class="btn btn-outline-primary">
+                            Pläne
+                        </button>
+                    </a>
                     <div class="justify-content-center">
                         <c:if test="${empty nutzer || nutzer.response == null}">
                             <a href="<c:url value="/register"/>">
