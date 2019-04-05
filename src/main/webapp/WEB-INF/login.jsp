@@ -12,6 +12,10 @@
     <jsp:attribute name="title">Login</jsp:attribute>
     <jsp:attribute name="content">
         <form method="POST">
+            <div class="loginSpace">
+                
+            <h1> Login </h1>
+            
             <div class="form-check-inline">
                 <label class="form-check-label" for="kunde">
                     <input type="radio" name="nutzertyp" class="form-check-input"
@@ -31,6 +35,7 @@
             <label for="password">Passwort: </label>
             <input type="password" name="password" class="form-control form-control-sm" required="true"/>
             <button class="btn btn-sm btn-outline-primary" type="submit" name="login">Login</button>
+            </div>
         </form>
     </jsp:attribute>
 </template:base>

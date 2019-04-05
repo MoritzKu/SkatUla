@@ -8,5 +8,5 @@ and open the template in the editor.
     Author     : Benjamin Kanzler
 */
 body {
-  background-image: url("/images/hintergrund.jpg");
+  background-color: blue;
 }
