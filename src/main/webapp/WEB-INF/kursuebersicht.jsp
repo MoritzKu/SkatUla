@@ -21,8 +21,8 @@
             </c:if>
 
             <c:choose>
-                <c:when test="${!empty KursList.responseList}">
-                    <c:forEach items="${KursList.responseList}" var="kurse">
+                <c:when test="${!empty kursList.responseList}">
+                    <c:forEach items="${kursList.responseList}" var="kurs">
                         <div class="card mb-3" style="max-width: 1000px;">
                             <div class="row no-gutters">
                                 <div class="col-md-4 herstellerLogo">
@@ -30,7 +30,7 @@
                                 <div class="col-md-4">
                                     <div class="card-body">
                                         <h5 class="card-title">${kurs.bezeichnung}</h5>
-                                        <p class="card-text">Trainer: ${kurs.trainer}</p>
+                                        <p class="card-text">Trainer: ${kurs.trainer.username}</p>
                                         <!-- <a href="<c:url value="/detail/${kurs.id}/"/>">
                                             <button class="btn btn-primary btn-sm">
                                                 Details
@@ -42,14 +42,9 @@
                                     <div class="card-body">
                                         <p class="card-text">Maximale Teilnehmer: ${kurs.maxTeilnehmer}</p>
                                         <p class="card-text">aktuelle Teilnehmer: ${kurs.aktuelleTeilnehmerzahl}</p>
-                                        <c:if test="${nutzer.response == null}">
-                                            <a href="<c:url value="/login"/>">
-                                                <button type="button" class="btn btn-primary btn-sm">Login</button>
-                                            </a>
-                                        </c:if>
-                                        <c:if test="${nutzer.response != null}">
-                                            <a href="<c:url value="/book/${fahrzeug.id}/"/>">
-                                                <button type="button" class="btn btn-primary btn-sm">Login</button>
+                                        <c:if test="${nutzertyp == 'kunde'}">
+                                            <a href="<c:url value="/kursBelegen/${kurs.id}/"/>">
+                                                <button type="button" class="btn btn-primary btn-sm">Kurs belegen</button>
                                             </a>
                                         </c:if>
                                     </div>

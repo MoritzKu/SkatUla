@@ -15,23 +15,22 @@
     <jsp:attribute name="content">
         <form method="POST">
             <h1> Kurs anlegen</h1> 
+            
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon3" >Kursbezeichnung</span>
                 </div>
-                <input name="bezeichnung" type="text" class="form-control" value="" id="basic-url" aria-describedby="basic-addon3">
+                <input name="bezeichnung" type="text" class="form-control" value="" id="basic-url" aria-describedby="basic-addon3" required="true">
             </div>
+             
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon3" >maximale Teilnehmeranzahl</span>
                 </div>
-                <input name="maxTeilnehmer" type="number" class="form-control" value="" id="basic-url" aria-describedby="basic-addon3">
+                <input name="maxTeilnehmer" type="number" class="form-control" value="" id="basic-url" aria-describedby="basic-addon3" required="true">
             </div>
 
-
-            <input name="bezeichnung" type="text" class="form-control" placeholder="Behzeichnung" value="">
-            <input name="maxTeilnehmer" type="number" class="form-control" placeholder="Maximale Teilnehmerzahl" value="">
-            <label for="hersteller">Hersteller: </label>
+            <label for="schwierigkeitsgrad">Schwierigkeitsgrad: </label>
             <select name="schwierigkeitsgrad" class="form-control form-control-sm" required>
                 <option value="" disabled selected style="display: none;">Bitte Schwierigkeitsgrad wählen</option>
                 <c:forEach items="${schwierigkeitsgrad}" var="sgValue">

@@ -27,18 +27,17 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "KursAnlegen", urlPatterns = {"/kursAnlegen"})
 public class KursAnlegenServlvet extends HttpServlet {
-    
-    Schwierigkeitsgrad sg; 
-   
+
+    Schwierigkeitsgrad sg;
 
     public final static String URL = "/kursAnlegen";
 
     @EJB
     protected KursBean kursBean;
-    
+
     @EJB
     protected TrainerBean trainerBean;
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -52,19 +51,16 @@ public class KursAnlegenServlvet extends HttpServlet {
             throws ServletException, IOException {
         Schwierigkeitsgrad[] sgList = sg.values();
         request.setAttribute("schwierigkeitsgrad", sgList);
-        
+
         Response<Trainer> trainer = trainerBean.findAll();
-        for(Trainer t: trainer.getResponseList()){
+        for (Trainer t : trainer.getResponseList()) {
             t.setPasswort(null);
             t.setSalt(null);
         }
         request.setAttribute("trainerList", trainer.getResponseList());
-        
- 
-        
-        
+
         request.getRequestDispatcher("WEB-INF/kursAnlegen.jsp").forward(request, response);
-        }
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -79,17 +75,19 @@ public class KursAnlegenServlvet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String nutzertyp = (String) session.getAttribute("nutzertyp");
-        if (nutzertyp == "trainer") {
-            Response<Trainer> trainer = (Response<Trainer>) session.getAttribute("nutzer");
-            Kurs kurs = new Kurs();
-            kurs.setBezeichnung(request.getParameter("bezeichnung"));
-            kurs.setMaxTeilnehmer(Integer.parseInt(request.getParameter("maxTeilnehmer")));
-            //kurs.setSchwierigkeitsgrad(request.getParameter("schwierigkeitsgrad"));
-            kurs.setTrainer(trainer.getResponse());
-            Response<Kurs> kursResponse = kursBean.createNewKurs(kurs);
-            System.out.println(kursResponse.getResponse());
-        }
-        response.sendRedirect(request.getContextPath() + IndexServlet.URL);
+        Response<Trainer> trainer = (Response<Trainer>) session.getAttribute("nutzer");
+        Kurs kurs = new Kurs();
+        kurs.setBezeichnung(request.getParameter("bezeichnung"));
+        kurs.setMaxTeilnehmer(Integer.parseInt(request.getParameter("maxTeilnehmer")));
+        //kurs.setSchwierigkeitsgrad(request.getParameter("schwierigkeitsgrad"));
+        kurs.setTrainer(trainer.getResponse());
+        Response<Kurs> kursResponse = kursBean.createNewKurs(kurs);
+        // Auslesen
+        kurs.setSchwierigkeitsgrad(Enum.valueOf(Schwierigkeitsgrad.class, request.getParameter("schwierigkeitsgrad")));
+        kurs.setTrainer(trainerBean.findById(Long.parseLong(request.getParameter("trainer"))).getResponse());
+        kursBean.createNewKurs(kurs);
+        
+        response.sendRedirect(request.getContextPath() + KursuebersichtServlet.URL);
     }
 
     /**

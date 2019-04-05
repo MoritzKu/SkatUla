@@ -5,12 +5,7 @@
  */
 package de.dhbw.skatula.kursverwaltung.web;
 
-import de.dhbw.skatula.accounthandler.jpa.Trainer;
-import de.dhbw.skatula.helper.Response;
-import de.dhbw.skatula.kursverwaltung.ejb.KursBean;
-import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,14 +16,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MoritzKuttler
  */
-@WebServlet(name = "KursuebersichtServlet", urlPatterns = {"/kursuebersicht"})
-public class KursuebersichtServlet extends HttpServlet{
+@WebServlet(name = "KursBelegenServlet", urlPatterns = {"/kursBelegen/{kursid}/"})
+public class KursBelegenServlet extends HttpServlet {
+
     
-    public final static String URL = "/kursuebersicht";
     
-    @EJB
-    protected KursBean kursBean;
-    
+  
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -40,13 +34,9 @@ public class KursuebersichtServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getRequestDispatcher("WEB-INF/kursBelegen.jsp").forward(request, response);
         
-        Response<Kurs> kurs = kursBean.findAll(); 
-        request.setAttribute("kursList", kurs);
-        
-        request.getRequestDispatcher("WEB-INF/kursuebersicht.jsp").forward(request, response);
     }
-   
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -59,9 +49,7 @@ public class KursuebersichtServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-
-    }
+   }
 
     /**
      * Returns a short description of the servlet.
@@ -72,5 +60,5 @@ public class KursuebersichtServlet extends HttpServlet{
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }
