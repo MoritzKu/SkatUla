@@ -30,6 +30,12 @@ public class KundeCollection {
 
     @GET
     public Response<Kunde> getKunde() {
-        return kundeBean.findAll();
+        Response<Kunde> kunde = kundeBean.findAll();
+
+        for (Kunde k : kunde.getResponseList()) {
+            k.setSalt(null);
+            k.setPasswort(null);
+        }
+        return kunde;
     }
 }
