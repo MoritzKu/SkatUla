@@ -1,6 +1,6 @@
 <%-- 
-    Document   : planuebersicht
-    Created on : 05.04.2019, 13:36:04
+    Document   : terminuebersicht
+    Created on : 05.04.2019, 21:09:29
     Author     : f_lieb
 --%>
 
@@ -10,18 +10,18 @@
 
 <!DOCTYPE html>
 <template:base>
-    <jsp:attribute name="title">Planübersicht</jsp:attribute>
+    <jsp:attribute name="title">Terminübersicht</jsp:attribute>
     <jsp:attribute name="content">
         <form method="POST">
-            <h1> Plan anlegen</h1>
+            <h1> Termin anlegen</h1>
 
             <c:if test="${nutzertyp == 'trainer' }">
-                <a href="<c:url value="/planAnlegen"/>"> <button class="btn btn-primary btn-sm" type="button"> Plan anlegen </button></a>
+                <a href="<c:url value="/terminAnlegen"/>"> <button class="btn btn-primary btn-sm" type="button"> Termin anlegen </button></a>
             </c:if>
 
             <c:choose>
-                <c:when test="${!empty planList.responseList}">
-                    <c:forEach items="${planList.responseList}" var="plan">
+                <c:when test="${!empty terminList.responseList}">
+                    <c:forEach items="${terminList.responseList}" var="termin">
                         <div class="card mb-3" style="max-width: 1000px;">
                             <div class="row no-gutters">
                                 <div class="col-md-4 herstellerLogo">

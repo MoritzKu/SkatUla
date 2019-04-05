@@ -6,7 +6,6 @@
 package de.dhbw.skatula.planverwaltung.jpa;
 
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
-import de.dhbw.skatula.jpa.Termin;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;

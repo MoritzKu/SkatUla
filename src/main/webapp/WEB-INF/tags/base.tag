@@ -72,6 +72,13 @@
                             Pläne
                         </button>
                     </a>
+                    <!-- Weiterer Button für die Terminverwaltung -->
+                    <a href="<c:url value="/terminuebersicht"/>">
+                        <button type="button" class="btn btn-outline-primary">
+                            Termine
+                        </button>
+                    </a>
+                    
                     <div class="justify-content-center">
                         <c:if test="${empty nutzer || nutzer.response == null}">
                             <a href="<c:url value="/register"/>">

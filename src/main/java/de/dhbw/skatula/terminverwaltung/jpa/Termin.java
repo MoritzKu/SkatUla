@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.dhbw.skatula.jpa;
+package de.dhbw.skatula.terminverwaltung.jpa;
 
 import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
-import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -30,13 +28,11 @@ public class Termin implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany()
-    @JoinColumn(name = "kunde_id", referencedColumnName = "id")
-    private List<Kunde> kunde;
+    private Date datum;
 
-    private Date start;
-
-    private Date ende;
+    private Time time;
+    
+    private int dauer;
 
     @OneToOne()
     @JoinColumn(name = "kurs_id", referencedColumnName = "id")
@@ -50,29 +46,40 @@ public class Termin implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public Date getDatum() {
+        return datum;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Termin)) {
-            return false;
-        }
-        Termin other = (Termin) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public int getDauer() {
+        return dauer;
+    }
+
+    public void setDauer(int dauer) {
+        this.dauer = dauer;
+    }
+
+    public Kurs getKurs() {
+        return kurs;
+    }
+
+    public void setKurs(Kurs kurs) {
+        this.kurs = kurs;
     }
 
     @Override
     public String toString() {
-        return "de.dhbw.skatula.jpa.Termin[ id=" + id + " ]";
+        return "Termin{" + "id=" + id + ", datum=" + datum + ", time=" + time + ", dauer=" + dauer + ", kurs=" + kurs + '}';
     }
-
 }

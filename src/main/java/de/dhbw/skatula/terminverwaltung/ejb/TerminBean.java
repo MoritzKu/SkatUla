@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.dhbw.skatula.ejb;
+package de.dhbw.skatula.terminverwaltung.ejb;
 
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
-import de.dhbw.skatula.jpa.Termin;
+import de.dhbw.skatula.terminverwaltung.jpa.Termin;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
