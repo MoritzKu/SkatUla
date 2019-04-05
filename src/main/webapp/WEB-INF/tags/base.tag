@@ -23,6 +23,7 @@
         <!-- CSS einbinden -->
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/base.css"/>">
+        <link rel="stylesheet" href="<c:url value="/css/login.css"/>">
 
         <!--Favicon -->
         <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
