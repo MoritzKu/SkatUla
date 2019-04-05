@@ -45,7 +45,7 @@ public class Kurs implements Serializable {
     private Trainer trainer;
     
     @OneToMany
-    private List<Kunde> kundeList;
+    private List<Kunde> kundeList = new ArrayList<Kunde>();
     
     private DateTime startdatum; 
     
@@ -77,10 +77,6 @@ public class Kurs implements Serializable {
 
     
     public List<Kunde> getKundeList() {
-        if(this.kundeList == null){
-            kundeList = new ArrayList<>();
-            System.out.println(kundeList);
-        }
         return kundeList;
     }
 
