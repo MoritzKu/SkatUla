@@ -84,6 +84,7 @@ public class KursAnlegenServlvet extends HttpServlet {
         Response<Kurs> kursResponse = kursBean.createNewKurs(kurs);
         // Auslesen
         kurs.setSchwierigkeitsgrad(Enum.valueOf(Schwierigkeitsgrad.class, request.getParameter("schwierigkeitsgrad")));
+        System.out.println("Hier steht der Output: " + kurs.getSchwierigkeitsgrad());
         kurs.setTrainer(trainerBean.findById(Long.parseLong(request.getParameter("trainer"))).getResponse());
         kursBean.createNewKurs(kurs);
         

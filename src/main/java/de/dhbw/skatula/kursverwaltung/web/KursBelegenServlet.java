@@ -5,17 +5,21 @@
  */
 package de.dhbw.skatula.kursverwaltung.web;
 
+import de.dhbw.skatula.accounthandler.jpa.Kunde;
+import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.kursverwaltung.ejb.KursBean;
 import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "KursBelegenServlet", urlPatterns = {"/kursBelegen/*"})
 public class KursBelegenServlet extends HttpServlet {
+
+    Schwierigkeitsgrad sg;
 
     @EJB
     protected KursBean kursBean;
@@ -38,6 +44,9 @@ public class KursBelegenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        Schwierigkeitsgrad[] sgList = sg.values();
+        request.setAttribute("schwierigkeitsgrad", sgList);
 
         long id = -1;
         String pathInfo = request.getPathInfo();
@@ -71,6 +80,35 @@ public class KursBelegenServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("nutzertyp") == "kunde") {
+            //Kunde aus der Session lesen
+            Response<Kunde> kunde = (Response<Kunde>) session.getAttribute("nutzer");
+            
+            long id = -1;
+            String pathInfo = request.getPathInfo();
+
+            if (pathInfo != null && pathInfo.length() > 2) {
+                try {
+                    id = Long.parseLong(pathInfo.split("/")[pathInfo.split("/").length - 1]);
+                    System.out.println("Übergeben ID im Servlet" + id);
+                    Response<Kurs> kurs = kursBean.findById(id);
+                    if (kurs.getResponse().getKundeList().isEmpty() && kurs.getResponse().getKundeList() == null) {
+                        kurs.getResponse().setKundeList(new ArrayList<Kunde>());
+                    }
+                    kurs.getResponse().getKundeList().add(kunde.getResponse());
+                    kurs = kursBean.updateKurs(kurs.getResponse());
+                    kurs.getResponse().setAktuelleTeilnehmerzahl(kurs.getResponse().getKundeList().size());
+                    response.sendRedirect(request.getContextPath() + KursuebersichtServlet.URL);
+
+                } catch (NumberFormatException ex) {
+                    // request.setAttribute("kurs", null);
+                    // URL enthält keine gültige Long-Zahl
+                }
+            }
+
+        }
+
     }
 
     /**
