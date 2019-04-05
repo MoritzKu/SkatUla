@@ -31,10 +31,10 @@
             </div>
 
             <label for="schwierigkeitsgrad">Schwierigkeitsgrad: </label>
-            <select name="schwierigkeitsgrad" class="form-control form-control-sm" readonly="true">
+            <select name="schwierigkeitsgrad" class="form-control form-control-sm" disabled="true">
                 <option value="" disabled selected style="display: none;">Bitte Schwierigkeitsgrad wählen</option>
-                <c:forEach items="${kurs.response.schwierigkeitsgrad}" var="sgValue">
-                    <option value="${sgValue}"
+                <c:forEach items="${schwierigkeitsgrad}" var="sgValue">
+                    <option readonly="true" value="${sgValue}"
                             ${sgValue == kurs.response.schwierigkeitsgrad ? 'selected' : ''}>
                         ${sgValue}
                     </option>
