@@ -79,9 +79,7 @@ public class KursAnlegenServlvet extends HttpServlet {
         Kurs kurs = new Kurs();
         kurs.setBezeichnung(request.getParameter("bezeichnung"));
         kurs.setMaxTeilnehmer(Integer.parseInt(request.getParameter("maxTeilnehmer")));
-        //kurs.setSchwierigkeitsgrad(request.getParameter("schwierigkeitsgrad"));
         kurs.setTrainer(trainer.getResponse());
-        Response<Kurs> kursResponse = kursBean.createNewKurs(kurs);
         // Auslesen
         kurs.setSchwierigkeitsgrad(Enum.valueOf(Schwierigkeitsgrad.class, request.getParameter("schwierigkeitsgrad")));
         System.out.println("Hier steht der Output: " + kurs.getSchwierigkeitsgrad());
