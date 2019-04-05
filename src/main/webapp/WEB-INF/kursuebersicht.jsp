@@ -15,8 +15,56 @@
     <jsp:attribute name="content">
         <form method="POST">
             <h1> Kurs anlegen</h1>
-            <a href="<c:url value="/kursAnlegen"/>"> <buton> Kurs anlegen </buton>
-            </a>
+
+            <c:if test="${nutzertyp == 'trainer' }">
+                <a href="<c:url value="/kursAnlegen"/>"> <button class="btn btn-primary btn-sm" type="button"> Kurs anlegen </button></a>
+            </c:if>
+
+            <c:choose>
+                <c:when test="${!empty KursList.responseList}">
+                    <c:forEach items="${KursList.responseList}" var="kurse">
+                        <div class="card mb-3" style="max-width: 1000px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4 herstellerLogo">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${kurs.bezeichnung}</h5>
+                                        <p class="card-text">Trainer: ${kurs.trainer}</p>
+                                        <!-- <a href="<c:url value="/detail/${kurs.id}/"/>">
+                                            <button class="btn btn-primary btn-sm">
+                                                Details
+                                            </button>
+                                        </a> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-body">
+                                        <p class="card-text">Maximale Teilnehmer: ${kurs.maxTeilnehmer}</p>
+                                        <p class="card-text">aktuelle Teilnehmer: ${kurs.aktuelleTeilnehmerzahl}</p>
+                                        <c:if test="${nutzer.response == null}">
+                                            <a href="<c:url value="/login"/>">
+                                                <button type="button" class="btn btn-primary btn-sm">Login</button>
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${nutzer.response != null}">
+                                            <a href="<c:url value="/book/${fahrzeug.id}/"/>">
+                                                <button type="button" class="btn btn-primary btn-sm">Login</button>
+                                            </a>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:when> 
+                <c:otherwise>
+                    <%-- Hinweis, dass es noch keine Kurs gibt --%>
+                    <div class="alert alert-danger" role="alert">
+                        Es sind noch keine Kurse vorhanden.
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </form>
     </jsp:attribute>
 </template:base>

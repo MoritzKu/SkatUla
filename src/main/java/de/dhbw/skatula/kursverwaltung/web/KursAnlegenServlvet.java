@@ -5,7 +5,9 @@
  */
 package de.dhbw.skatula.kursverwaltung.web;
 
+import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
+import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.kursverwaltung.ejb.KursBean;
 import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
@@ -25,11 +27,17 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "KursAnlegen", urlPatterns = {"/kursAnlegen"})
 public class KursAnlegenServlvet extends HttpServlet {
+    
+    Schwierigkeitsgrad sg; 
+   
 
     public final static String URL = "/kursAnlegen";
+
+    @EJB
+    protected KursBean kursBean;
     
-    @EJB 
-    protected KursBean kursBean; 
+    @EJB
+    protected TrainerBean trainerBean;
     
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -42,8 +50,15 @@ public class KursAnlegenServlvet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Schwierigkeitsgrad[] sgList = sg.values();
+        request.setAttribute("schwierigkeitsgrad", sgList);
+        
+        Response<Trainer> trainer = trainerBean.findAll();
+        request.setAttribute("trainerList", trainer.getResponseList());
+        
+        
         request.getRequestDispatcher("WEB-INF/kursAnlegen.jsp").forward(request, response);
-    }
+        }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -66,10 +81,9 @@ public class KursAnlegenServlvet extends HttpServlet {
             //kurs.setSchwierigkeitsgrad(request.getParameter("schwierigkeitsgrad"));
             kurs.setTrainer(trainer.getResponse());
             Response<Kurs> kursResponse = kursBean.createNewKurs(kurs);
-            System.out.println(kursResponse.getResponse()); 
-         }
-        response.sendRedirect(request.getContextPath()+IndexServlet.URL);
-
+            System.out.println(kursResponse.getResponse());
+        }
+        response.sendRedirect(request.getContextPath() + IndexServlet.URL);
     }
 
     /**

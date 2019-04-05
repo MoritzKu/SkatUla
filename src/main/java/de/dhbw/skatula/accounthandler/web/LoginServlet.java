@@ -100,7 +100,7 @@ public class LoginServlet extends HttpServlet {
                 boolean login = passwordHelper.authenticate(password, trainer.getResponse().getPasswort(), trainer.getResponse().getSalt());
                 if (login) {
                     trainer.setMessage("Sie sind erfolgreich angemeldet");
-                    session.setAttribute("nutzertyp", "kunde");
+                    session.setAttribute("nutzertyp", "trainer");
                     url = IndexServlet.URL;
                 } else {
                     trainer.setResponse(null);
