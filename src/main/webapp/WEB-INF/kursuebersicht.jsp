@@ -44,7 +44,7 @@
                                         <p class="card-text">aktuelle Teilnehmer: ${kurs.aktuelleTeilnehmerzahl}</p>
                                         <c:if test="${nutzertyp == 'kunde'}">
                                             <a href="<c:url value="/kursBelegen/${kurs.id}"/>">
-                                                <button type="button" class="btn btn-primary btn-sm">Kurs belegen</button>
+                                                <button type="button" ${(kurs.maxTeilnehmer >= kurs.aktuelleTeilnehmerzahl)?'disabled':''}class="btn btn-primary btn-sm">Kurs belegen</button>
                                             </a>
                                         </c:if>
                                     </div>
