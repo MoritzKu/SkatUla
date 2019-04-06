@@ -40,15 +40,9 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
         <jsp:invoke fragment="head"/>
-        <!--Versuch ein Hintergrundbild einzubauen -->
-        <style type="text/css">
-            body{
-                background: url(WEB-INF/tags/hintergrund.jpg) no-repeat fixed;
-            }
-        </style>
 
     </head>
-    <body>
+    <body class="back">
         <header>
             <nav class="navbar navbar-dark bg-dark">
                 <div class="box1">
@@ -132,8 +126,8 @@
             </nav>
             <jsp:invoke fragment="header"/>
         </header>
-        <div>
-            <jsp:invoke fragment="content"/>
+        <div class="overlay">
+                <jsp:invoke fragment="content"/>
         </div>
     </body>
     <footer>
