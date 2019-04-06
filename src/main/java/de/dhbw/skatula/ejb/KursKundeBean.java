@@ -24,6 +24,13 @@ public class KursKundeBean {
     @PersistenceContext
     protected EntityManager em;
 
+    
+    public Response<KursKunde> findAll(){
+        Response<KursKunde> kk = new Response<>();
+        kk.setResponseList(em.createQuery("SELECT k FROM KursKunde k").getResultList());
+        return kk;
+    }
+    
     public Response<KursKunde> createNewKursKunde(KursKunde k, Kunde kunde, Kurs kurs) {
 
         Response<KursKunde> response = new Response<>();
@@ -36,6 +43,7 @@ public class KursKundeBean {
             em.merge(kunde);
             
             kurs.getKursKunde().add(k);
+            kurs.setAktuelleTeilnehmerzahl(kurs.getAktuelleTeilnehmerzahl()+1);
             em.merge(kurs);
             
             k = em.merge(k);

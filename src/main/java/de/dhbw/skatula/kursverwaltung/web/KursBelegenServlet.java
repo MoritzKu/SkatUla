@@ -8,6 +8,7 @@ package de.dhbw.skatula.kursverwaltung.web;
 import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.ejb.KursKundeBean;
+import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.KursKunde;
