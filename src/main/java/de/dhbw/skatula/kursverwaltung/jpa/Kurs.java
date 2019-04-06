@@ -8,6 +8,7 @@ package de.dhbw.skatula.kursverwaltung.jpa;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.Schwierigkeitsgrad;
+import de.dhbw.skatula.jpa.KursKunde;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,8 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -44,13 +44,8 @@ public class Kurs implements Serializable {
     @JoinColumn(name = "trainer_id", referencedColumnName = "id")
     private Trainer trainer;
 
-    @ManyToMany
-    @JoinTable(name = "kurs_kunde",
-            joinColumns = {
-                @JoinColumn(name = "fk_kurs")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "fk_kunde")})
-    private Set<Kunde> teilnehmer = new HashSet<>();
+    @OneToMany(mappedBy = "kurs")
+    private Set<KursKunde> kursKunde;
 
     public Long getId() {
         return id;
@@ -100,12 +95,12 @@ public class Kurs implements Serializable {
         this.trainer = trainer;
     }
 
-    public Set<Kunde> getTeilnehmer() {
-        return teilnehmer;
+    public Set<KursKunde> getTeilnehmer() {
+        return kursKunde;
     }
 
-    public void setTeilnehmer(Set<Kunde> teilnehmer) {
-        this.teilnehmer = teilnehmer;
+    public void setTeilnehmer(Set<KursKunde> kursKunde) {
+        this.kursKunde = kursKunde;
     }
 
     @Override

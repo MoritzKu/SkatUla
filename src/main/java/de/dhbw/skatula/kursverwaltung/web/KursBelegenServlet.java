@@ -7,14 +7,15 @@ package de.dhbw.skatula.kursverwaltung.web;
 
 import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
+import de.dhbw.skatula.ejb.KursKundeBean;
 import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import de.dhbw.skatula.helper.Response;
+import de.dhbw.skatula.jpa.KursKunde;
 import de.dhbw.skatula.kursverwaltung.ejb.KursBean;
 import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import de.dhbw.skatula.web.IndexServlet;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,9 +35,12 @@ public class KursBelegenServlet extends HttpServlet {
 
     @EJB
     protected KursBean kursBean;
-    
+
     @EJB
     protected KundeBean kundeBean;
+    
+    @EJB
+    protected KursKundeBean kursKundeBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -94,20 +98,12 @@ public class KursBelegenServlet extends HttpServlet {
                 try {
                     id = Long.parseLong(pathInfo.split("/")[pathInfo.split("/").length - 1]);
                     Response<Kurs> kurs = kursBean.findById(id);
-                    if (kurs.getResponse().getTeilnehmer() == null) {
-                        Set<Kunde> teilnehmer = new HashSet<>();
-                        teilnehmer.add(kunde.getResponse());
-                        kurs.getResponse().setTeilnehmer(teilnehmer);
-                        if(kunde.getResponse().getKurse() == null){
-                            kunde.getResponse().setKurse(new HashSet<Kurs>());
-                        }
-                        kunde.getResponse().getKurse().add(kurs.getResponse());
-                        kundeBean.updateKunde(kunde.getResponse());
-                    } else {
-                        kurs.getResponse().getTeilnehmer().add(kunde.getResponse());
-                    }
-                    kurs.getResponse().setAktuelleTeilnehmerzahl(kurs.getResponse().getAktuelleTeilnehmerzahl()+1);
-                    kurs = kursBean.updateKurs(kurs.getResponse());
+                    KursKunde kursKunde = new KursKunde();
+                    kursKunde.setKunde(kunde.getResponse());
+                    kursKunde.setKurs(kurs.getResponse());
+                    kursKunde.setZeitstempel(new Date());
+                    Response<KursKunde> reskk = kursKundeBean.createNewKursKunde(kursKunde);
+                    System.out.println(reskk.getResponse());
                 } catch (NumberFormatException ex) {
                     // request.setAttribute("kurs", null);
                     // URL enthält keine gültige Long-Zahl

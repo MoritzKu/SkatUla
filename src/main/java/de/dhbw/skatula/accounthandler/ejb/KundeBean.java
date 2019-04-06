@@ -18,10 +18,10 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class KundeBean {
-    
+
     @PersistenceContext
     EntityManager em;
-    
+
     public Response<Kunde> createNewKunde(Kunde k) {
         Response<Kunde> response = new Response<>();
         try {
@@ -37,7 +37,7 @@ public class KundeBean {
             return response;
         }
     }
-    
+
     public Response<Kunde> updateKunde(Kunde k) {
         Response<Kunde> response = new Response<>();
         try {
@@ -52,7 +52,7 @@ public class KundeBean {
             return response;
         }
     }
-    
+
     public Response<Kunde> findAll() {
         Response<Kunde> response = new Response<>();
         try {
@@ -67,7 +67,7 @@ public class KundeBean {
             return response;
         }
     }
-    
+
     public Response<Kunde> findById(Long id) {
         Response<Kunde> response = new Response<>();
         try {
@@ -82,12 +82,13 @@ public class KundeBean {
             return response;
         }
     }
-    
+
     public Response<Kunde> findByNick(String nick) {
         Response<Kunde> response = new Response<>();
         try {
             response.setResponse((Kunde) em.createQuery("SELECT k FROM Kunde k WHERE k.username LIKE :NICK")
-                    .setParameter("NICK", nick).getSingleResult());
+                    .setParameter("NICK", nick)
+                    .getSingleResult());
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
@@ -97,9 +98,9 @@ public class KundeBean {
         } finally {
             return response;
         }
-        
+
     }
-    
+
     public Response<Kunde> deleteKunde(Kunde k) {
         Response<Kunde> response = new Response<>();
         try {
@@ -116,5 +117,5 @@ public class KundeBean {
             return response;
         }
     }
-    
+
 }

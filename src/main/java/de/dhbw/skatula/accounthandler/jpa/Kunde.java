@@ -6,7 +6,7 @@
 package de.dhbw.skatula.accounthandler.jpa;
 
 import de.dhbw.skatula.jpa.Adresse;
-import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
+import de.dhbw.skatula.jpa.KursKunde;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
@@ -17,7 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -30,13 +30,13 @@ public class Kunde implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Column(nullable = false, unique = true)
     private String username;
-    
+
     @Column(nullable = false)
     private byte[] passwort;
-    
+
     @Column(nullable = false)
     private byte[] salt;
 
@@ -50,9 +50,9 @@ public class Kunde implements Serializable {
     @OneToOne()
     @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adresse adresse;
-    
-    @ManyToMany(mappedBy = "teilnehmer")
-    private Set<Kurs> kurse;
+
+    @OneToMany(mappedBy = "kunde")
+    private Set<KursKunde> kursKunde;
 
     public Long getId() {
         return id;
@@ -69,7 +69,7 @@ public class Kunde implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public String getVorname() {
         return vorname;
     }
@@ -118,12 +118,12 @@ public class Kunde implements Serializable {
         this.salt = salt;
     }
 
-    public Set<Kurs> getKurse() {
-        return kurse;
+    public Set<KursKunde> getKursKunde() {
+        return kursKunde;
     }
 
-    public void setKurse(Set<Kurs> kurse) {
-        this.kurse = kurse;
+    public void setKursKunde(Set<KursKunde> kursKunde) {
+        this.kursKunde = kursKunde;
     }
 
     @Override
@@ -137,7 +137,7 @@ public class Kunde implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.name);
         hash = 59 * hash + Objects.hashCode(this.email);
         hash = 59 * hash + Objects.hashCode(this.adresse);
-        hash = 59 * hash + Objects.hashCode(this.kurse);
+        hash = 59 * hash + Objects.hashCode(this.kursKunde);
         return hash;
     }
 
@@ -161,7 +161,7 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return "Kunde{" + "id=" + id + ", username=" + username + ", passwort=" + passwort + ", salt=" + salt + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + ", kurse=" + kurse + '}';
+        return "Kunde{" + "id=" + id + ", username=" + username + ", passwort=" + passwort + ", salt=" + salt + ", vorname=" + vorname + ", name=" + name + ", email=" + email + ", adresse=" + adresse + ", kurse=" + kursKunde + '}';
     }
-    
+
 }
