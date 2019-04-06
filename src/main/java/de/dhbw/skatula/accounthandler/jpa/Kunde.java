@@ -9,6 +9,7 @@ import de.dhbw.skatula.jpa.Adresse;
 import de.dhbw.skatula.jpa.KursKunde;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -52,7 +53,12 @@ public class Kunde implements Serializable {
     private Adresse adresse;
 
     @OneToMany(mappedBy = "kunde")
-    private Set<KursKunde> kursKunde;
+    private Set<KursKunde> kursKunde = new HashSet<>();
+    
+    public void addKursKunde(KursKunde kursKunde){
+        this.kursKunde.add(kursKunde);
+        kursKunde.setKunde(this);
+    }
 
     public Long getId() {
         return id;

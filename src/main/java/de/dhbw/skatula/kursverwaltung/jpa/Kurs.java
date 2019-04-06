@@ -5,13 +5,13 @@
  */
 package de.dhbw.skatula.kursverwaltung.jpa;
 
-import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import de.dhbw.skatula.jpa.KursKunde;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,8 +45,13 @@ public class Kurs implements Serializable {
     private Trainer trainer;
 
     @OneToMany(mappedBy = "kurs")
-    private Set<KursKunde> kursKunde;
+    private Set<KursKunde> kursKunde = new HashSet<>();
 
+    public void addKursKunde(KursKunde kursKunde){
+        this.kursKunde.add(kursKunde);
+        kursKunde.setKurs(this);
+    }
+    
     public Long getId() {
         return id;
     }
@@ -103,9 +108,17 @@ public class Kurs implements Serializable {
         this.kursKunde = kursKunde;
     }
 
+    public Set<KursKunde> getKursKunde() {
+        return kursKunde;
+    }
+
+    public void setKursKunde(Set<KursKunde> kursKunde) {
+        this.kursKunde = kursKunde;
+    }
+
     @Override
     public String toString() {
-        return "Kurs{" + "id=" + id + ", bezeichnung=" + bezeichnung + ", maxTeilnehmer=" + maxTeilnehmer + ", aktuelleTeilnehmerzahl=" + aktuelleTeilnehmerzahl + ", schwierigkeitsgrad=" + schwierigkeitsgrad + ", trainer=" + trainer + '}';
+        return "Kurs{" + "id=" + id + ", bezeichnung=" + bezeichnung + ", maxTeilnehmer=" + maxTeilnehmer + ", aktuelleTeilnehmerzahl=" + aktuelleTeilnehmerzahl + ", schwierigkeitsgrad=" + schwierigkeitsgrad + ", trainer=" + trainer + ", kursKunde=" + kursKunde + '}';
     }
 
 }

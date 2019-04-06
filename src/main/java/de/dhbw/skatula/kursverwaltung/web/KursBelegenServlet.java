@@ -99,14 +99,12 @@ public class KursBelegenServlet extends HttpServlet {
                     id = Long.parseLong(pathInfo.split("/")[pathInfo.split("/").length - 1]);
                     Response<Kurs> kurs = kursBean.findById(id);
                     KursKunde kursKunde = new KursKunde();
-                    kursKunde.setKunde(kunde.getResponse());
-                    kursKunde.setKurs(kurs.getResponse());
                     kursKunde.setZeitstempel(new Date());
-                    Response<KursKunde> reskk = kursKundeBean.createNewKursKunde(kursKunde);
-                    System.out.println(reskk.getResponse());
-                } catch (NumberFormatException ex) {
-                    // request.setAttribute("kurs", null);
-                    // URL enthält keine gültige Long-Zahl
+                    kursKundeBean.createNewKursKunde(kursKunde, kunde.getResponse(), kurs.getResponse());
+                } catch (Exception ex) {
+                    kunde.setException(ex.getClass().getName());
+                    kunde.setMessage(ex.getMessage());
+                    session.setAttribute("nutzer", kunde);
                 }
             }
 

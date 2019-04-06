@@ -5,9 +5,11 @@
  */
 package de.dhbw.skatula.ejb;
 
+import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.enums.ResponseStatus;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.KursKunde;
+import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,16 +20,26 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class KursKundeBean {
-    
+
     @PersistenceContext
     protected EntityManager em;
-    
-    public Response<KursKunde> createNewKursKunde(KursKunde k){
-        
+
+    public Response<KursKunde> createNewKursKunde(KursKunde k, Kunde kunde, Kurs kurs) {
+
         Response<KursKunde> response = new Response<>();
         try {
+            k.setKunde(kunde);
+            k.setKurs(kurs);
             em.persist(k);
-            response.setResponse(em.merge(k));
+            
+            kunde.getKursKunde().add(k);
+            em.merge(kunde);
+            
+            kurs.getKursKunde().add(k);
+            em.merge(kurs);
+            
+            k = em.merge(k);
+            response.setResponse(k);
             response.setStatus(ResponseStatus.ERFOLGREICH);
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);

@@ -10,11 +10,14 @@ import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -22,27 +25,27 @@ import javax.persistence.MapsId;
  */
 @Entity
 public class KursKunde implements Serializable {
-    
-    @EmbeddedId
-    KursKundeKey id;
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+
     @ManyToOne
-    @MapsId("kurs_id")
     @JoinColumn(name = "kurs_id")
     Kurs kurs;
- 
+
     @ManyToOne
-    @MapsId("kunde_id")
     @JoinColumn(name = "kunde_id")
     Kunde kunde;
-    
+
+    @Temporal(TemporalType.TIMESTAMP)
     Date zeitstempel;
 
-    public KursKundeKey getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(KursKundeKey id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
