@@ -69,26 +69,25 @@
                                 <div class="modal-body">
                                     <c:if test="${empty nutzer || nutzer.response == null}">
                                         <a href="<c:url value="/register"/>">
-                                        <img src="<c:url value="/images/registration.png"/>" alt="selfhtml">                                        
-                                            Registrieren
+                                            <img src="<c:url value="/images/registration.png"/>" alt="selfhtml">                                        
+                                            <p1 class="modalKonto"> Registrieren </p1>
                                         </a>
                                         <hr>
                                         <a href="<c:url value="/login"/>">
                                             <img src="<c:url value="/images/login.png"/>" alt="selfhtml"> 
-                                                Login
+                                            <p1 class="modalKonto">    Login</p1>
                                         </a>
                                     </c:if>
+
                                     <c:if test="${!empty nutzer && nutzer.response != null}">
-                                        <!-- Navbar links -->
                                         <a href="<c:url value="/logout"/>">
-                                            <button class="btn btn-success">
-                                                Logout
-                                            </button>
+                                            <img src="<c:url value="/images/logout.png"/>" alt="selfhtml">                                        
+                                            <p1 class="modalKonto">Logout</p1>
                                         </a>
+                                        <hr>
                                         <a href="<c:url value="/accountdetails"/>">
-                                            <button class="btn btn-success">
-                                                Profil
-                                            </button>
+                                            <img src="<c:url value="/images/profile.png"/>" alt="selfhtml">                                        
+                                            <p1 class="modalKonto">Profil verwalten</p1>
                                         </a>
                                     </c:if>
                                 </div>
@@ -128,7 +127,7 @@
             <jsp:invoke fragment="header"/>
         </header>
         <div class="overlay">
-                <jsp:invoke fragment="content"/>
+            <jsp:invoke fragment="content"/>
         </div>
     </body>
     <footer>
