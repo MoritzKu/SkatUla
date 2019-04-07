@@ -1,0 +1,16 @@
+.card-title{
+    color: lightgray;
+        text-shadow: 1px 1px 1px black;
+
+}
+
+.row{
+    background-color: darkgreen;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.card-body{
+    width: 15em;
+    
+}

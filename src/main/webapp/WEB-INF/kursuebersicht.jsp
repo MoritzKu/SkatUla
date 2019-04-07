@@ -29,15 +29,9 @@
                 </c:when>
             </c:choose>
                     
-            
-                    
-
-
-
-
             <c:if test="${nutzertyp == 'trainer' }">
                 <a href="<c:url value="/kursAnlegen"/>">
-                    <button class="btn btn-primary btn-sm" type="button"> Kurs anlegen </button>
+                    <button class="btn btn-success" type="button"> Kurs anlegen </button>
                 </a>
             </c:if>
             <div id="kurse"></div>
@@ -60,10 +54,9 @@
                             let kursElement = document.createElement("div");
                             kurseElement.appendChild(kursElement);
                             kursElement.innerHTML =
-                                    `<div class="card mb-3" style="max-width: 1000px;">` +
+                                    `<div class="card mb-3">` +
                                     `<div class="row no-gutters">` +
-                                    `<div class="col-md-4 herstellerLogo">` +
-                                    `</div>` +
+                                    
                                     `<div class="col-md-4">` +
                                     `<div class="card-body">` +
                                     `<h5 class="card-title">` + singleKurs.bezeichnung.valueOf() + `</h5>` +
@@ -76,7 +69,7 @@
                                     `<p class="card-text">aktuelle Teilnehmer: ` + singleKurs.aktuelleTeilnehmerzahl.valueOf() + `</p>` +
                                     `<c:if test="${nutzertyp == 'kunde'}">` +
                                     `<a href="kursBelegen/` + singleKurs.id.valueOf() + `"/>` +
-                                    `<button id="belegen" type="button" class="btn btn-primary btn-sm">Kurs belegen</button>` +
+                                    `<button id="belegen" type="button" class="btn btn-success">Kurs belegen</button>` +
                                     `</a>` +
                                     `</c:if>` +
                                     `</div>` +

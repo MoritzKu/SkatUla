@@ -46,7 +46,7 @@
                 <input name="plz" type="text" class="form-control" placeholder="PLZ" value="${nutzer.response.adresse.plz}">
                 <input name="ort" type="text" class="form-control" placeholder="Ort" value="${nutzer.response.adresse.ort}">
             </div>
-            <button type="submit" class="btn btn-outline-primary btn-sm">
+            <button type="submit" class="btn btn-success">
                 Speichern
             </button>
         </form>
