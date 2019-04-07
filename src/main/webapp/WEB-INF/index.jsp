@@ -23,13 +23,11 @@
     </jsp:attribute>
     <jsp:attribute name="content">
         <div>
-            <h1> Herzlich Willkommen!</h1>
+            <h1> Herzlich Willkommen ${nutzer.response.username}!</h1>
             <p> Viel Spaß auf unserer Seite :-)</p>
-            <form>
-                <label for="nickname">Nickname: </label>
-                <input class="form-control form-control-sm" name="nickname" value="${nutzer.response.username}" required="true"
-                       type="text" readonly="true"></input>
-            </form>
+            <div class="pictureIndex">
+            <img src="<c:url value="/images/motivation.bmp"/>" alt="selfhtml">         
+            </div>
         </div>
     </jsp:attribute>
 </template:base>
