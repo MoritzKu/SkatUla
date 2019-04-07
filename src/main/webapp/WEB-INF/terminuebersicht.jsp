@@ -28,24 +28,15 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card-body">
-                                        <h5 class="card-title">${kurs.bezeichnung}</h5>
-                                        <p class="card-text">Trainer: ${kurs.trainer.username}</p>
-                                        <!-- <a href="<c:url value="/detail/${kurs.id}/"/>">
-                                            <button class="btn btn-primary btn-sm">
-                                                Details
-                                            </button>
-                                        </a> -->
+                                        <h5 class="card-title">${termin.kurs.bezeichnung}</h5>
+                                        <p class="card-text">Trainer: ${termin.kurs.trainer.username}</p>
+
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card-body">
-                                        <p class="card-text">Maximale Teilnehmer: ${kurs.maxTeilnehmer}</p>
-                                        <p class="card-text">aktuelle Teilnehmer: ${kurs.aktuelleTeilnehmerzahl}</p>
-                                        <c:if test="${nutzertyp == 'kunde'}">
-                                            <a href="<c:url value="/kursBelegen/${kurs.id}"/>">
-                                                <button type="button" ${(kurs.maxTeilnehmer >= kurs.aktuelleTeilnehmerzahl)?'disabled':''}class="btn btn-primary btn-sm">Kurs belegen</button>
-                                            </a>
-                                        </c:if>
+                                        <p class="card-text">Datum: ${termin.datum}</p>
+                                        <p class="card-text">Zeit: ${termin.time}</p>
                                     </div>
                                 </div>
                             </div>
