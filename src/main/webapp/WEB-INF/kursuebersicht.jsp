@@ -12,6 +12,9 @@
 
 <template:base>
     <jsp:attribute name="title">Kursübersicht</jsp:attribute>
+    <jsp:attribute name="head">
+        <script src="<c:url value="/js/KursCollection.js"/>"></script>
+    </jsp:attribute>
     <jsp:attribute name="content">
         <form method="POST">
             <h1> Kurs anlegen</h1>
@@ -51,6 +54,40 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Platzhalter für die vorhandenen Songs -->
+                        <div id="kurse"></div>
+
+                        <!-- Ab hier fängt es an, Spaß zu machen 🤩 -->
+                        <script>
+                            kursCollection = new KursCollection();
+                            //songResource.setAuthData("username", "password");
+
+                            // Abruf und Anzeige aller Songs, nach Laden der Seite
+                            let reloadKurse = async () => {
+                                let response = await kursCollection.getKurse("");
+
+                                if ("exception" in response) {
+                                    alert(`[${response.exception}]: ${response.message}`)
+                                } else {
+                                    let kurseElement = document.getElementById("kurse");
+                                    kurseElement.innerHTML = "";
+
+                                    response.responseList.forEach(kurs => {
+                                        // Empfangene Daten anzeigen
+                                        let kursElement = document.createElement("div");
+                                        kurseElement.classList.add("kurs");
+                                        kurseElement.appendChild(kursElement);
+
+                                        kursElement.innerHTML = `<b>${kurs.bezeichnung}</b> <br/>`
+                                                + `<span class="label">Trainer:</span> ${kurs.trainer.username} <br/>`
+                                                + `<span class="label">Max. Teilnehmer</span> ${kurs.maxTeilnehmer} <br/>`
+                                                + `<span class="label">Teilnehmer aktuell</span> ${kurs.aktuelleTeilnehmerzahl} <br/>`;
+                                    });
+                                }
+                            };
+
+                            window.addEventListener("load", () => reloadKurse());
+                        </script>
                     </c:forEach>
                 </c:when> 
                 <c:otherwise>
