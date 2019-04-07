@@ -87,10 +87,10 @@
                             let maxTeilnehmer = parseInt(singleKurs.maxTeilnehmer.valueOf());
                             let aktuellTeilnehmer = parseInt(singleKurs.aktuelleTeilnehmerzahl.valueOf());
                             console.log("Max: " + maxTeilnehmer + "\tAkt: " + aktuellTeilnehmer);
-                            if (maxTeilnehmer <= aktuellTeilnehmer) {
+                            /*if (maxTeilnehmer <= aktuellTeilnehmer) {
                                 console.log("Maximale Anzahl an Teilnehmer erreicht");
                                 document.getElementById("belegen").disabled = true;
-                            }
+                            }*/
                         }
                         );
                     }
