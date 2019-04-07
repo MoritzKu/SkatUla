@@ -39,7 +39,7 @@ public class KursBelegenServlet extends HttpServlet {
 
     @EJB
     protected KundeBean kundeBean;
-    
+
     @EJB
     protected KursKundeBean kursKundeBean;
 
@@ -90,22 +90,36 @@ public class KursBelegenServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if (session.getAttribute("nutzertyp") == "kunde") {
             //Kunde aus der Session lesen
-            Response<Kunde> kunde = (Response<Kunde>) session.getAttribute("nutzer");
-            kunde = kundeBean.findById(kunde.getResponse().getId());
+            Response<Kunde> resKunde = (Response<Kunde>) session.getAttribute("nutzer");
+            resKunde = kundeBean.findById(resKunde.getResponse().getId());
             long id = -1;
             String pathInfo = request.getPathInfo();
 
             if (pathInfo != null && pathInfo.length() > 2) {
                 try {
                     id = Long.parseLong(pathInfo.split("/")[pathInfo.split("/").length - 1]);
-                    Response<Kurs> kurs = kursBean.findById(id);
-                    KursKunde kursKunde = new KursKunde();
-                    kursKunde.setZeitstempel(new Date());
-                    kursKundeBean.createNewKursKunde(kursKunde, kunde.getResponse(), kurs.getResponse());
+                    Response<Kurs> resKurs = kursBean.findById(id);
+                    Response<KursKunde> checkKursKunde = kursKundeBean.findByKunde(resKunde.getResponse());
+                    boolean schonbelegt = false;
+                    for (KursKunde tmpKursKunde : checkKursKunde.getResponseList()) {
+                        if (tmpKursKunde.getKurs().getId() == resKurs.getResponse().getId()) {
+                            schonbelegt = true;
+                        }
+                    }
+                    if (!schonbelegt) {
+                        KursKunde kursKunde = new KursKunde();
+                        kursKunde.setZeitstempel(new Date());
+                        kursKundeBean.createNewKursKunde(kursKunde, resKunde.getResponse(), resKurs.getResponse());
+                    } else {
+                        resKunde.setStatus(ResponseStatus.ERROR);
+                        resKunde.setMessage("Sie haben diesen Kurs schon belegt, eine Doppelbelegung ist nicht zulässig.");
+                        session.setAttribute("nutzer", resKunde);
+                    }
                 } catch (Exception ex) {
-                    kunde.setException(ex.getClass().getName());
-                    kunde.setMessage(ex.getMessage());
-                    session.setAttribute("nutzer", kunde);
+                    resKunde.setStatus(ResponseStatus.ERROR);
+                    resKunde.setException(ex.getClass().getName());
+                    resKunde.setMessage(ex.getMessage());
+                    session.setAttribute("nutzer", resKunde);
                 }
             }
 

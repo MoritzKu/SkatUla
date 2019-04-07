@@ -24,13 +24,29 @@ public class KursKundeBean {
     @PersistenceContext
     protected EntityManager em;
 
-    
-    public Response<KursKunde> findAll(){
+    public Response<KursKunde> findAll() {
         Response<KursKunde> kk = new Response<>();
         kk.setResponseList(em.createQuery("SELECT k FROM KursKunde k").getResultList());
         return kk;
     }
-    
+
+    public Response<KursKunde> findByKunde(Kunde kunde) {
+        Response<KursKunde> response = new Response<>();
+        try {
+            response.setResponseList(em.createQuery("SELECT k FROM KursKunde k WHERE k.kunde = :KUNDE")
+                    .setParameter("KUNDE", kunde)
+                    .getResultList());
+            response.setStatus(ResponseStatus.ERFOLGREICH);
+        } catch (Exception ex) {
+            response.setStatus(ResponseStatus.ERROR);
+            response.setException(ex.getClass().getName());
+            response.setMessage(ex.getMessage());
+            response.setStackTrace(ex.getStackTrace());
+        } finally {
+            return response;
+        }
+    }
+
     public Response<KursKunde> createNewKursKunde(KursKunde k, Kunde kunde, Kurs kurs) {
 
         Response<KursKunde> response = new Response<>();
@@ -38,14 +54,14 @@ public class KursKundeBean {
             k.setKunde(kunde);
             k.setKurs(kurs);
             em.persist(k);
-            
+
             kunde.getKursKunde().add(k);
             em.merge(kunde);
-            
+
             kurs.getKursKunde().add(k);
-            kurs.setAktuelleTeilnehmerzahl(kurs.getAktuelleTeilnehmerzahl()+1);
+            kurs.setAktuelleTeilnehmerzahl(kurs.getAktuelleTeilnehmerzahl() + 1);
             em.merge(kurs);
-            
+
             k = em.merge(k);
             response.setResponse(k);
             response.setStatus(ResponseStatus.ERFOLGREICH);

@@ -5,7 +5,6 @@
  */
 package de.dhbw.skatula.accounthandler.jpa;
 
-import de.dhbw.skatula.jpa.Adresse;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;

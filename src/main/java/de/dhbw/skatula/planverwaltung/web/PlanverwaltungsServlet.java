@@ -7,7 +7,7 @@ package de.dhbw.skatula.planverwaltung.web;
 
 import de.dhbw.skatula.accounthandler.ejb.KundeBean;
 import de.dhbw.skatula.accounthandler.ejb.TrainerBean;
-import de.dhbw.skatula.ejb.AdresseBean;
+import de.dhbw.skatula.accounthandler.ejb.AdresseBean;
 import de.dhbw.skatula.planverwaltung.ejb.PlanBean;
 import java.io.IOException;
 import java.io.PrintWriter;
