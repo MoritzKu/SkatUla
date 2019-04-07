@@ -23,7 +23,7 @@
     </jsp:attribute>
     <jsp:attribute name="content">
         <div>
-            <h1> Herzlich Wilkommen!</h1>
+            <h1> Herzlich Willkommen!</h1>
             <p> Viel Spaß auf unserer Seite :-)</p>
             <form>
                 <label for="nickname">Nickname: </label>
@@ -31,8 +31,5 @@
                        type="text" readonly="true"></input>
             </form>
         </div>
-    </jsp:attribute>
-    <jsp:attribute name="footer">
-        <div>Footer</div>
     </jsp:attribute>
 </template:base>
