@@ -110,22 +110,21 @@ public class KursBelegenServlet extends HttpServlet {
                         KursKunde kursKunde = new KursKunde();
                         kursKunde.setZeitstempel(new Date());
                         kursKundeBean.createNewKursKunde(kursKunde, resKunde.getResponse(), resKurs.getResponse());
+                        resKunde = kundeBean.findById(resKunde.getResponse().getId());
                     } else {
                         resKunde.setStatus(ResponseStatus.ERROR);
                         resKunde.setMessage("Sie haben diesen Kurs schon belegt, eine Doppelbelegung ist nicht zulässig.");
-                        session.setAttribute("nutzer", resKunde);
                     }
                 } catch (Exception ex) {
                     resKunde.setStatus(ResponseStatus.ERROR);
                     resKunde.setException(ex.getClass().getName());
                     resKunde.setMessage(ex.getMessage());
+                } finally {
                     session.setAttribute("nutzer", resKunde);
                 }
             }
-
+            response.sendRedirect(request.getContextPath() + KursuebersichtServlet.URL);
         }
-        response.sendRedirect(request.getContextPath() + KursuebersichtServlet.URL);
-
     }
 
 }
