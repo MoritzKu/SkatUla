@@ -28,6 +28,9 @@
                     <h1> Kursübersicht</h1>
                 </c:when>
             </c:choose>
+                    
+            
+                    
 
 
 
