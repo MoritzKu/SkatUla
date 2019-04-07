@@ -115,7 +115,7 @@ public class AccountServlet extends HttpServlet {
             }
             session.setAttribute("nutzer", trainerBean.updateTrainer(trainer.getResponse()));
         }
-        request.getRequestDispatcher("WEB-INF/accountdetails.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + AccountServlet.URL);
     }
 
 }
