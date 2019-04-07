@@ -5,7 +5,6 @@
  */
 package de.dhbw.skatula.kursverwaltung.web;
 
-import de.dhbw.skatula.accounthandler.jpa.Trainer;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.kursverwaltung.ejb.KursBean;
 import de.dhbw.skatula.kursverwaltung.jpa.Kurs;
@@ -41,9 +40,6 @@ public class KursuebersichtServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Response<Kurs> kurs = kursBean.findAll(); 
-        request.setAttribute("kursList", kurs);
-        
         request.getRequestDispatcher("WEB-INF/kursuebersicht.jsp").forward(request, response);
     }
    
@@ -62,15 +58,5 @@ public class KursuebersichtServlet extends HttpServlet{
         
 
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
     
 }
