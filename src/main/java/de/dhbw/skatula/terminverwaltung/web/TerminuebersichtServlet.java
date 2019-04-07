@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author f_lieb
  */
-@WebServlet(name = "TerminuebersichtServlet", urlPatterns = {"/TerminuebersichtServlet"})
+@WebServlet(name = "TerminuebersichtServlet", urlPatterns = {"/terminuebersicht"})
 public class TerminuebersichtServlet extends HttpServlet {
 
     
@@ -43,9 +43,9 @@ public class TerminuebersichtServlet extends HttpServlet {
             throws ServletException, IOException {
         
         Response<Termin> termin = terminBean.findAll(); 
-        request.setAttribute("TerminList", termin);
+        request.setAttribute("terminList", termin);
         
-        request.getRequestDispatcher("/WEB-INF/terminuebersicht.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/terminuebersicht.jsp").forward(request, response);
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

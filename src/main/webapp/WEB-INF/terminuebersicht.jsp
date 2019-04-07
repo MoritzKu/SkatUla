@@ -55,7 +55,7 @@
                 <c:otherwise>
                     <%-- Hinweis, dass es noch keine Pläne gibt --%>
                     <div class="alert alert-danger" role="alert">
-                        Es sind noch keine Pläne vorhanden.
+                        Es sind noch keine Termine vorhanden.
                     </div>
                 </c:otherwise>
             </c:choose>

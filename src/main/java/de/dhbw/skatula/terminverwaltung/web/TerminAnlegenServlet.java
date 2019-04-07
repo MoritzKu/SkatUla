@@ -5,15 +5,18 @@
  */
 package de.dhbw.skatula.terminverwaltung.web;
 
+import de.dhbw.skatula.accounthandler.jpa.Trainer;
+import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.terminverwaltung.ejb.TerminBean;
+import de.dhbw.skatula.terminverwaltung.jpa.Termin;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -29,33 +32,7 @@ public class TerminAnlegenServlet extends HttpServlet {
     @EJB
     protected TerminBean terminBean;
     
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TerminAnlegenServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TerminAnlegenServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -67,9 +44,19 @@ public class TerminAnlegenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+     
+        Response<Termin> termin = terminBean.findAll();
+        for (Termin t : termin.getResponseList()) {
+            t.setDate(null);
+            t.setTime(null);
+            t.setDauer(null);
+        }
+        request.setAttribute("terminList", termin.getResponseList());
+        
+        request.getRequestDispatcher("/WEB-INF/terminAnlegen.jsp").forward(request, response);
+        
     }
-
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -81,7 +68,19 @@ public class TerminAnlegenServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String nutzertyp = (String) session.getAttribute("nutzertyp");
+        Response<Trainer> trainer = (Response<Trainer) session.getAttribute("nutzer");
+        Termin termin = new Termin();
+        termin.setDatum(request.getParameter("datum"));
+        termin.setTime(request.getParameter("time"));
+        termin.setDauer(Integer.parseInt(request.getParameter("dauer")));
+        termin.setKurs(kurs.getResponse());
+        // Auslesen
+        termin.set(Bean.findById(Long.parseLong(request.getParameter("trainer"))).getResponse());
+        terminBean.createNewTermin(termin);
+        
+        response.sendRedirect(request.getContextPath() + TerminuebersichtServlet.URL);
     }
 
     /**

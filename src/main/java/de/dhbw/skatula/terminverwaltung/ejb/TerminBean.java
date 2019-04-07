@@ -22,7 +22,7 @@ public class TerminBean {
     @PersistenceContext
     EntityManager em;
 
-    public Response<Termin> createNewBankverbindung(Termin t) {
+    public Response<Termin> createNewTermin(Termin t) {
         Response<Termin> response = new Response<>();
         try {
             em.persist(t);
@@ -38,7 +38,7 @@ public class TerminBean {
         }
     }
 
-    public Response<Termin> updateBankverbindung(Termin t) {
+    public Response<Termin> updateTermin(Termin t) {
         Response<Termin> response = new Response<>();
         try {
             response.setResponse(em.merge(t));
@@ -83,13 +83,13 @@ public class TerminBean {
         }
     }
     
-    public Response<Termin> deleteBankverbingung(Termin t){
+    public Response<Termin> deleteTermin(Termin t){
         Response<Termin> response = new Response<>();
         try {
             em.remove(t);
             response.setResponse(t);
             response.setStatus(ResponseStatus.ERFOLGREICH);
-            response.setMessage("Die Bankverbindung\n" + t + "\nwurde erfolgreich gelöscht.");
+            response.setMessage("Der Termin" + t + "\nwurde erfolgreich gelöscht.");
         } catch (Exception ex) {
             response.setStatus(ResponseStatus.ERROR);
             response.setException(ex.getClass().getName());
