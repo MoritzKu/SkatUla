@@ -17,7 +17,20 @@
     </jsp:attribute>
     <jsp:attribute name="content">
         <form method="POST">
-            <h1> Kurs anlegen</h1>
+            <c:choose>
+                <c:when test="${nutzertyp == 'trainer' }">
+                    <h1> Kurs anlegen</h1>
+                </c:when>
+                <c:when test="${nutzertyp == 'kunde' }">
+                    <h1> Kurs buchen</h1>
+                </c:when> 
+                <c:when test="${nutzertyp == null }">
+                    <h1> Kursübersicht</h1>
+                </c:when>
+            </c:choose>
+
+
+
 
             <c:if test="${nutzertyp == 'trainer' }">
                 <a href="<c:url value="/kursAnlegen"/>">

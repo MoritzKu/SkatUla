@@ -23,6 +23,8 @@
     </jsp:attribute>
     <jsp:attribute name="content">
         <div>
+            <h1> Herzlich Wilkommen!</h1>
+            <p> Viel Spaß auf unserer Seite :-)</p>
             <form>
                 <label for="nickname">Nickname: </label>
                 <input class="form-control form-control-sm" name="nickname" value="${nutzer.response.username}" required="true"
