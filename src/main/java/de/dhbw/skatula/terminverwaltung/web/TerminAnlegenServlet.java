@@ -44,15 +44,6 @@ public class TerminAnlegenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     
-        Response<Termin> termin = terminBean.findAll();
-        for (Termin t : termin.getResponseList()) {
-            t.setDate(null);
-            t.setTime(null);
-            t.setDauer(null);
-        }
-        request.setAttribute("terminList", termin.getResponseList());
-        
         request.getRequestDispatcher("/WEB-INF/terminAnlegen.jsp").forward(request, response);
         
     }
@@ -70,27 +61,16 @@ public class TerminAnlegenServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String nutzertyp = (String) session.getAttribute("nutzertyp");
-        Response<Trainer> trainer = (Response<Trainer) session.getAttribute("nutzer");
+        Response<Trainer> trainer = (Response<Trainer>) session.getAttribute("nutzer");
         Termin termin = new Termin();
-        termin.setDatum(request.getParameter("datum"));
-        termin.setTime(request.getParameter("time"));
+        //termin.setDatum(request.getParameter("datum"));
+        //termin.setTime(request.getParameter("time"));
         termin.setDauer(Integer.parseInt(request.getParameter("dauer")));
-        termin.setKurs(kurs.getResponse());
+        //termin.setKurs(kurs.getResponse());
         // Auslesen
-        termin.set(Bean.findById(Long.parseLong(request.getParameter("trainer"))).getResponse());
+        //termin.set(Bean.findById(Long.parseLong(request.getParameter("trainer"))).getResponse());
         terminBean.createNewTermin(termin);
         
         response.sendRedirect(request.getContextPath() + TerminuebersichtServlet.URL);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
