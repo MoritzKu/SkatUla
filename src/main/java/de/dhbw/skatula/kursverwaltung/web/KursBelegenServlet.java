@@ -102,7 +102,7 @@ public class KursBelegenServlet extends HttpServlet {
                     Response<KursKunde> checkKursKunde = kursKundeBean.findByKunde(resKunde.getResponse());
                     boolean schonbelegt = false;
                     for (KursKunde tmpKursKunde : checkKursKunde.getResponseList()) {
-                        if (tmpKursKunde.getKurs().getId() == resKurs.getResponse().getId()) {
+                        if (tmpKursKunde.getKurs().equals(resKurs.getResponse())) {
                             schonbelegt = true;
                         }
                     }
@@ -110,7 +110,8 @@ public class KursBelegenServlet extends HttpServlet {
                         KursKunde kursKunde = new KursKunde();
                         kursKunde.setZeitstempel(new Date());
                         kursKundeBean.createNewKursKunde(kursKunde, resKunde.getResponse(), resKurs.getResponse());
-                        resKunde = kundeBean.findById(resKunde.getResponse().getId());
+                        resKurs.getResponse().setAktuelleTeilnehmerzahl(resKurs.getResponse().getAktuelleTeilnehmerzahl() + 1);
+                        resKurs = kursBean.updateKurs(resKurs.getResponse());
                     } else {
                         resKunde.setStatus(ResponseStatus.ERROR);
                         resKunde.setMessage("Sie haben diesen Kurs schon belegt, eine Doppelbelegung ist nicht zulässig.");

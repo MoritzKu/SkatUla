@@ -10,8 +10,8 @@ import de.dhbw.skatula.enums.Schwierigkeitsgrad;
 import de.dhbw.skatula.jpa.KursKunde;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -114,6 +114,37 @@ public class Kurs implements Serializable {
 
     public void setKursKunde(Set<KursKunde> kursKunde) {
         this.kursKunde = kursKunde;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.bezeichnung);
+        hash = 97 * hash + this.maxTeilnehmer;
+        hash = 97 * hash + this.aktuelleTeilnehmerzahl;
+        hash = 97 * hash + Objects.hashCode(this.schwierigkeitsgrad);
+        hash = 97 * hash + Objects.hashCode(this.trainer);
+        hash = 97 * hash + Objects.hashCode(this.kursKunde);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Kurs other = (Kurs) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override

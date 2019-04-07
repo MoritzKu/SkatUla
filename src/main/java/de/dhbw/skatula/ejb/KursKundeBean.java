@@ -56,11 +56,10 @@ public class KursKundeBean {
             em.persist(k);
 
             kunde.getKursKunde().add(k);
-            em.merge(kunde);
+            kunde = em.merge(kunde);
 
             kurs.getKursKunde().add(k);
-            kurs.setAktuelleTeilnehmerzahl(kurs.getAktuelleTeilnehmerzahl() + 1);
-            em.merge(kurs);
+            kurs = em.merge(kurs);
 
             k = em.merge(k);
             response.setResponse(k);
