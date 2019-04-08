@@ -53,6 +53,23 @@
                         <span class="brand h3">SkatUla</span>                        
                     </a>                
 
+              
+                </div>
+                <div class="box2">
+                    <a href="<c:url value="/kursuebersicht"/>">
+                        <button type="button" class="btn btn-success">
+                            Kurse
+                        </button>
+                    </a>
+                    
+                    <!-- Weiterer Button für die Terminverwaltung -->
+                    <a href="<c:url value="/terminuebersicht"/>">
+                        <button type="button" class="btn btn-success">
+                            Termine
+                        </button>
+                    </a>
+                </div>
+                <div class="box3">
                     <!-- Button um Modal-Kontoeinstellungen zu triggern -->
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                         Konto
@@ -98,31 +115,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="box2">
-                    <a href="<c:url value="/kursuebersicht"/>">
-                        <button type="button" class="btn btn-success">
-                            Kurse
-                        </button>
-                    </a>
-                    <!-- Weiteren Button für die Planverwaltung -->
-                    <a href="<c:url value="/planuebersicht"/>">
-                        <button type="button" class="btn btn-success">
-                            Pläne
-                        </button>
-                    </a>
-                    <!-- Weiterer Button für die Terminverwaltung -->
-                    <a href="<c:url value="/terminuebersicht"/>">
-                        <button type="button" class="btn btn-success">
-                            Termine
-                        </button>
-                    </a>
-                </div>
-                <div class="box3">
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-success" type="submit">Search</button>
-                    </form>
+                    
                 </div>                    
             </nav>
             <jsp:invoke fragment="header"/>
