@@ -46,6 +46,23 @@ public class KursKundeBean {
             return response;
         }
     }
+    
+    public Response<KursKunde> findByKurs(Kurs kurs) {
+        Response<KursKunde> response = new Response<>();
+        try {
+            response.setResponseList(em.createQuery("SELECT k FROM KursKunde k WHERE k.kurs = :KURS")
+                    .setParameter("KURS", kurs)
+                    .getResultList());
+            response.setStatus(ResponseStatus.ERFOLGREICH);
+        } catch (Exception ex) {
+            response.setStatus(ResponseStatus.ERROR);
+            response.setException(ex.getClass().getName());
+            response.setMessage(ex.getMessage());
+            response.setStackTrace(ex.getStackTrace());
+        } finally {
+            return response;
+        }
+    }
 
     public Response<KursKunde> createNewKursKunde(KursKunde k, Kunde kunde, Kurs kurs) {
 

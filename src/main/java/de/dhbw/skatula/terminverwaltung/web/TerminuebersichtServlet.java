@@ -7,6 +7,7 @@ package de.dhbw.skatula.terminverwaltung.web;
 
 import de.dhbw.skatula.accounthandler.jpa.Kunde;
 import de.dhbw.skatula.accounthandler.jpa.Trainer;
+import de.dhbw.skatula.ejb.KursKundeBean;
 import de.dhbw.skatula.helper.Response;
 import de.dhbw.skatula.jpa.KursKunde;
 import de.dhbw.skatula.terminverwaltung.ejb.TerminBean;
@@ -34,6 +35,9 @@ public class TerminuebersichtServlet extends HttpServlet {
     @EJB
     protected TerminBean terminBean;
 
+    @EJB
+    protected KursKundeBean kursKundeBean;
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -49,31 +53,34 @@ public class TerminuebersichtServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Response<Termin> termin = terminBean.findAll();
         String nutzertyp = (String) session.getAttribute("nutzertyp");
-        if (nutzertyp.equals("kunde")) {
-            Response<Kunde> resK = new Response<>();
-            resK = (Response<Kunde>) session.getAttribute("nutzer");
-            List<Termin> terminList = new ArrayList<>();
-            for (Termin t : termin.getResponseList()) {
-                for (KursKunde kk : t.getKurs().getKursKunde()) {
-                    if (kk.getKunde().getId() == resK.getResponse().getId()) {
+        if (nutzertyp != null) {
+            if (nutzertyp.equals("kunde")) {
+                Response<Kunde> resK = new Response<>();
+                resK = (Response<Kunde>) session.getAttribute("nutzer");
+                List<Termin> terminList = new ArrayList<>();
+                for (Termin t : termin.getResponseList()) {
+                    Response<KursKunde> resKK = kursKundeBean.findByKurs(t.getKurs());
+                    for (KursKunde kk : resKK.getResponseList()) {
+                        if (kk.getKunde().getId().longValue() == resK.getResponse().getId().longValue()) {
+                            terminList.add(t);
+                        }
+                    }
+                }
+                termin.setResponseList(terminList);
+            } else if (nutzertyp.equals("trainer")) {
+                Response<Trainer> resT = new Response<>();
+                resT = (Response<Trainer>) session.getAttribute("nutzer");
+                List<Termin> terminList = new ArrayList<>();
+                for (Termin t : termin.getResponseList()) {
+                    if (t.getKurs().getTrainer().getId().longValue() == resT.getResponse().getId().longValue()) {
+                        System.out.println("Ids sind gleich");
                         terminList.add(t);
                     }
                 }
+                termin.setResponseList(terminList);
+            } else {
+                termin.setResponseList(null);
             }
-            termin.setResponseList(terminList);
-        } else if (nutzertyp.equals("trainer")) {
-            Response<Trainer> rest = new Response<>();
-            rest = (Response<Trainer>) session.getAttribute("nutzer");
-            List<Termin> terminList = new ArrayList<>();
-            for (Termin t : termin.getResponseList()) {
-                if (t.getKurs().getTrainer().getId() == rest.getResponse().getId()) {
-                    terminList.add(t);
-                }
-            }
-            termin.setResponseList(terminList);
-
-        } else {
-            termin.setResponseList(null);
         }
         request.setAttribute("terminList", termin);
 
