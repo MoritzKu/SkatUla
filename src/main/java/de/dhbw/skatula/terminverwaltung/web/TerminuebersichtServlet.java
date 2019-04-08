@@ -81,6 +81,8 @@ public class TerminuebersichtServlet extends HttpServlet {
             } else {
                 termin.setResponseList(null);
             }
+        } else {
+            termin.setResponseList(null);
         }
         request.setAttribute("terminList", termin);
 
